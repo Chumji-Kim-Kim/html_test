@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주니어보드 7기 정기 회의 브리핑 자료</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+    <style>
+        /* 글로벌 스타일 정의 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Pretendard Variable", -apple-system, sans-serif;
+            letter-spacing: -0.03em;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        /* 💻 데스크탑 환경에서 AOS가 스크롤을 감지하지 못해 투명화 상태로 멈추는 현상 강제 방지 보정 */
+        html:not(.fp-enabled) [data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        .section {
+            background-color: #f8fafc;
+        }
+
+        /* 슬라이드 메인 컨테이너 */
+        .slide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* 세련된 세리프/산세리프 하이브리드 헤더 */
+        .slide-header {
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .slide-header .slide-num {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #2563eb;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .slide-header h2 {
+            font-size: 2.4rem;
+            color: #0f172a;
+            font-weight: 800;
+            line-height: 1.2;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .slide-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            border-radius: 2px;
+        }
+
+        /* 2단 레이아웃 메인 구조 */
+        .slide-content {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 50px;
+            align-items: stretch;
+        }
+
+        /* 좌측 텍스트 카드 스타일링 */
+        .text-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .agenda-list {
+            list-style: none;
+            width: 100%;
+        }
+
+        .agenda-list .item-row {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .agenda-list .item-row:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 가, 나, 다 라벨 배지 디자인 */
+        .agenda-badge {
+            display: inline-block;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            margin-right: 10px;
+            border: 1px solid #dbeafe;
+        }
+
+        /* 하위 상세 항목 (대시 기호) */
+        .sub-bullet {
+            list-style: none;
+            margin-top: 10px;
+            padding-left: 15px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .sub-bullet li {
+            position: relative;
+            padding-left: 16px;
+            font-size: 1.05rem;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .sub-bullet li:last-child {
+            margin-bottom: 0;
+        }
+
+        .sub-bullet li::before {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 10px;
+            width: 5px;
+            height: 1.5px;
+            background-color: #3b82f6;
+        }
+
+        /* 우측 비주얼 대시보드 카드 */
+        .visual-card {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            width: 100%;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 🗓️ Agenda 1: 미니 달력 그래픽 */
+        .mini-calendar-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .cal-title {
+            font-weight: 800;
+            color: #1e3a8a;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        .cal-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: bold;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+        .cal-num-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 8px;
+        }
+        .cal-cell {
+            font-size: 0.85rem;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            color: #475569;
+            font-weight: 500;
+        }
+        .cal-cell.highlight {
+            background: #2563eb;
+            color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* ⏱️ Agenda 2: 선형 시간표 그래픽 */
+        .scheduler-card {
+            width: 100%;
+        }
+
+        .timeline-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .timeline-vertical::before {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: linear-gradient(180deg, #2563eb, #3b82f6);
+        }
+
+        .timeline-row {
+            position: relative;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+
+        .timeline-row::before {
+            content: "";
+            position: absolute;
+            left: -21px;
+            top: 18px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #2563eb;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px #2563eb;
+        }
+
+        .timeline-month {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 2px;
+        }
+
+        .timeline-task {
+            font-size: 0.9rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        /* 임직원 인식확인 가독성 패널 */
+        .action-arrow-box {
+            margin-top: 6px;
+            padding: 10px 14px;
+            background: #fff5f5;
+            border-radius: 8px;
+            color: #e11d48;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-block;
+            border: 1px solid #ffe4e6;
+        }
+
+        /* 인트로 및 아웃트로 디자인 */
+        .cover-bg {
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            color: #ffffff;
+        }
+        .center-box {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+        .cover-badge {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #3b82f6;
+            letter-spacing: 0.15em;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+        .cover-title {
+            font-size: 3.6rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 1024px) {
+            .slide-container { padding: 30px 20px; height: auto !important; min-height: 100vh; }
+            .slide-header h2 { font-size: 1.8rem; }
+            .slide-content { grid-template-columns: 1fr; gap: 25px; }
+            .cover-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fullpage">
+        
+        <div class="section cover-bg">
+            <div class="slide-container center-box" data-aos="fade-up">
+                <p class="cover-badge">7th JUNIOR BOARD REGULAR SESSION</p>
+                <h1 class="cover-title">주니어보드 7기 정기 회의</h1>
+                <p style="font-size:1.4rem; color:#94a3b8; font-weight: 300;">의결 안건 브리핑 리포트</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="slide-container">
+                <div class="slide-header" data-aos="fade-down">
+                    <span class="slide-num">Agenda 01</span>
+                    <h2>1. 청렴 릴레이 토론회</h2>
+                </div>
+                <div class="slide-content">
+                    <div class="text-card" data-aos="fade-right">
+                        <ul class="agenda-list">
+                            <li class="item-row"><span class="agenda-badge">가</span><strong>일시 :</strong> 2026. 7. 1 14:00~ 예정</li>
+                            <li class="item-row"><span class="agenda-badge">나</span><strong>장소 :</strong> 온라인(Web-ex)</li>
+                            <li class="item-row">
+                                <span class="agenda-badge">다</span><strong>내용 :</strong>
+                                <ul class="sub-bullet">
+                                    <li>이전 본부 토론 내용 정리</li>
+                                    <li>이전 본부 질문 정리</li>
+                                    <li>질문을 토대로 청렴 토론 시행 및 내용 정리</li>
+                                    <li>우리 본부 질문 도출 및 다음 본부 전달</li>
+                                </ul>
+                            </li>
+                            <li class="item-row" style="margin-top: 5px;"><span class="agenda-badge">라</span><strong>비고 :</strong> 2개 본부(중부건설-대세충) 통합 진행, 거리상 온라인으로 진행</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="visual-card" data-aos="fade-left">
+                        <div class="chart-title">📅 7월 일정 선상의 개최 시점</div>
+                        <div class="mini-calendar-box">
+                            <div class="cal-title">2026년 7월</div>
+                            <div class="cal-days-grid">
+                                <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+                            </div>
+                            <div class="cal-num-grid">
+                                <span></span><span></span><span></span>
+                                <span class="cal-cell highlight">1</span><span class="cal-cell">2</span><span class="cal-cell">3</span><span class="cal-cell">4</span>
+                                <span class="cal-cell">5</span><span class="cal-cell">6</span><span class="cal-cell">7</span><span class="cal-cell">8</span><span class="cal-cell">9</span><span class="cal-cell">10</span><span class="cal-cell">11</span>
+                                <span class="cal-cell">12</span><span class="cal-cell">13</span><span class="cal-cell">14</span><span class="cal-cell">15</span><span class="cal-cell">16</span><span class="cal-cell">17</span><span class="cal-cell">18</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="slide-container">
+                <div class="slide-header" data-aos="fade-down">
+                    <span class="slide-num">Agenda 02</span>
+                    <h2>2. 건설 실태조사 구체화</h2>
+                </div>
+                <div class="slide-content">
+                    <div class="text-card" data-aos="fade-right">
+                        <ul class="agenda-list">
+                            <li class="item-row">
+                                <span class="agenda-badge">가</span><strong>추진배경 :</strong> 건설사업소 근무 기피 현상 심화
+                                <br><div class="action-arrow-box">→ 임직원 인식확인 및 원인파악 필요</div>
+                            </li>
+                            <li class="item-row"><span class="agenda-badge">나</span><strong>시행목적 :</strong> 건설사업소 인지도 개선 및 실태 홍보</li>
+                            <li class="item-row"><span class="agenda-badge">라</span><strong>비고 :</strong> 이전 기수 우수 사례 참조하여 진행(오지사업소 실태조사 및 개선안)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="visual-card" data-aos="fade-left">
+                        <div class="chart-title">📋 다. 세부 계획 타임라인</div>
+                        <div class="scheduler-card">
+                            <div class="timeline-vertical">
+                                <div class="timeline-row">
+                                    <div class="timeline-month">프로젝트 구체화</div>
+                                    <div class="timeline-task">'26. 6</div>
+                                </div>
+                                <div class="timeline-row">
+                                    <div class="timeline-month">건설 인식 조사</div>
+                                    <div class="timeline-task">'26. 7 ~ 26. 8</div>
+                                </div>
+                                <div class="timeline-row">
+                                    <div class="timeline-month">인식 정리</div>
+                                    <div class="timeline-task">'26. 9</div>
+                                </div>
+                                <div class="timeline-row">
+                                    <div class="timeline-month">개선안 도출 및 조사결과 정리 및 발표</div>
+                                    <div class="timeline-task">'26. 10</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="slide-container">
+                <div class="slide-header" data-aos="fade-down">
+                    <span class="slide-num">Agenda 03</span>
+                    <h2>3. 6, 7월 본사 주요 활동계획</h2>
+                </div>
+                <div class="slide-content">
+                    <div class="text-card" data-aos="fade-right">
+                        <ul class="agenda-list">
+                            <li class="item-row" style="margin-bottom: 25px;">
+                                <span class="agenda-badge">가</span><strong>집체교육 :</strong> 주니어보드7기 집체교육
+                                <p style="color:#64748b; font-size:1.05rem; margin-top: 4px; font-weight: 500;">(26.06.28 ~ 26.06.29, 예산 소노캄)</p>
+                            </li>
+                            <li class="item-row">
+                                <span class="agenda-badge">나</span><strong>캠페인 :</strong> 블라인드 소통ON 연계 캠페인
+                                <p style="color:#64748b; font-size:1.05rem; margin-top: 4px; font-weight: 500;">('26. 6 교육 예정)</p>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="visual-card" data-aos="fade-left">
+                        <div class="chart-title">📊 상반기 활동 및 캠페인 참여도 분석</div>
+                        <div style="position: relative; width: 100%; height: 200px;">
+                            <canvas id="activityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section cover-bg">
+            <div class="slide-container center-box" data-aos="zoom-in">
+                <h2 style="font-size: 3.2rem; font-weight: 800; margin-bottom: 15px;">자유 토론 및 의견 수렴</h2>
+                <p style="font-size: 1.3rem; color: #94a3b8; font-weight: 300;">이상으로 정기 회의 의결 사항 보고를 마치겠습니다.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // AOS 초기 선언
+            AOS.init({
+                duration: 500,
+                easing: 'ease-out-quad',
+                once: false // 데스크탑 스크롤 전환을 위해 반복 트리거 허용
+            });
+
+            // ⭐ [데스크탑 전용 핵심 보정] FullPage.js 휠 콜백 제어문 구성
+            $('#fullpage').fullpage({
+                autoScrolling: true,
+                scrollHorizontally: true,
+                navigation: true,
+                navigationPosition: 'right',
+                responsiveWidth: 1024,
+                
+                // 데스크탑에서 페이지가 전환(이동)되기 직전 실행되는 함수
+                onLeave: function(origin, destination, direction) {
+                    // 1. 기존 페이지에 남아있던 투명 애니메이션을 초기화
+                    $('.section').find('[data-aos]').removeClass('aos-animate');
+                },
+                // 새로운 페이지로 안착이 완료되었을 때 실행되는 함수
+                afterLoad: function(origin, destination, direction) {
+                    // 2. 현재 눈앞에 도달한 장표 안의 요소들만 타겟팅하여 애니메이션 강제 주입
+                    $(destination.item).find('[data-aos]').addClass('aos-animate');
+                }
+            });
+
+            // Chart.js 라인 플롯 렌더링
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['4월 활동', '5월 활동', '6월 캠페인', '7월 교육효과'],
+                    datasets: [{
+                        data: [62, 70, 85, 93],
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.03)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#2563eb',
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: false, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Pretendard Variable' } } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Pretendard Variable' } } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
