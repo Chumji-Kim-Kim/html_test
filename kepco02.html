@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 활용 HTML/CSS 프레젠테이션 보고</title>
+    <style>
+        /* 기본 스타일 리셋 및 폰트 설정 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 프레젠테이션 컨테이너 */
+        .slide-container {
+            width: 100%;
+            max-width: 1200px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            overflow: hidden;
+            min-height: 650px;
+        }
+
+        /* 왼쪽: 핵심 타이틀 영역 */
+        .left-pane {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: #ffffff;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tag {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.4;
+            margin-top: 40px;
+        }
+
+        .footer-text {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+        }
+
+        /* 오른쪽: 상세 보고 내용 영역 */
+        .right-pane {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-item {
+            margin-bottom: 40px;
+        }
+
+        .section-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 간단한 불릿 포인트 아이콘 대용 */
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: #495057;
+            line-height: 1.7;
+            padding-left: 18px;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #2563eb;
+            background: linear-gradient(to top, #dbeafe 40%, transparent 40%);
+        }
+
+        /* 반응형 레이아웃 (태블릿/모바일용) */
+        @media (max-width: 992px) {
+            .slide-container {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            .left-pane {
+                padding: 40px;
+                gap: 30px;
+            }
+            .main-title {
+                font-size: 2.2rem;
+                margin-top: 20px;
+            }
+            .right-pane {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container">
+        <div class="left-pane">
+            <span class="tag">업무 효율화 보고</span>
+            <h1 class="main-title">AI 기반<br>HTML/CSS<br>프레젠테이션 도입</h1>
+            <p class="footer-text">보고자: 송변전 부서 직업원</p>
+        </div>
+
+        <div class="right-pane">
+            
+            <div class="section-item">
+                <h2 class="section-title">개념 (What)</h2>
+                <p class="section-desc">
+                    텍스트 및 기획안 입력만으로 <span class="highlight">웹 표준(HTML/CSS) 기반의 발표 장표를 자동 생성</span>하는 기술입니다. 기존 PPT 제작 방식을 혁신하는 새로운 문서 작성 패러다임입니다.
+                </p>
+            </div>
+
+            <div class="section-item">
+                <h2 class="section-title">핵심 장점 (Why)</h2>
+                <p class="section-desc">
+                    • <strong>시간 단축:</strong> 디자인 및 레이아웃 작업을 AI가 전담하여 <span class="highlight">장표 제작 시간 50% 이상 절감</span><br>
+                    • <strong>높은 호환성:</strong> 프로그램 설치 없이 URL 링크 하나로 <span class="highlight">PC, 모바일, 태블릿 어디서나 레이아웃 깨짐 없이</span> 동일하게 구현
+                </p>
+            </div>
+
+            <div class="section-item">
+                <h2 class="section-title">향후 활용 방안 (How)</h2>
+                <p class="section-desc">
+                    Marp, Gamma 등의 AI 툴을 활용해 5분 만에 초안을 확보한 뒤, <span class="highlight">내부 세미나 및 부서 내 간편 보고 자료부터 시범 적용</span>하여 업무 효율성을 검증하겠습니다.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
