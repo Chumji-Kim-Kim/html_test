@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI를 활용한 HTML, CSS 웹 프레젠테이션</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', system-ui, sans-serif;
+            letter-spacing: -0.03em;
+            word-break: keep-all;
+        }
+
+        /* [흔들림 완벽 차단] 브라우저 기본 마진 및 레이아웃 유동성 완전 제어 */
+        html, body {
+            background-color: #ffffff;
+            color: #1e293b;
+            overflow: hidden !important;
+            height: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #fullpage {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        /* 기본 화이트 섹션 스타일 */
+        .section {
+            padding: 60px 24px;
+            background-color: #ffffff;
+        }
+
+        /* 분위기 전환용 다크 챕터 간지 스타일 */
+        .section.chapter-divider {
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 미니멀 타이포그래피 */
+        h1 {
+            font-size: 3.4rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+        .chapter-divider h1 {
+            color: #ffffff !important;
+        }
+
+        <h2> {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+        .chapter-divider h2 {
+            color: #ffffff !important;
+        }
+
+        <h3> {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.6rem;
+            white-space: nowrap;
+        }
+
+        /* 챕터 간지 타이틀 스타일 */
+        .chapter-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        /* 박스 컴포넌트 */
+        .plain-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .gray-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        /* 클릭 가능한 인터랙션 박스 */
+        .clickable-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+        .clickable-box:hover {
+            border-color: #4f46e5;
+            background-color: #fbfbfe;
+        }
+        .clickable-badge {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            font-size: 0.75rem;
+            color: #4f46e5;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+            padding: 0.15rem 0.45rem;
+            border-radius: 20px;
+        }
+
+        .badge {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #4f46e5;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.2rem;
+            display: inline-block;
+        }
+        .chapter-divider .badge {
+            color: #38bdf8;
+        }
+
+        /* 이미지 카드 프레임 */
+        .img-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #f8fafc;
+            width: 100%;
+        }
+        .img-card img {
+            width: 100%;
+            height: auto;
+            max-height: 440px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        /* 본문 리스트 */
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+            position: relative;
+            padding-left: 1.1rem;
+            color: #334155;
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+
+        li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 4px;
+            height: 4px;
+            background-color: #0f172a;
+            border-radius: 50%;
+        }
+
+        .example-text {
+            margin-top: 0.8rem;
+            padding: 1rem;
+            background: #ffffff;
+            border-left: 3px solid #cbd5e1;
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* 팝업 모달 시스템 스타일 기본 정의 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 24px;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            max-width: 950px;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 70px rgba(15, 23, 42, 0.15);
+            transform: translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        /* 🔥 [신설] 독립 장표 및 외부 연동 HTML 구동을 위한 대형 특수 모달 규격 */
+        .modal-overlay.large-embed .modal-content {
+            max-width: 1300px !important;
+            width: 95% !important;
+            height: 88vh !important;
+            padding: 2rem !important;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden !important;
+        }
+        
+        /* 외부 HTML 렌더링을 격리 구동하는 정밀 iframe 스타일링 */
+        .embed-iframe {
+            width: 100%;
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            background-color: #f8fafc;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+            margin-top: 1rem;
+        }
+        
+        /* 모달 전용 3분할 가로 이미지 레이아웃 팩 */
+        .modal-img-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .modal-img-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8fafc;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+        }
+        .modal-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .close-btn {
+            margin-top: 1.5rem;
+            background: #0f172a;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 2.2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: block;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+        .close-btn:hover {
+            background: #1e293b;
+        }
+
+        /* 전환 효과 애니메이션 */
+        .animate-element {
+            opacity: 0 !important;
+            transform: translateY(40px) !important;
+            transition: transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1), opacity 0.8s ease !important;
+        }
+
+        .section.fp-completely .animate-element {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        .section.fp-completely .delay-1 { transition-delay: 0.15s !important; }
+        .section.fp-completely .delay-2 { transition-delay: 0.3s !important; }
+
+        /* 내장 내비게이션 바 고정 및 찌꺼기 은닉 최적화 */
+        #fp-nav {
+            display: block !important;
+            position: fixed !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            right: 20px !important;
+            z-index: 99999 !important;
+            width: 40px !important;
+            height: auto !important;
+        }
+
+        .fp-sr-only {
+            display: none !important;
+        }
+
+        #fp-nav ul {
+            display: block !important;
+        }
+
+        #fp-nav ul li {
+            display: block !important;
+            width: 14px !important;
+            height: 14px !important;
+            margin: 14px auto !important;
+            position: relative !important;
+        }
+
+        #fp-nav ul li a span {
+            background: #0f172a !important;
+            border-radius: 50% !important;
+            width: 8px !important;
+            height: 8px !important;
+            border: none !important;
+            box-shadow: none !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            position: absolute !important;
+            transition: background 0.3s ease, transform 0.2s ease !important;
+        }
+
+        #fp-nav ul li a.active span {
+            transform: translate(-50%, -50%) scale(1.4) !important;
+            background: #4f46e5 !important;
+        }
+
+        /* 자바스크립트 연동 다크모드 반전 클래스 */
+        body.dark-nav-mode #fp-nav ul li a span {
+            background: #ffffff !important;
+        }
+        body.dark-nav-mode #fp-nav ul li a.active span {
+            background: #38bdf8 !important;
+        }
+
+        @media (max-width: 992px) {
+            h1 { font-size: 2.4rem; }
+            h2 { font-size: 1.8rem; }
+            .chapter-title { font-size: 3rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 1.5rem; }
+            .plain-box, .gray-box, .clickable-box { padding: 1.5rem; }
+            .modal-content { padding: 1.5rem; }
+            .img-card img { max-height: 300px; }
+            .modal-overlay { padding: 12px; }
+            .modal-img-grid { grid-template-columns: 1fr; }
+            .modal-img-box { height: 160px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fullpage">
+        
+        <div class="section">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Presentation</span>
+                <h1 class="animate-element delay-1" style="margin-top: 1rem;">AI를 활용한<br>HTML, CSS 프레젠테이션</h1>
+                <div class="animate-element delay-2" style="width: 60px; height: 2px; background: #0f172a; margin: 2rem auto 0;"></div>
+            </div>
+        </div>
+
+        <div class="section chapter-divider">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Chapter 01</span>
+                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Overview</h1>
+                <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">웹 기반 발표 자료란?</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container" style="max-width: 850px;">
+                <span class="badge animate-element">01. Overview</span>
+                <h2 class="animate-element delay-1" style="text-align: left; margin-bottom: 1.5rem;">HTML, CSS 웹 프레젠테이션이란?</h2>
+                <div class="gray-box animate-element delay-2" style="border-left: 4px solid #0f172a;">
+                    <p style="font-size: 1.15rem; color: #1e293b; line-height: 1.7;">
+                        기존처럼 파워포인트로 일일이 장표를 만드는게 아닌, <strong>AI를 활용하여 HTML, CSS, JS 코드를 생성</strong>하고 이를 활용해 발표 자료를 빌드하여 웹 브라우저 환경에서 프레젠테이션을 진행하는 방식입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="animate-element">
+                    <span class="badge">01. Overview</span>
+                    <h2 style="text-align: left;">웹 기반 프레젠테이션의 장점</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="plain-box animate-element delay-1">
+                        <h3>짧은 제작시간</h3>
+                        <ul>
+                            <li>사용자는 자료 내용만 정리하고 디자인 및 프레젠테이션 제작은 AI를 사용함으로써 <strong>기존 대비 제작시간 감소</strong></li>
+                        </ul>
+                    </div>
+                    <div class="plain-box animate-element delay-1">
+                        <h3>풍부한 효과</h3>
+                        <ul>
+                            <li>CSS, JS 라이브러리 사용을 통해 다양한 전환 및 상호작용 효과 사용 가능</li>
+                        </ul>
+                    </div>
+                    <div class="plain-box animate-element delay-2">
+                        <h3>높은 호환성 및 범용성</h3>
+                        <ul>
+                            <li>HTML 페이지로 프레젠테이션 자료를 제작하는 만큼 <strong>모바일, PC 어느곳에서도 접속하여 열람</strong>할 수 있는 호환성과 범용성</li>
+                            <li>파일 전송이 용이하다는 점도 장점</li>
+                        </ul>
+                    </div>
+                    <div class="plain-box animate-element delay-2">
+                        <h3>확장성, 자유도</h3>
+                        <ul>
+                            <li>기존 파워포인트로는 구현하기 어려웠던 다양한 기능들을 슬라이드 내에서 구현 가능</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section chapter-divider">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Chapter 02</span>
+                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Workflow</h1>
+                <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">AI 활용을 통한 단계별 웹 프레젠테이션 제작</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="animate-element">
+                    <span class="badge">02. Workflow</span>
+                    <h2 style="text-align: left;">Step 1. 자료 정리</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="plain-box animate-element delay-1" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <h3>내용 정제 및 구조화 단계</h3>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>회의록이나 발표 자료의 전체적인 내용을 텍스트나 PDF 등으로 명확하게 정리합니다.</li>
+                            <li style="margin-top: 0.5rem;">생성형 AI가 맥락을 정확하게 파악할 수 있도록 핵심 위주의 데이터를 구성 및 입력하는 단계입니다.</li>
+                        </ul>
+                    </div>
+                    <div class="img-card animate-element delay-2">
+                        <img src="pics/01.png" alt="자료 정리 텍스트 원안 원본 파일">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="animate-element">
+                    <span class="badge">02. Workflow</span>
+                    <h2 style="text-align: left;">Step 2. 프롬프트 작성 및 입력</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="plain-box animate-element delay-1">
+                        <h3>AI 명령어 설계 단계</h3>
+                        <ul>
+                            <li>준비된 내용과 핵심 키워드를 토대로 프롬프트를 작성하여 입력합니다.</li>
+                        </ul>
+                        <div class="example-text">
+                            <strong>지시문 표준 예시:</strong><br>~의 내용을 토대로 html, css, js를 사용하여 프레젠테이션용 n페이지 분량의 웹 페이지를 html로 작성해줘
+                        </div>
+                    </div>
+                    <div class="img-card animate-element delay-2">
+                        <img src="pics/02.png" alt="AI 프롬프트 작성 및 질의 연동 예시">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="animate-element">
+                    <span class="badge">02. Workflow</span>
+                    <h2 style="text-align: left;">Step 3. 출력 확인 및 Feedback</h2>
+                </div>
+                <div class="plain-box animate-element delay-1">
+                    <h3>코드 검증 및 반복 수정 단계</h3>
+                    <ul>
+                        <li>작성 완료된 html 페이지를 브라우저로 직접 확인 후, 의도와 다른 레이아웃이나 버그를 수정합니다.</li>
+                        <li>피드백 및 부분 수정을 점진적으로 진행합니다.</li>
+                    </ul>
+                </div>
+                <div class="grid-2 animate-element delay-2">
+                    <div class="img-card">
+                        <img src="pics/03.png" alt="생성 코드 피드백 출력 확인 상부">
+                    </div>
+                    <div class="img-card">
+                        <img src="pics/04.png" alt="생성 코드 피드백 주요 변경 개정사항 하부">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="animate-element">
+                    <span class="badge">02. Workflow</span>
+                    <h2 style="text-align: left;">Step 4. 프로젝트 배포(필요시)</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="clickable-box animate-element delay-1" onclick="openModal('deploy-modal')" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <span class="clickable-badge">자세히 보기 (Click)</span>
+                        <h3>네트워크 접속(필요시)</h3>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>웹 접속 필요 시 별도 채널을 통해 프로젝트를 배포하여 인터넷으로 언제 어디서든 접속 가능하게 구현합니다.</li>
+                        </ul>
+                    </div>
+                    <div class="img-card animate-element delay-2">
+                        <img src="pics/05.png" alt="Vercel/GitHub 레포지토리 배포 완료 대시보드">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container" style="max-width: 1150px;">
+                <div class="animate-element">
+                    <span class="badge">02. Workflow</span>
+                    <h2 style="text-align: left; margin-bottom: 0.5rem;">핵심 키워드를 통한 프롬프트 작성 노하우</h2>
+                </div>
+                
+                <div class="grid-2" style="grid-template-columns: 1.2fr 0.8fr; gap: 1.5rem; align-items: stretch;">
+                    <div class="plain-box animate-element delay-1" style="display: flex; flex-direction: column; justify-content: center;">
+                        <h3 style="color: #0f172a; margin-bottom: 0.5rem;">(1) HTML 코드 출력 지시</h3>
+                        <p style="font-size: 1.05rem; color: #334155; line-height: 1.6;">
+                            AI가 명확한 웹 표준 컴포넌트를 빌드하도록 목적과 분량을 정확히 매핑하여 선언합니다.
+                        </p>
+                        <div class="example-text" style="background-color: #f8fafc; border-left: 3px solid #cbd5e1; font-weight: 500; margin-top: 1rem;">
+                            "~의 내용을 토대로 html, css, js를 사용하여 프레젠테이션용 n페이지 분량의 웹 페이지를 만들어줘"
+                        </div>
+                    </div>
+
+                    <div class="plain-box animate-element delay-1" style="background-color: #f8fafc; border: none; display: flex; flex-direction: column; justify-content: center;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">(5) 호환성 및 기기 최적화</h3>
+                        <ul style="margin: 0;">
+                            <li style="font-size: 0.98rem; color: #475569; line-height: 1.5;">모바일 및 PC 어디에서 접속해도 동일한 출력을 볼 수 있도록 동적이고 반응형 디자인으로 만들어줘</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid-3 animate-element delay-2" style="grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: -0.5rem;">
+                    <div class="clickable-box" onclick="openModal('design-modal')">
+                        <span class="clickable-badge">Click</span>
+                        <span style="font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; display:block; margin-bottom:0.2rem;">Visual Theme</span>
+                        <h3 style="font-size: 1.25rem;">(2) 디자인 키워드</h3>
+                        <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 0.8rem; line-height: 1.4;">자료의 전체적인 무드와 톤앤매너 지시</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem;">
+                            <span style="background: #f1f5f9; padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; color: #334155;">neuromorphism</span>
+                            <span style="background: #e0e7ff; padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; color: #4f46e5;">fluent / glass 등</span>
+                        </div>
+                    </div>
+
+                    <div class="plain-box">
+                        <span style="font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; display:block; margin-bottom:0.2rem;">Text Architecture</span>
+                        <h3 style="font-size: 1.25rem;">(3) 본문 페이지 내용 구성</h3>
+                        <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 0.5rem; line-height: 1.4;">가독성 극대화를 위한 본문 전개 규칙</p>
+                        <ul style="margin-top: 0.3rem;">
+                            <li style="font-size: 0.92rem; margin-bottom: 0.4rem; color: #475569;">입력한 텍스트 원안 그대로 반영</li>
+                            <li style="font-size: 0.92rem; margin-bottom: 0.4rem; color: #475569;">내용들이 연속성 있게 연동</li>
+                            <li style="font-size: 0.92rem; margin-bottom: 0rem; color: #475569;">간결하고 정돈된 개조식 지향</li>
+                        </ul>
+                    </div>
+
+                    <div class="clickable-box" onclick="openModal('library-modal')">
+                        <span class="clickable-badge">Click</span>
+                        <span style="font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; display:block; margin-bottom:0.2rem;">Extension Script</span>
+                        <h3 style="font-size: 1.25rem;">(4) 스크립트 라이브러리</h3>
+                        <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 0.5rem; line-height: 1.4;">기능 확장 및 컴포넌트 라이브러리 지정</p>
+                        <ul style="margin-top: 0.3rem;">
+                            <li style="font-size: 0.92rem; margin-bottom: 0.4rem; color: #475569;"><strong>차트 삽입:</strong> chart.js</li>
+                            <li style="font-size: 0.92rem; margin-bottom: 0.4rem; color: #475569;"><strong>3D 입체 효과:</strong> three.js</li>
+                            <li style="font-size: 0.92rem; margin-bottom: 0rem; color: #475569;"><strong>화면 롤링 출력:</strong> fullpage.js</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section chapter-divider">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Chapter 03</span>
+                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Use Cases</h1>
+                <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">가벼운 내부 정기 회의 모델링부터 고도화 프로토타입 예시까지</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="animate-element">
+                    <span class="badge">03. Use Cases</span>
+                    <h2>현업 업무 내 실무 적용 예시</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="clickable-box animate-element delay-1" onclick="openModal('case-meeting-modal', 'kepco05.html')" style="border-left: 4px solid #0f172a;">
+                        <span class="clickable-badge">구동하기 (Click)</span>
+                        <h3>간단한 회의 진행</h3>
+                        <p style="color: #64748b; font-size: 0.95rem;">주니어보드 월간 정기회의 업무 문서 대체 사례</p>
+                    </div>
+                    <div class="clickable-box animate-element delay-1" onclick="openModal('case-tech-modal', 'ss_viewsim.html')" style="border-left: 4px solid #0f172a;">
+                        <span class="clickable-badge">구동하기 (Click)</span>
+                        <h3>HTML 기술 고도화 연계</h3>
+                        <p style="color: #64748b; font-size: 0.95rem;">변전소 주위환경 시뮬레이션 인터페이스 연동 사례</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section chapter-divider">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Chapter 04</span>
+                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Conclusion</h1>
+                <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">트레이드 오프(장단점) 분별 및 최종 총평</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container" style="max-width: 900px;">
+                <div class="animate-element">
+                    <span class="badge" style="color: #b91c1c;">04. Conclusion</span>
+                    <h2>단점</h2>
+                </div>
+                <div class="plain-box animate-element delay-1" style="border-top: 4px solid #0f172a;">
+                    <ul>
+                        <li style="margin-bottom: 1.2rem;">AI를 통해 html 코드를 빌드하는 만큼 세세한 수정이 어려우며 이미지 삽입 등 외부 자료 삽입이 번거로움</li>
+                        <li style="margin-bottom: 1.2rem;">사내보고서 등 형식이 중요한 자료보다는 좀 더 가벼운 느낌의 자료에 적합</li>
+                        <li>구조상 AI 활용이 필수인데 claude 등 토큰 용량이 작은 AI는 사용 중 토큰 한계 도달 가능</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="animate-element">
+                    <span class="badge">04. Conclusion</span>
+                    <h2>장점</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="plain-box animate-element delay-1">
+                        <h3>업무 생산성 향상</h3>
+                        <ul>
+                            <li>짧은 제작시간 및 낮은 제작 난이도</li>
+                        </ul>
+                    </div>
+                    <div class="plain-box animate-element delay-2">
+                        <h3>인프라 범용성</h3>
+                        <ul>
+                            <li>플랫폼 제한이 없는 높은 호환성 및 범용성 보장</li>
+                        </ul>
+                    </div>
+                    <div class="plain-box animate-element delay-1">
+                        <h3>풍부한 시각적 이펙트</h3>
+                        <ul>
+                            <li>html 특유의 다양한 효과 및 기능 구현 가능</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="deploy-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>프로젝트 배포 상세 내용</h2>
+            <div class="gray-box" style="margin-top:1.5rem;">
+                <p>별도 채널(예: GitHub Pages, Netlify, Vercel 등 웹 호스팅 서비스)을 통해 빌드된 HTML 프로젝트를 배포하고 URL 주소를 공유하여 실시간으로 접근 할 수 있습니다.</p>
+            </div>
+            <button class="close-btn" onclick="closeModal('deploy-modal')">원래 페이지로 돌아가기</button>
+        </div>
+    </div>
+
+    <div id="design-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>디자인 키워드 및 UI 세부 가이드</h2>
+            <div class="modal-img-grid">
+                <div class="modal-img-box"><img src="pics/dgnex/neuromorp.png" alt="Neuromorphism"></div>
+                <div class="modal-img-box"><img src="pics/dgnex/flat.jpg" alt="Flat Design"></div>
+                <div class="modal-img-box"><img src="pics/dgnex/glassmorp.jpg" alt="Glassmorphism"></div>
+            </div>
+            <div class="gray-box">
+                <p>Neuromorphism, Flat, Glassmorphism 같은 인터페이스 디자인 방법론을 지시하여 구조물의 시각적 입체감과 투명 가독성을 제어하는 세부 조건 명시 가이드입니다.</p>
+            </div>
+            <button class="close-btn" onclick="closeModal('design-modal')">원래 페이지로 돌아가기</button>
+        </div>
+    </div>
+
+    <div id="library-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>JS 라이브러리 선언 상세 기법</h2>
+            <div class="modal-img-grid">
+                <div class="modal-img-box"><img src="pics/dgnex/three.jpg" alt="Three.js Basics"></div>
+                <div class="modal-img-box"><img src="pics/dgnex/chart.jpg" alt="Chart.js Samples"></div>
+                <div class="modal-img-box"><img src="pics/dgnex/fullp.png" alt="Fullpage.js UI"></div>
+            </div>
+            <div class="gray-box">
+                <p>fullpage.js를 통한 터치 친화형 안내화면 이동 제어 기법, Three.js 기반의 3D 렌더링 컨텍스트 스크립트 결합, Chart.js의 동적 데이터 배열 매핑 기술 세부 사양 설명 영역입니다.</p>
+            </div>
+            <button class="close-btn" onclick="closeModal('library-modal')">원래 페이지로 돌아가기</button>
+        </div>
+    </div>
+
+    <div id="case-meeting-modal" class="modal-overlay large-embed">
+        <div class="modal-content">
+            <h2>간단한 회의 진행 실증 웹앱 (주니어보드 정기회의 장표)</h2>
+            <iframe class="embed-iframe" src="" frameborder="0" allowfullscreen></iframe>
+            <button class="close-btn" onclick="closeModal('case-meeting-modal')">원래 페이지로 돌아가기</button>
+        </div>
+    </div>
+
+    <div id="case-tech-modal" class="modal-overlay large-embed">
+        <div class="modal-content">
+            <h2>HTML 기술 고도화 (구룡리 변전소 3D 조망권 시뮬레이터)</h2>
+            <iframe class="embed-iframe" src="" frameborder="0" allowfullscreen></iframe>
+            <button class="close-btn" onclick="closeModal('case-tech-modal')">원래 페이지로 돌아가기</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+    <script>
+        var myFullpage = new fullpage('#fullpage', {
+            licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
+            
+            navigation: true,
+            navigationPosition: 'right',
+            
+            scrollingSpeed: 650, 
+            autoScrolling: true,
+            fitToSection: true,
+            scrollBar: false, 
+            css3: true,
+            
+            normalScrollElements: '.plain-box, .gray-box, .modal-content, .embed-iframe',
+            loopBottom: false,
+            loopTop: false,
+
+            // 스크립트가 직접 다크 간지 장표인지를 추적하여 도트 반전 클래스를 수동 스위칭
+            onLeave: function(origin, destination, direction, trigger) {
+                if (destination.item.classList.contains('chapter-divider')) {
+                    document.body.classList.add('dark-nav-mode');
+                } else {
+                    document.body.classList.remove('dark-nav-mode');
+                }
+            }
+        });
+
+        // 🔥 [수정] 모달이 활성화될 때만 독립 HTML 주소를 iframe에 안전하게 주입
+        function openModal(id, url) {
+            var modal = document.getElementById(id);
+            modal.classList.add('active');
+            if (url) {
+                var iframe = modal.querySelector('iframe');
+                if (iframe) iframe.src = url;
+            }
+            fullpage_api.setAllowScrolling(false);
+            fullpage_api.setKeyboardScrolling(false);
+        }
+
+        // 🔥 [수정] 돌아가기를 누르면 iframe의 주소를 비워 리소스를 초기화
+        function closeModal(id) {
+            var modal = document.getElementById(id);
+            modal.classList.remove('active');
+            var iframe = modal.querySelector('iframe');
+            if (iframe) iframe.src = '';
+            fullpage_api.setAllowScrolling(true);
+            fullpage_api.setKeyboardScrolling(true);
+        }
+    </script>
+</body>
+</html>
