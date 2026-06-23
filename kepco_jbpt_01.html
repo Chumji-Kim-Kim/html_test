@@ -17,10 +17,12 @@
             letter-spacing: -0.02em;
         }
 
-        body {
+        /* 스크롤바 생성으로 인한 화면 흔들림(Layout Shift)을 원천 차단 */
+        html, body {
             background-color: #ffffff;
             color: #1e293b;
-            overflow: hidden;
+            overflow: hidden !important;
+            height: 100%;
         }
 
         /* 구조 및 레이아웃 */
@@ -58,6 +60,14 @@
             font-weight: 700;
             color: #0f172a;
             margin-bottom: 0.8rem;
+        }
+
+        /* 챕터 간지 타이틀 스타일 */
+        .chapter-title {
+            font-size: 4.2rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.1;
         }
 
         /* 박스 컴포넌트 */
@@ -215,31 +225,37 @@
             background: #1e293b;
         }
 
-        /* 🔥 [수정] 데스크톱 버그 해결을 위한 새로운 애니메이션 구조 */
-        /* 초기 상태: 아래 숨김 및 투명도 0 */
+        /* 데스크톱 버그 해결을 위한 애니메이션 구조 */
         .animate-element {
             opacity: 0 !important;
             transform: translateY(40px) !important;
             transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease !important;
         }
 
-        /* fullpage.js가 활성화해 주는 주체 클래스인 .active 하위에 있을 때만 작동 지시 */
+        /* 완전히 컴포넌트가 로드되었을 때 모션 전개 */
         .section.fp-completely .animate-element {
             opacity: 1 !important;
             transform: translateY(0) !important;
         }
 
-        /* 순차 딜레이 기법 안정화 */
         .section.fp-completely .delay-1 { transition-delay: 0.15s !important; }
         .section.fp-completely .delay-2 { transition-delay: 0.3s !important; }
 
+        /* 점이 중복 생성되어 두 줄로 나오는 버그 방지 제어 연산 */
+        #fp-nav {
+            display: block !important;
+        }
         #fp-nav ul li a span {
             background: #0f172a !important;
+        }
+        #fp-nav.fp-sr-only {
+            display: none !important;
         }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.6rem; }
             h2 { font-size: 1.8rem; }
+            .chapter-title { font-size: 2.8rem; }
             .grid-2 { grid-template-columns: 1fr; gap: 1rem; }
             .plain-box, .gray-box, .clickable-box { padding: 1.5rem; }
             .modal-content { padding: 1.5rem; }
@@ -255,6 +271,14 @@
                 <span class="badge animate-element">Presentation</span>
                 <h1 class="animate-element delay-1" style="margin-top: 1rem;">AI를 활용한<br>HTML, CSS 프레젠테이션</h1>
                 <div class="animate-element delay-2" style="width: 60px; height: 2px; background: #0f172a; margin: 2rem auto 0;"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Chapter 01</span>
+                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Overview</h1>
+                <p class="animate-element delay-2" style="color: #64748b; font-size: 1.2rem; margin-top: 1rem;">웹 기반 발표 자료의 개념 정의와 기대 가치</p>
             </div>
         </div>
 
@@ -303,6 +327,14 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Chapter 02</span>
+                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Workflow</h1>
+                <p class="animate-element delay-2" style="color: #64748b; font-size: 1.2rem; margin-top: 1rem;">AI 조율을 통한 단계별 웹 프레젠테이션 제작 공정</p>
             </div>
         </div>
 
@@ -412,13 +444,25 @@
                     <div class="clickable-box animate-element delay-1" onclick="openModal('library-modal')">
                         <span class="clickable-badge">Click</span>
                         <h3>JS 라이브러리 사용 선언</h3>
-                        <p style="color: #64748b; font-size: 0.95rem;">fullpage.js, three.js, chart.js 기능 확장 구현</p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>차트 삽입: chart.js</li>
+                            <li>3d 그래픽 삽입 : three.js</li>
+                            <li>프레젠테이션용 화면 출력 : fullpage.js</li>
+                        </ul>
                     </div>
                     <div class="plain-box animate-element delay-1">
                         <h3>상호작용 및 전개 제어</h3>
                         <p style="color: #64748b; font-size: 0.95rem; line-height: 1.5;">마우스 휠과 모바일 터치 충돌 방지 제어</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Chapter 03</span>
+                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Use Cases</h1>
+                <p class="animate-element delay-2" style="color: #64748b; font-size: 1.2rem; margin-top: 1rem;">가벼운 내부 정기 회의 모델링부터 고도화 프로토타입 예시까지</p>
             </div>
         </div>
 
@@ -440,6 +484,14 @@
                         <p style="color: #64748b; font-size: 0.95rem;">변전소 주위환경 시뮬레이션 인터페이스 연동 사례</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container" style="max-width: 850px; text-align: center;">
+                <span class="badge animate-element">Chapter 04</span>
+                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Conclusion</h1>
+                <p class="animate-element delay-2" style="color: #64748b; font-size: 1.2rem; margin-top: 1rem;">트레이드 오프(장단점) 분별 및 최종 프레임워크 총평</p>
             </div>
         </div>
 
@@ -484,7 +536,6 @@
                             <li>html 특유의 다양한 효과 및 기능 구현 가능</li>
                         </ul>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -541,7 +592,6 @@
         </div>
     </div>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
     <script>
         var myFullpage = new fullpage('#fullpage', {
@@ -551,13 +601,13 @@
             scrollingSpeed: 600, 
             autoScrolling: true,
             fitToSection: true,
-            scrollBar: false,
+            scrollBar: false, // 풀페이지 내장 스크롤바 비활성화 고정
+            css3: true,       // 하드웨어 가속 트랜지션 활용으로 흔들림 억제
             normalScrollElements: '.plain-box, .gray-box, .modal-content',
             loopBottom: false,
             loopTop: false
         });
 
-        // 팝업 조작 유틸리티 함수
         function openModal(id) {
             document.getElementById(id).classList.add('active');
             fullpage_api.setAllowScrolling(false);
