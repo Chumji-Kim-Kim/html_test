@@ -17,7 +17,7 @@
             letter-spacing: -0.02em;
         }
 
-        /* 스크롤바 생성으로 인한 화면 흔들림(Layout Shift)을 원천 차단 */
+        /* 스크롤바 생성으로 인한 화면 흔들림(Layout Shift) 원천 차단 */
         html, body {
             background-color: #ffffff;
             color: #1e293b;
@@ -25,10 +25,17 @@
             height: 100%;
         }
 
-        /* 구조 및 레이아웃 */
+        /* 기본 화이트 섹션 스타일 */
         .section {
             padding: 60px 24px;
             background-color: #ffffff;
+            transition: background-color 0.5s ease;
+        }
+
+        /* 🔥 분위기 전환용 다크 챕터 간지 스타일 */
+        .section.chapter-divider {
+            background-color: #0f172a !important; /* 완전히 대비되는 다크 네이비 배색 */
+            color: #ffffff !important;
         }
 
         .container {
@@ -47,12 +54,18 @@
             color: #0f172a;
             line-height: 1.2;
         }
+        .chapter-divider h1 {
+            color: #ffffff !important;
+        }
 
         h2 {
             font-size: 2.4rem;
             font-weight: 800;
             color: #0f172a;
             margin-bottom: 0.5rem;
+        }
+        .chapter-divider h2 {
+            color: #ffffff !important;
         }
 
         h3 {
@@ -64,9 +77,11 @@
 
         /* 챕터 간지 타이틀 스타일 */
         .chapter-title {
-            font-size: 4.2rem;
+            font-size: 4.5rem;
             font-weight: 800;
-            color: #0f172a;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             line-height: 1.1;
         }
 
@@ -118,6 +133,9 @@
             letter-spacing: 0.1em;
             margin-bottom: 0.2rem;
             display: inline-block;
+        }
+        .chapter-divider .badge {
+            color: #38bdf8;
         }
 
         /* 예시 및 이미지 배치 스페이스 */
@@ -225,37 +243,54 @@
             background: #1e293b;
         }
 
-        /* 데스크톱 버그 해결을 위한 애니메이션 구조 */
+        /* 🔥 [전환 효과] 각 페이지 진입 시 스무스하게 올라오는 상호작용 모션 연출 */
         .animate-element {
             opacity: 0 !important;
-            transform: translateY(40px) !important;
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease !important;
+            transform: translateY(45px) !important;
+            transition: transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1), opacity 0.8s ease !important;
         }
 
-        /* 완전히 컴포넌트가 로드되었을 때 모션 전개 */
+        /* 해당 섹션이 화면에 완전히 고정(완료)되었을 때 재생 */
         .section.fp-completely .animate-element {
             opacity: 1 !important;
             transform: translateY(0) !important;
         }
 
-        .section.fp-completely .delay-1 { transition-delay: 0.15s !important; }
-        .section.fp-completely .delay-2 { transition-delay: 0.3s !important; }
+        /* 순차 등장 타이밍 지연(Delay) 효과 */
+        .section.fp-completely .delay-1 { transition-delay: 0.18s !important; }
+        .section.fp-completely .delay-2 { transition-delay: 0.35s !important; }
 
-        /* 점이 중복 생성되어 두 줄로 나오는 버그 방지 제어 연산 */
+        /* 🔥 우측 네비게이션 점(도트) 중복 버그 완벽 제어 */
         #fp-nav {
+            display: block !important;
+            z-index: 9999 !important;
+        }
+        #fp-nav ul li {
             display: block !important;
         }
         #fp-nav ul li a span {
-            background: #0f172a !important;
+            background: #0f172a !important; /* 기본 화이트 슬라이드에서는 도트가 검은색 */
+            box-shadow: none !important;
+            transition: background 0.3s ease;
         }
-        #fp-nav.fp-sr-only {
+        /* 다크 슬라이드(간지)에 위치할 때는 인디케이터 도트가 하얗게 보이도록 반전 처리 */
+        .fp-viewing-1 #fp-nav ul li a span,
+        .fp-viewing-4 #fp-nav ul li a span,
+        .fp-viewing-11 #fp-nav ul li a span,
+        .fp-viewing-13 #fp-nav ul li a span {
+            background: #ffffff !important;
+        }
+
+        .fp-sr-only, 
+        #fp-nav.fp-sr-only,
+        #fp-nav ul li:nth-child(n+17) {
             display: none !important;
         }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.6rem; }
             h2 { font-size: 1.8rem; }
-            .chapter-title { font-size: 2.8rem; }
+            .chapter-title { font-size: 3rem; }
             .grid-2 { grid-template-columns: 1fr; gap: 1rem; }
             .plain-box, .gray-box, .clickable-box { padding: 1.5rem; }
             .modal-content { padding: 1.5rem; }
@@ -274,11 +309,11 @@
             </div>
         </div>
 
-        <div class="section">
+        <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 01</span>
                 <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Overview</h1>
-                <p class="animate-element delay-2" style="color: #64748b; font-size: 1.2rem; margin-top: 1rem;">웹 기반 발표 자료의 개념 정의와 기대 가치</p>
+                <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">웹 기반 발표 자료의 개념 정의와 기대 가치</p>
             </div>
         </div>
 
@@ -330,11 +365,11 @@
             </div>
         </div>
 
-        <div class="section">
+        <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 02</span>
                 <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Workflow</h1>
-                <p class="animate-element delay-2" style="color: #64748b; font-size: 1.2rem; margin-top: 1rem;">AI 조율을 통한 단계별 웹 프레젠테이션 제작 공정</p>
+                <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">AI 조율을 통한 단계별 웹 프레젠테이션 제작 공정</p>
             </div>
         </div>
 
@@ -348,7 +383,7 @@
                     <h3>내용 정제 및 구조화 단계</h3>
                     <ul>
                         <li>회의록이나 발표 자료의 전체적인 내용을 텍스트나 PDF 등으로 명확하게 정리합니다.</li>
-                        <li>생성형 AI가 맥락을 정확하게 파악할 수 있도록 핵심 위주의 데이터를 구성 및 입력하는 단계입니다.</li>
+                        <li>생성형 AI가 맥락을 정확하게 파악할 수 있도록 핵심 위주의 Raw 데이터를 구성하는 단계입니다.</li>
                     </ul>
                 </div>
                 <div class="preview-space animate-element delay-2">
@@ -458,11 +493,11 @@
             </div>
         </div>
 
-        <div class="section">
+        <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 03</span>
                 <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Use Cases</h1>
-                <p class="animate-element delay-2" style="color: #64748b; font-size: 1.2rem; margin-top: 1rem;">가벼운 내부 정기 회의 모델링부터 고도화 프로토타입 예시까지</p>
+                <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">가벼운 내부 정기 회의 모델링부터 고도화 프로토타입 예시까지</p>
             </div>
         </div>
 
@@ -487,11 +522,11 @@
             </div>
         </div>
 
-        <div class="section">
+        <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 04</span>
                 <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">Conclusion</h1>
-                <p class="animate-element delay-2" style="color: #64748b; font-size: 1.2rem; margin-top: 1rem;">트레이드 오프(장단점) 분별 및 최종 프레임워크 총평</p>
+                <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">트레이드 오프(장단점) 분별 및 최종 프레임워크 총평</p>
             </div>
         </div>
 
@@ -596,18 +631,22 @@
     <script>
         var myFullpage = new fullpage('#fullpage', {
             licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
+            
             navigation: true,
             navigationPosition: 'right',
-            scrollingSpeed: 600, 
+            
+            scrollingSpeed: 650, 
             autoScrolling: true,
             fitToSection: true,
-            scrollBar: false, // 풀페이지 내장 스크롤바 비활성화 고정
-            css3: true,       // 하드웨어 가속 트랜지션 활용으로 흔들림 억제
+            scrollBar: false,
+            css3: true,
+            
             normalScrollElements: '.plain-box, .gray-box, .modal-content',
             loopBottom: false,
             loopTop: false
         });
 
+        // 팝업 조작 유틸리티 함수
         function openModal(id) {
             document.getElementById(id).classList.add('active');
             fullpage_api.setAllowScrolling(false);
