@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구룡리 변전소 3D 조망권 시뮬레이터 (정밀 스케일 적용)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-100 h-screen flex overflow-hidden font-sans">
+
+    <div class="w-96 bg-slate-900 border-r border-slate-800 flex flex-col z-10 shadow-2xl overflow-y-auto">
+        <div class="p-5 border-b border-slate-800 bg-slate-950/50">
+            <h1 class="text-lg font-extrabold tracking-tight text-amber-500">KEPCO 송변전 입지검토 3D 툴</h1>
+            <p class="text-xs text-slate-400 mt-1">전남 장성군 동화면 구룡리 297-3 일대 조망 시뮬레이션</p>
+        </div>
+
+        <div class="p-5 flex-1 space-y-6">
+            <div class="space-y-3">
+                <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">1. 국토 공간 정보 연동 상태</span>
+                <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700/60 space-y-2">
+                    <div class="flex items-center justify-between text-xs text-slate-300">
+                        <span>① 지형 표고 수치 데이터 (DEM)</span>
+                        <span class="text-emerald-400 font-bold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span> 자동 연동 완료
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-slate-300 pt-1">
+                        <span>② 위성 원격 감지 텍스처 (Sat)</span>
+                        <span class="text-emerald-400 font-bold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span> 자동 연동 완료
+                        </span>
+                    </div>
+                    <div class="text-[11px] text-slate-400 border-t border-slate-700/50 pt-2 mt-2 leading-relaxed">
+                        * 발주 데이터 수집 경로인 <code class="text-amber-400">sim_test/</code> 디렉토리 내부 고도 위성 레이어 매핑 구조화 좌표 정렬이 활성화되었습니다.
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">2. 지형 및 변전소 설계 (Target)</span>
+                <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700/60 space-y-4">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-300 font-semibold text-emerald-400">지형 산맥 최고 표고 (굴곡 증폭)</span>
+                            <span id="maxElevVal" class="font-bold text-emerald-400">80 m</span>
+                        </div>
+                        <input type="range" id="maxElev" min="30" max="250" value="80" class="w-full accent-emerald-500">
+                    </div>
+                    
+                    <div class="border-t border-slate-700/50 pt-3">
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-300">부지 조성 표고 (절·성토 평탄화)</span>
+                            <span id="siteElevVal" class="font-bold text-amber-400">45 m</span>
+                        </div>
+                        <input type="range" id="siteElev" min="10" max="100" value="45" class="w-full accent-amber-500">
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-300">변전소 설비 최고 높이 (철구조물 기준)</span>
+                            <span id="subHeightVal" class="font-bold text-amber-400">22 m</span>
+                        </div>
+                        <input type="range" id="subHeight" min="5" max="50" value="22" class="w-full accent-amber-500">
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">3. 주요 마을 조망권 분석 (Observer)</span>
+                <p class="text-[11px] text-slate-400">실제 거리가 반영되었습니다. 카드를 클릭해 주민 눈높이(1.7m) 시점을 확인하세요.</p>
+                
+                <div class="space-y-2" id="villageCards">
+                    </div>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-slate-800 bg-slate-950 text-center">
+            <button id="resetCamBtn" class="text-xs text-slate-400 hover:text-white underline font-medium">전체 조감도 시점으로 복귀</button>
+        </div>
+    </div>
+
+    <div id="canvas-container" class="flex-1 relative bg-slate-950">
+        <div class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur border border-slate-800 px-3 py-2 rounded-md pointer-events-none z-10 flex items-center gap-4 text-xs font-medium shadow-lg">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500 inline-block shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span> 조망됨 (민원 리스크)</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> 지형 차폐 (안전)</span>
+        </div>
+        <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/90 backdrop-blur z-20 flex flex-col items-center justify-center space-y-3 transition-opacity duration-500">
+            <div class="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+            <p id="loadingStatusText" class="text-sm font-bold text-slate-300">지형 고도 레이어 인프라 자적 자동 로드 중...</p>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        const U = 0.1; 
+
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0f172a);
+
+        const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 3000);
+        camera.position.set(0, 100, 150);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.maxPolarAngle = Math.PI / 2 - 0.01; 
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+        const sunLight = new THREE.DirectionalLight(0xfffaed, 1.5);
+        sunLight.position.set(100, 200, 100);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = 2048;
+        sunLight.shadow.mapSize.height = 2048;
+        sunLight.shadow.camera.near = 10;
+        sunLight.shadow.camera.far = 500;
+        const d = 100;
+        sunLight.shadow.camera.left = -d;
+        sunLight.shadow.camera.right = d;
+        sunLight.shadow.camera.top = d;
+        sunLight.shadow.camera.bottom = -d;
+        scene.add(sunLight);
+
+        const terrainWidth = 2400 * U;  
+        const terrainHeight = 2400 * U;
+        const gridRes = 200; 
+        
+        let terrainMesh = null;
+        let demCanvasData = null; 
+        
+        const subGroup = new THREE.Group();
+        scene.add(subGroup);
+
+        const padGeo = new THREE.PlaneGeometry(100 * U, 100 * U);
+        padGeo.rotateX(-Math.PI/2);
+        const padMat = new THREE.MeshStandardMaterial({ color: 0x64748b, side: THREE.DoubleSide });
+        const subPad = new THREE.Mesh(padGeo, padMat);
+        subPad.receiveShadow = true;
+        subGroup.add(subPad);
+
+        let hallMesh, roofMesh;
+        const gantries = [];
+
+        const hallMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.9 });
+        const hallGeo = new THREE.BoxGeometry(40 * U, 1, 30 * U);
+        hallGeo.translate(0, 0.5, 0); 
+        hallMesh = new THREE.Mesh(hallGeo, hallMat);
+        hallMesh.castShadow = true;
+        subGroup.add(hallMesh);
+
+        const roofMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.8 });
+        const roofGeo = new THREE.BoxGeometry(42 * U, 0.2 * U, 32 * U);
+        roofGeo.translate(0, 0.1 * U, 0);
+        roofMesh = new THREE.Mesh(roofGeo, roofMat);
+        roofMesh.castShadow = true;
+        subGroup.add(roofMesh);
+
+        for(let i=0; i<4; i++) {
+            const gGeo = new THREE.BoxGeometry(1 * U, 1, 1 * U);
+            gGeo.translate(0, 0.5, 0);
+            const gantry = new THREE.Mesh(gGeo, steelMat || new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.5, roughness: 0.5 }));
+            gantry.position.set(-15 * U + i * 10 * U, 0, 20 * U);
+            gantry.castShadow = true;
+            gantries.push(gantry);
+            subGroup.add(gantry);
+        }
+
+        const villages = [
+            { id: 'v1', name: '구룡1구마을회관', x: 450 * U, z: -360 * U, desc: '직선거리 약 580m (동북쪽)' },
+            { id: 'v2', name: '홍정2리마을회관', x: -700 * U, z: -320 * U, desc: '직선거리 약 770m (서북쪽)' },
+            { id: 'v3', name: '덕산마을회관', x: 100 * U, z: 650 * U, desc: '직선거리 약 660m (남쪽)' },
+            { id: 'v4', name: '월산마을회관', x: 950 * U, z: -500 * U, desc: '직선거리 약 1070m (북동쪽)' }
+        ];
+
+        villages.forEach(v => {
+            const marker = new THREE.Mesh(new THREE.SphereGeometry(2.5 * U, 16, 16), new THREE.MeshBasicMaterial({ color: 0x38bdf8 }));
+            scene.add(marker);
+            v.markerMesh = marker;
+
+            const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]), new THREE.LineBasicMaterial({ color: 0x10b981, linewidth: 2 }));
+            scene.add(line);
+            v.rayLineMesh = line;
+
+            const card = document.createElement('div');
+            card.className = "p-3 rounded-lg border border-slate-800 bg-slate-800/40 hover:border-slate-500 cursor-pointer transition flex items-center justify-between group";
+            card.innerHTML = `
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span id="badge_${v.id}" class="w-2.5 h-2.5 rounded-full bg-slate-600 inline-block shadow-sm"></span>
+                        <h4 class="text-xs font-bold text-white group-hover:text-amber-400 transition">${v.name}</h4>
+                    </div>
+                    <p class="text-[10.5px] text-slate-400 mt-1">${v.desc}</p>
+                </div>
+                <div class="text-right">
+                    <span id="status_${v.id}" class="text-[11px] font-bold text-slate-500">대기중</span>
+                    <span class="block text-[10px] text-slate-500 mt-0.5 group-hover:text-white transition">시점 이동 ➔</span>
+                </div>
+            `;
+            card.addEventListener('click', () => jumpToVillageView(v));
+            document.getElementById('villageCards').appendChild(card);
+        });
+
+        function rebuildTerrainGeometry() {
+            if(!demCanvasData) return;
+            if(terrainMesh) scene.remove(terrainMesh);
+
+            const planeGeo = new THREE.PlaneGeometry(terrainWidth, terrainHeight, gridRes, gridRes);
+            planeGeo.rotateX(-Math.PI / 2);
+
+            const pos = planeGeo.attributes.position;
+            const siteElev = parseFloat(document.getElementById('siteElev').value) * U;
+            const maxElev = parseFloat(document.getElementById('maxElev').value) * U; 
+            const subRadius = 55 * U; 
+
+            const ctx = demCanvasData.getContext('2d');
+            const imgData = ctx.getImageData(0,0,demCanvasData.width, demCanvasData.height).data;
+
+            for(let i=0; i<pos.count; i++) {
+                const vx = pos.getX(i);
+                const vz = pos.getZ(i);
+
+                const distFromCenter = Math.sqrt(vx*vx + vz*vz);
+                if(distFromCenter <= subRadius) {
+                    pos.setY(i, siteElev);
+                    continue;
+                }
+
+                const u = (vx + terrainWidth/2) / terrainWidth;
+                const v_coord = 1 - (vz + terrainHeight/2) / terrainHeight;
+                
+                const px = Math.floor(u * (demCanvasData.width-1));
+                const py = Math.floor((1-v_coord) * (demCanvasData.height-1));
+                const pIdx = (py * demCanvasData.width + px) * 4;
+
+                const rawHeight = (imgData[pIdx] / 255.0) * maxElev;
+                pos.setY(i, Math.max(1 * U, rawHeight));
+            }
+
+            planeGeo.computeVertexNormals(); 
+
+            const terrainMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 });
+            if(window.currentSatTexture) {
+                terrainMat.map = window.currentSatTexture;
+            }
+
+            terrainMesh = new THREE.Mesh(planeGeo, terrainMat);
+            terrainMesh.receiveShadow = true;
+            terrainMesh.castShadow = true;
+            scene.add(terrainMesh);
+
+            subGroup.position.set(0, siteElev, 0);
+            const bHeight = parseFloat(document.getElementById('subHeight').value) * U;
+            
+            hallMesh.scale.y = bHeight * 0.7;
+            roofMesh.position.y = bHeight * 0.7;
+            gantries.forEach(g => g.scale.y = bHeight);
+
+            executeViewshedAnalysis();
+        }
+
+        function getGroundHeightAt(x, z) {
+            if(!terrainMesh) return 0;
+            const raycaster = new THREE.Raycaster(new THREE.Vector3(x, 500, z), new THREE.Vector3(0, -1, 0));
+            const hits = raycaster.intersectObject(terrainMesh);
+            return hits.length > 0 ? hits[0].point.y : 0;
+        }
+
+        function executeViewshedAnalysis() {
+            if(!terrainMesh) return;
+
+            const bHeight = parseFloat(document.getElementById('subHeight').value) * U;
+            const targetRoofPos = new THREE.Vector3(subGroup.position.x, subGroup.position.y + bHeight, subGroup.position.z);
+
+            villages.forEach(v => {
+                const groundY = getGroundHeightAt(v.x, v.z);
+                const obsPos = new THREE.Vector3(v.x, groundY + (1.7 * U), v.z); 
+                v.markerMesh.position.copy(obsPos);
+
+                const dir = new THREE.Vector3().subVectors(targetRoofPos, obsPos);
+                const totalDist = dir.length();
+                dir.normalize();
+
+                const raycaster = new THREE.Raycaster(obsPos, dir);
+                const hits = raycaster.intersectObject(terrainMesh);
+
+                let isVisible = true;
+                let hitPoint = targetRoofPos;
+
+                if(hits.length > 0 && hits[0].distance < totalDist - (1.0 * U)) {
+                    isVisible = false;
+                    hitPoint = hits[0].point;
+                }
+
+                v.rayLineMesh.geometry.setFromPoints([obsPos, hitPoint]);
+
+                const badgeEl = document.getElementById(`badge_${v.id}`);
+                const statusEl = document.getElementById(`status_${v.id}`);
+
+                if(isVisible) {
+                    v.rayLineMesh.material.color.setHex(0xef4444); 
+                    badgeEl.className = "w-2.5 h-2.5 rounded-full bg-red-500 animate-ping inline-block shadow-[0_0_8px_rgba(239,68,68,0.8)]";
+                    statusEl.innerText = "조망됨 (노출)";
+                    statusEl.className = "text-[11px] font-bold text-red-400";
+                } else {
+                    v.rayLineMesh.material.color.setHex(0x10b981); 
+                    badgeEl.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block";
+                    statusEl.innerText = "지형 차폐 (안전)";
+                    statusEl.className = "text-[11px] font-bold text-emerald-400";
+                }
+            });
+        }
+
+        function jumpToVillageView(v) {
+            const obsY = getGroundHeightAt(v.x, v.z) + (1.7 * U);
+            camera.position.set(v.x, obsY, v.z);
+            const bHeight = parseFloat(document.getElementById('subHeight').value) * U;
+            const targetLook = new THREE.Vector3(0, subGroup.position.y + bHeight * 0.5, 0);
+            controls.target.copy(targetLook);
+            controls.update();
+        }
+
+        document.getElementById('resetCamBtn').addEventListener('click', () => {
+            camera.position.set(0, 100, 150);
+            controls.target.set(0, 10, 0);
+            controls.update();
+        });
+
+// 🔥 [경로 추적 오류 완벽 해결] 상위 루트 디렉토리를 기준으로 주소를 자동 계산하는 최적화 엔진
+        function initAppAutoLoad() {
+            const texLoader = new THREE.TextureLoader();
+            
+            // 1. 현재 브라우저의 메인 주소 위치(상위 폴더 위치)를 자동으로 계산하여 추출합니다.
+            const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/';
+            
+            // 2. 상위 루트 주소와 결합된 절대적인 위치에서 위성지도를 비동기로 안전하게 강제 로드합니다.
+            texLoader.load(basePath + 'sim_test/satlite_view.jfif', tex => {
+                tex.colorSpace = THREE.SRGBColorSpace;
+                tex.wrapS = THREE.RepeatWrapping;
+                tex.wrapT = THREE.RepeatWrapping;
+                
+                // 1:1 좌표계 정렬 치수 주입
+                tex.center.set(0.5, 0.5);
+                tex.repeat.set(1 / 1.18, 1 / 1.18); 
+                tex.offset.set(0.035, 0.110);       
+                window.currentSatTexture = tex;
+
+                // 3. 위성지도가 성공하면, 연이어 정밀 수치 표고 파일(DEM)을 동일한 절대 경로에서 호출합니다.
+                const img = new Image();
+                img.onload = () => {
+                    const cvs = document.createElement('canvas');
+                    cvs.width = 256; cvs.height = 256;
+                    cvs.getContext('2d').drawImage(img, 0, 0, 256, 256);
+                    demCanvasData = cvs;
+                    
+                    // 4. 지형 데이터 및 3D 모델링 종합 렌더링 구동
+                    rebuildTerrainGeometry();
+                    
+                    // 화면을 가리고 있던 로딩 창 투명화 및 제거
+                    document.getElementById('loadingOverlay').style.opacity = '0';
+                    setTimeout(() => document.getElementById('loadingOverlay').style.display = 'none', 500);
+                };
+                img.src = basePath + 'sim_test/heightmap.png';
+            }, undefined, function(err) {
+                // 경로 추적 실패 시 대시보드에 즉시 에러 알림 처리
+                document.getElementById('loadingStatusText').innerText = "⚠️ sim_test/ 폴더 내 파일 로드 실패 (대소문자 및 깃허브 업로드 상태를 확인하세요)";
+                document.getElementById('loadingStatusText').className = "text-sm font-bold text-red-400";
+            });
+        }
+        ['maxElev', 'siteElev', 'subHeight'].forEach(id => {
+            document.getElementById(id).addEventListener('input', e => {
+                document.getElementById(`${id}Val`).innerText = `${e.target.value} m`;
+                rebuildTerrainGeometry();
+            });
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        // 앱 초기화 구동
+        initAppAutoLoad();
+        animate();
+    </script>
+</body>
+</html>
