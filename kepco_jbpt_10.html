@@ -9,6 +9,9 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
     <style>
+        /* ==========================================================================
+           1. 브라우저 및 레이아웃 기본 초기화 (흔들림 및 스크롤 강제 잠금)
+           ========================================================================== */
         * {
             margin: 0;
             padding: 0;
@@ -18,24 +21,14 @@
             word-break: keep-all;
         }
 
-        /* 스크롤바 깜빡임 및 화면 밀림 현상 완벽 차단 */
         html, body {
             background-color: #ffffff;
             color: #1e293b;
-            margin: 0 !important;
-            padding: 0 !important;
+            overflow: hidden !important;
             height: 100% !important;
             width: 100% !important;
-            overflow: hidden !important; 
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        html::-webkit-scrollbar, 
-        body::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
         #fullpage {
@@ -44,7 +37,7 @@
         }
 
         .section {
-            padding: 80px 48px; /* 발표장 스크린 최적화를 위해 상하좌우 여백 조정 */
+            padding: 80px 48px;
             background-color: #ffffff;
             display: flex;
             align-items: center;
@@ -55,19 +48,21 @@
             color: #ffffff !important;
         }
 
-        /* [데스크탑 레이아웃 정리] 대형 화면 가로폭 확장 및 가시성 극대화 */
+        /* [와이드 캔버스] 대형 스크린 PT 최적화 규격 */
         .container {
-            max-width: 1350px; /* 1100px에서 대폭 확장하여 와이드 캔버스 구현 */
+            max-width: 1350px;
             width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 2.5rem; /* 요소 간 간격을 넓혀 시원한 화면 구성 제공 */
+            gap: 2.5rem;
         }
 
-        /* 발표용 타이포그래피 스케일 벌크업 */
+        /* ==========================================================================
+           2. 발표용 타이포그래피 스타일 정의 (시인성 강화 벌크업)
+           ========================================================================== */
         h1 {
-            font-size: 4.2rem; /* 3.4rem -> 4.2rem */
+            font-size: 4.2rem;
             font-weight: 800;
             color: #0f172a;
             line-height: 1.2;
@@ -77,7 +72,7 @@
         }
 
         h2 {
-            font-size: 3.0rem; /* 2.2rem -> 3.0rem */
+            font-size: 3.0rem;
             font-weight: 800;
             color: #0f172a;
             margin-bottom: 0.5rem;
@@ -87,7 +82,7 @@
         }
 
         h3 {
-            font-size: 1.7rem; /* 1.35rem -> 1.7rem */
+            font-size: 1.7rem;
             font-weight: 700;
             color: #0f172a;
             margin-bottom: 0.8rem;
@@ -95,7 +90,7 @@
         }
 
         .chapter-title {
-            font-size: 5.5rem; /* 4.5rem -> 5.5rem */
+            font-size: 5.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
             -webkit-background-clip: text;
@@ -103,14 +98,35 @@
             line-height: 1.1;
         }
 
-        /* [스타일 업그레이드] 띡 켜지는 현상을 제거하고 부드러운 하이엔드 글로우(Glow) 효과 구현 */
+        .badge {
+            font-size: 1.0rem;
+            font-weight: 700;
+            color: #4f46e5;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.2rem;
+            display: inline-block;
+        }
+        .chapter-divider .badge {
+            color: #38bdf8;
+        }
+
+        strong {
+            font-weight: 700;
+            background: linear-gradient(to top, rgba(254, 240, 138, 1) 45%, transparent 45%);
+            padding: 0 2px;
+        }
+
+        /* ==========================================================================
+           3. 컨텐츠 블록 컴포넌트 서식 (부드러운 서브픽셀 글로우 이펙트 코어)
+           ========================================================================== */
         .plain-box {
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 20px;
             padding: 2.2rem 2.5rem;
-            width: 100%; /* 데스크탑에서 균형 잡힌 정렬을 위해 너비 100% 동기화 */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+            width: 100%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
                         border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
                         box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -118,10 +134,9 @@
         .plain-box:hover {
             border-color: #6366f1;
             transform: translateY(-6px);
-            /* 다중 레이어 쉐도우를 통해 번지는 듯한 섬세한 글로우 연출 */
             box-shadow: 0 20px 35px -5px rgba(99, 102, 241, 0.12), 
                         0 10px 15px -5px rgba(99, 102, 241, 0.06),
-                        0 0 15px 1px rgba(99, 102, 241, 0.05);
+                        0 0 15px 1px rgba(99, 102, 241, 0.04);
         }
 
         .gray-box {
@@ -168,111 +183,7 @@
             border-radius: 20px;
         }
 
-        /* Chapter 04 결론 장표 전용 입체 카드 비주얼 셋 (장단점 디자인 개선) */
-        .conclusion-bad-box {
-            background: #fffafb;
-            border: 1px solid #fee2e2;
-            border-top: 6px solid #ef4444; /* 단점 레드 시각적 강조 */
-            border-radius: 20px;
-            padding: 2.5rem;
-            width: 100%;
-            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.02);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .conclusion-bad-box:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 35px -5px rgba(239, 68, 68, 0.08);
-        }
-        .conclusion-bad-box li::before {
-            background-color: #ef4444 !important;
-        }
-
-        .conclusion-good-box {
-            background: #f7fee7;
-            border: 1px solid #d9f99d;
-            border-top: 6px solid #22c55e; /* 장점 그린 시각적 강조 */
-            border-radius: 20px;
-            padding: 2.2rem;
-            box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.02);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .conclusion-good-box:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 35px -5px rgba(34, 197, 94, 0.1);
-        }
-        .conclusion-good-box li::before {
-            background-color: #22c55e !important;
-        }
-
-        .badge {
-            font-size: 1.0rem; /* 0.85rem -> 1.0rem */
-            font-weight: 700;
-            color: #4f46e5;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.2rem;
-            display: inline-block;
-        }
-        .chapter-divider .badge {
-            color: #38bdf8;
-        }
-
-        /* 노란색 형광펜 하이라이트 효과 */
-        strong {
-            font-weight: 700;
-            background: linear-gradient(to top, rgba(254, 240, 138, 1) 45%, transparent 45%);
-            padding: 0 2px;
-        }
-
-        .img-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 20px;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            background-color: #f8fafc;
-            width: 100%;
-            height: 440px; /* 발표용 대형 화면에 맞춰 이미지 영역 확대 */
-            position: relative;
-            cursor: crosshair;
-        }
-        
-        .img-card img {
-            max-width: 95%;
-            max-height: 95%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            pointer-events: none;
-            display: block;
-        }
-
-        .magnifier-lens {
-            position: absolute;
-            width: 260px; 
-            height: 240px;
-            border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25), inset 0 0 25px rgba(0, 0, 0, 0.2);
-            background-repeat: no-repeat;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            z-index: 10;
-            background-color: #f8fafc;
-        }
-        
-        .img-card:not(#deploy-card):hover .magnifier-lens {
-            opacity: 1;
-        }
-
-        #deploy-card {
-            cursor: default;
-        }
-
+        /* 본문 리스트 서식 */
         ul {
             list-style: none;
         }
@@ -283,7 +194,7 @@
             padding-left: 1.4rem;
             color: #334155;
             line-height: 1.6;
-            font-size: 1.2rem; /* 0.95rem -> 1.2rem 장표 가독성 벌크업 */
+            font-size: 1.2rem;
         }
 
         li::before {
@@ -307,7 +218,7 @@
             line-height: 1.6;
         }
 
-        /* 데스크탑 그리드 배치 최적화 - 시원한 대칭 분할 */
+        /* 그리드 배치 서식 */
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -321,7 +232,61 @@
             gap: 2rem;
         }
 
-        /* [완벽 수정] 흰색 배경 도트 2줄 분리 현상 수술 차단 서식 조율 */
+        /* ==========================================================================
+           4. 이미지 프레임 및 왜곡 없는 1:1 대응 정밀 선형 보정 돋보기 모듈
+           ========================================================================== */
+        .img-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #f8fafc;
+            width: 100%;
+            height: 440px;
+            position: relative;
+            cursor: crosshair;
+        }
+        
+        .img-card img {
+            max-width: 95%;
+            max-height: 95%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            pointer-events: none;
+            display: block;
+        }
+
+        .magnifier-lens {
+            position: absolute;
+            width: 275px; /* 크기 복원 고정 */
+            height: 275px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25), inset 0 0 25px rgba(0, 0, 0, 0.2);
+            background-repeat: no-repeat;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease;
+            z-index: 10;
+            background-color: #f8fafc;
+        }
+        
+        .img-card:not(#deploy-card):hover .magnifier-lens {
+            opacity: 1;
+        }
+
+        #deploy-card {
+            cursor: default;
+        }
+
+        /* ==========================================================================
+           5. 우측 네비게이션 인디케이터 (흰 배경 유령 점 유발 코드 완전 소멸 마감)
+           ========================================================================== */
         #fp-nav {
             display: block !important;
             position: fixed !important;
@@ -349,7 +314,6 @@
             position: relative !important;
         }
 
-        /* fullpage 내장 라이브러리가 강제 주입하는 고스트 텍스트 파편 은닉 */
         #fp-nav ul li .fp-sr-only,
         #fp-nav ul li a .fp-sr-only {
             display: none !important;
@@ -357,11 +321,8 @@
             visibility: hidden !important;
         }
 
-        /* 유령 점을 유도하는 li 및 a 하위의 가상 선택자 잔여물 완전 파괴 */
-        #fp-nav ul li::before, 
-        #fp-nav ul li::after,
-        #fp-nav ul li a::before,
-        #fp-nav ul li a::after {
+        #fp-nav ul li::before, #fp-nav ul li::after,
+        #fp-nav ul li a::before, #fp-nav ul li a::after {
             display: none !important;
             content: none !important;
         }
@@ -374,7 +335,7 @@
         }
 
         #fp-nav ul li a span {
-            background: #94a3b8 !important; /* 기본 상태 색상 차분하게 톤 다운 */
+            background: #94a3b8 !important; 
             border-radius: 50% !important;
             width: 8px !important;
             height: 8px !important;
@@ -387,10 +348,9 @@
             transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease !important;
         }
 
-        /* [요구사항] 현재 활성화 페이지 도트만 소프트한 파스텔톤 블루 계열 하이라이트 매핑 */
         #fp-nav ul li a.active span {
             transform: translate(-50%, -50%) scale(1.5) !important;
-            background: #3b82f6 !important; /* 라이트 모드용 파스텔 딥블루 */
+            background: #3b82f6 !important; /* 소프트 파스텔톤 블루 하이라이트 */
             box-shadow: 0 0 8px rgba(59, 130, 246, 0.4) !important;
         }
 
@@ -398,11 +358,98 @@
             background: rgba(255, 255, 255, 0.3) !important;
         }
         body.dark-nav-mode #fp-nav ul li a.active span {
-            background: #38bdf8 !important; /* 다크 모드용 파스텔 스카이블루 */
+            background: #38bdf8 !important;
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.5) !important;
         }
 
-        /* 모바일 레이아웃 무조건 100% 철저히 보존 가이드 */
+        /* ==========================================================================
+           6. 팝업 모달 하이엔드 레이아웃 구조 정의
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 99999; /* fullpage 내비게이션보다 상위에 오도록 보정 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 24px;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            max-width: 950px;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 70px rgba(15, 23, 42, 0.15);
+            transform: translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-overlay.large-embed .modal-content {
+            max-width: 1300px !important;
+            width: 95% !important;
+            height: 88vh !important;
+            padding: 2rem !important;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden !important;
+        }
+        
+        .embed-iframe {
+            width: 100%;
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            background-color: #f8fafc;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+            margin-top: 1rem;
+        }
+        
+        .modal-img-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .modal-img-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8fafc;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+        }
+        .modal-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        /* ==========================================================================
+           7. 모바일 레이아웃 구조 완벽 보존 미디어 쿼리
+           ========================================================================== */
         @media (max-width: 768px) {
             .section {
                 padding: 40px 16px !important;
@@ -424,7 +471,7 @@
             .chapter-title {
                 font-size: 2.8rem !important;
             }
-            .plain-box, .gray-box, .clickable-box, .conclusion-bad-box, .conclusion-good-box {
+            .plain-box, .gray-box, .clickable-box {
                 padding: 1rem 1.2rem !important;
                 width: 100% !important;
             }
@@ -454,6 +501,7 @@
 
     <div id="fullpage">
         
+        <!-- 대문 슬라이드 -->
         <div class="section">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Presentation</span>
@@ -462,6 +510,7 @@
             </div>
         </div>
 
+        <!-- 챕터 1 간지 -->
         <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 01</span>
@@ -470,8 +519,9 @@
             </div>
         </div>
 
+        <!-- 01. 개요 슬라이드 -->
         <div class="section">
-            <div class="container" style="max-width: 950px;">
+            <div class="container" style="max-width: 1050px;">
                 <span class="badge animate-element">01. Overview</span>
                 <h2 class="animate-element delay-1" style="text-align: left; margin-bottom: 1.5rem;">HTML, CSS 웹 프레젠테이션이란?</h2>
                 <div class="gray-box animate-element delay-2" style="border-left: 5px solid #0f172a;">
@@ -482,6 +532,7 @@
             </div>
         </div>
 
+        <!-- 01. 장점 목록 슬라이드 -->
         <div class="section">
             <div class="container">
                 <div class="animate-element">
@@ -518,6 +569,7 @@
             </div>
         </div>
 
+        <!-- 챕터 2 간지 -->
         <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 02</span>
@@ -526,6 +578,7 @@
             </div>
         </div>
 
+        <!-- Step 1 슬라이드 -->
         <div class="section">
             <div class="container">
                 <div class="animate-element">
@@ -548,6 +601,7 @@
             </div>
         </div>
 
+        <!-- Step 2 슬라이드 -->
         <div class="section">
             <div class="container">
                 <div class="animate-element">
@@ -572,6 +626,7 @@
             </div>
         </div>
 
+        <!-- Step 3 슬라이드 -->
         <div class="section">
             <div class="container">
                 <div class="animate-element">
@@ -598,6 +653,7 @@
             </div>
         </div>
 
+        <!-- Step 4 슬라이드 -->
         <div class="section">
             <div class="container">
                 <div class="animate-element">
@@ -620,14 +676,14 @@
             </div>
         </div>
 
+        <!-- 프롬프트 노하우 종합장표 슬라이드 -->
         <div class="section">
-            <div class="container">
+            <div class="container" style="max-width: 1250px;">
                 <div class="animate-element">
                     <span class="badge">02. Workflow</span>
                     <h2 style="text-align: left; margin-bottom: 0.5rem;">핵심 키워드를 통한 프롬프트 작성 노하우</h2>
                 </div>
                 
-                <!-- 상하 비대칭 레이아웃을 1:1 대형 매칭 카드로 가로 분할 정돈 -->
                 <div class="grid-2">
                     <div class="plain-box animate-element delay-1" style="display: flex; flex-direction: column; justify-content: center;">
                         <h3 style="color: #0f172a;">(1) HTML 코드 출력 지시</h3>
@@ -689,6 +745,7 @@
             </div>
         </div>
 
+        <!-- 챕터 3 간지 -->
         <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 03</span>
@@ -697,6 +754,7 @@
             </div>
         </div>
 
+        <!-- 03. 실제 사용 사례 슬라이드 -->
         <div class="section">
             <div class="container">
                 <div class="animate-element">
@@ -719,6 +777,7 @@
             </div>
         </div>
 
+        <!-- 챕터 4 간지 -->
         <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 04</span>
@@ -727,56 +786,41 @@
             </div>
         </div>
 
-        <!-- [디자인 개선] 장단점 레이아웃 입체감 및 가시성 인포그래픽 카드로 업그레이드 -->
+        <!-- [롤백 완료] 04. 결론 - 단점 구조 복원 슬라이드 -->
         <div class="section">
-            <div class="container">
+            <div class="container" style="max-width: 1050px;">
                 <div class="animate-element">
-                    <span class="badge" style="color: #ef4444;">04. Conclusion</span>
+                    <span class="badge" style="color: #b91c1c;">04. Conclusion</span>
                     <h2>단점</h2>
                 </div>
-                <div class="conclusion-bad-box animate-element delay-1">
+                <div class="plain-box animate-element delay-1" style="border-top: 5px solid #0f172a;">
                     <ul>
                         <li style="margin-bottom: 1.5rem;">AI를 통해 html 코드를 빌드하는 만큼 <strong>세세한 수정이 어려우며</strong> 이미지 삽입 등 외부 자료 삽입이 번거롭습니다.</li>
-                        <li style="margin-bottom: 1.5rem;">사내보고서 등 서식 규격이 엄격하게 정해진 문서보다는 <strong>가볍고 유연한 발표 자료</strong>에 적합합니다.</li>
+                        <li style="margin-bottom: 1.5rem;">사내보고서 등 서식 규격이 엄격하게 정해진 문서보다는 <strong>가벼운 느낌의 자료</strong>에 적합합니다.</li>
                         <li>Claude Opus 등 토큰 제약이 큰 인공지능 모델의 경우 무료 플랜 사용 시 사용량 제한에 도달할 수 있습니다.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- [디자인 개선] 장점 카드 덱 비주얼 강화 -->
+        <!-- [롤백 완료] 04. 결론 - 장점 구조 복원 슬라이드 -->
         <div class="section">
-            <div class="container">
+            <div class="container" style="max-width: 1050px;">
                 <div class="animate-element">
-                    <span class="badge" style="color: #22c55e;">04. Conclusion</span>
+                    <span class="badge">04. Conclusion</span>
                     <h2>장점</h2>
                 </div>
-                <div class="grid-3">
-                    <div class="conclusion-good-box animate-element delay-1">
-                        <h3>업무 생산성 향상</h3>
-                        <ul>
-                            <li>짧은 제작시간 및 낮은 제작 난이도</li>
-                            <li>텍스트 입력만으로 고품질 장표 완성</li>
-                        </ul>
-                    </div>
-                    <div class="conclusion-good-box animate-element delay-2">
-                        <h3>인프라 범용성</h3>
-                        <ul>
-                            <li>별도의 전용 프로그램 설치 없이 웹 브라우저만으로도 즉시 액세스 가능</li>
-                            <li>PC, 모바일 등 기기를 가리지 않는 완벽한 반응형 디스플레이 구현</li>
-                        </ul>
-                    </div>
-                    <div class="conclusion-good-box animate-element delay-1">
-                        <h3>풍부한 시각 효과</h3>
-                        <ul>
-                            <li>HTML/CSS 고유의 인터랙티브 컴포넌트 탑재 가능</li>
-                            <li>라이브러리 확장을 통한 동적 무브먼트 구현</li>
-                        </ul>
-                    </div>
+                <div class="plain-box animate-element delay-1" style="border-top: 5px solid #0f172a;">
+                    <ul>
+                        <li style="margin-bottom: 1.5rem;">사용자는 자료 내용만 정리하고 디자인 및 프레젠테이션 제작은 AI를 사용함으로써 <strong>업무 생산성이 대폭 향상</strong>됩니다.</li>
+                        <li style="margin-bottom: 1.5rem;">파워포인트 필요 없이 웹 브라우저만 있으면 작동하여 <strong>인프라 범용성과 확장성</strong>이 탁월합니다.</li>
+                        <li>HTML 특유의 동적 오픈소스 스크립트를 자유롭게 결합하여 <strong>풍부한 시각적 상호작용 효과</strong>를 구현할 수 있습니다.</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- 엔딩 슬라이드 -->
         <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">END</span>
@@ -787,7 +831,9 @@
 
     </div>
 
-    <!-- 모달 컨테이너 팝업 서식 유지 -->
+    <!-- ==========================================================================
+       8. 독립 격리 구동 팝업 모달 마크업 세션
+       ========================================================================== */ -->
     <div id="deploy-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>프로젝트 배포 상세 내용</h2>
@@ -844,8 +890,12 @@
         </div>
     </div>
 
+    <!-- ==========================================================================
+       9. 핵심 인터랙션 고도화 자바스크립트 엔진 컨트롤
+       ========================================================================== */ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
     <script>
+        // fullPage.js 핵심 환경 세팅
         var myFullpage = new fullpage('#fullpage', {
             licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
             navigation: true,
@@ -856,7 +906,7 @@
             scrollBar: false, 
             css3: true,
             scrollOverflow: false, 
-            normalScrollElements: '.plain-box, .gray-box, .modal-content, .embed-iframe, .img-card, .conclusion-bad-box, .conclusion-good-box',
+            normalScrollElements: '.plain-box, .gray-box, .modal-content, .embed-iframe, .img-card',
             loopBottom: false,
             loopTop: false,
             onLeave: function(origin, destination, direction, trigger) {
@@ -868,7 +918,7 @@
             }
         });
 
-        /* 1:1 카드 컨테이너 완벽 동기화 트래킹 주더 돋보기 렌더러 */
+        /* [엔진 완전 복원] 이미지 카드 중심축 1:1 왜곡 차단형 정밀 대수 매핑 돋보기 스크립트 */
         document.querySelectorAll('.img-card').forEach(function(card) {
             if (card.id === 'deploy-card') return;
 
@@ -876,46 +926,76 @@
             var lens = card.querySelector('.magnifier-lens');
             
             if(!lens) return;
-            var zoomFactor = 2.2;
+
+            var zoomFactor = 2.2; // 2.2배 최적화 배율 고정
 
             card.addEventListener('mouseenter', function() {
                 lens.style.backgroundImage = "url('" + img.src + "')";
-                lens.style.backgroundSize = (card.offsetWidth * zoomFactor) + "px " + (card.offsetHeight * zoomFactor) + "px";
             });
 
             card.addEventListener('mousemove', function(e) {
                 var rect = card.getBoundingClientRect();
+                
+                // 카드 영역 내 마우스 좌표 수집
                 var mouseX = e.clientX - rect.left;
                 var mouseY = e.clientY - rect.top;
 
+                // 렌즈 물리적 구체 위치 매핑
                 var lensX = mouseX - (lens.offsetWidth / 2);
                 var lensY = mouseY - (lens.offsetHeight / 2);
                 lens.style.left = lensX + 'px';
                 lens.style.top = lensY + 'px';
 
-                var posX = (mouseX / card.offsetWidth) * ((card.offsetWidth * zoomFactor) - lens.offsetWidth);
-                var posY = (mouseY / card.offsetHeight) * ((card.offsetHeight * zoomFactor) - lens.offsetHeight);
+                // 컨테이너 내 이미지의 실제 바운딩 박스 크기 추적 및 여백(Offset) 계산
+                var imgRatio = img.naturalWidth / img.naturalHeight;
+                var cardRatio = card.offsetWidth / card.offsetHeight;
+                
+                var realImgWidth, realImgHeight;
+                var offsetX = 0, offsetY = 0;
 
-                lens.style.backgroundPosition = "-" + posX + "px -" + posY + "px";
+                if (imgRatio > cardRatio) {
+                    realImgWidth = card.offsetWidth;
+                    realImgHeight = card.offsetWidth / imgRatio;
+                    offsetY = (card.offsetHeight - realImgHeight) / 2;
+                } else {
+                    realImgHeight = card.offsetHeight;
+                    realImgWidth = card.offsetHeight * imgRatio;
+                    offsetX = (card.offsetWidth - realImgWidth) / 2;
+                }
+                
+                lens.style.backgroundSize = (realImgWidth * zoomFactor) + "px " + (realImgHeight * zoomFactor) + "px";
+
+                // 여백 왜곡 부작용을 완벽하게 제거하는 선형 비례식 계산 매핑
+                var bgX = ((mouseX - offsetX) / realImgWidth) * 100;
+                var bgY = ((mouseY - offsetY) / realImgHeight) * 100;
+
+                lens.style.backgroundPosition = bgX + "% " + bgY + "%";
             });
         });
 
+        /* 인터랙티브 격리 모달 시스템 통제 스크립트 */
         function openModal(id, url) {
             var modal = document.getElementById(id);
+            if (!modal) return;
+            
             modal.classList.add('active');
             if (url) {
                 var iframe = modal.querySelector('iframe');
                 if (iframe) iframe.src = url;
             }
+            // 풀페이지 제어 차단하여 충돌 먹통 방지 보정
             fullpage_api.setAllowScrolling(false);
             fullpage_api.setKeyboardScrolling(false);
         }
 
         function closeModal(id) {
             var modal = document.getElementById(id);
+            if (!modal) return;
+
             modal.classList.remove('active');
             var iframe = modal.querySelector('iframe');
             if (iframe) iframe.src = '';
+            
             fullpage_api.setAllowScrolling(true);
             fullpage_api.setKeyboardScrolling(true);
         }
