@@ -18,15 +18,25 @@
             word-break: keep-all;
         }
 
-        /* [흔들림 완벽 차단] 브라우저 기본 마진 및 레이아웃 유동성 완전 제어 */
+        /* 스크롤바 깜빡임 및 화면 밀림 현상 완벽 차단 */
         html, body {
             background-color: #ffffff;
             color: #1e293b;
-            overflow: hidden !important;
-            height: 100% !important;
-            width: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+            overflow: hidden !important; 
+            -ms-overflow-style: none; /* IE, Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        /* Chrome, Safari, Opera에서 스크롤바 영역 자체를 비활성화 */
+        html::-webkit-scrollbar, 
+        body::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
         }
 
         #fullpage {
@@ -34,13 +44,13 @@
             width: 100% !important;
         }
 
-        /* 기본 화이트 섹션 스타일 */
         .section {
             padding: 60px 24px;
             background-color: #ffffff;
+            display: flex;
+            align-items: center;
         }
 
-        /* 분위기 전환용 다크 챕터 간지 및 엔딩 스타일 */
         .section.chapter-divider {
             background-color: #0f172a !important;
             color: #ffffff !important;
@@ -55,7 +65,6 @@
             gap: 2rem;
         }
 
-        /* 미니멀 타이포그래피 */
         h1 {
             font-size: 3.4rem;
             font-weight: 800;
@@ -84,7 +93,6 @@
             white-space: nowrap;
         }
 
-        /* 챕터 간지 타이틀 스타일 */
         .chapter-title {
             font-size: 4.5rem;
             font-weight: 800;
@@ -94,21 +102,36 @@
             line-height: 1.1;
         }
 
-        /* 박스 컴포넌트 */
+        /* [PC 버전 롤백] 원래대로 그리드 영역을 가득 채워 이쁘게 나오도록 수정 */
         .plain-box {
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 2rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .plain-box:hover {
+            border-color: #4f46e5;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.08);
+            transform: translateY(-2px);
         }
 
         .gray-box {
             background: #f8fafc;
+            border: 1px solid transparent;
             border-radius: 16px;
             padding: 2rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .gray-box:hover {
+            border-color: #cbd5e1;
+            background: #ffffff;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+            transform: translateY(-2px);
         }
 
-        /* 클릭 가능한 인터랙션 박스 */
         .clickable-box {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -116,11 +139,14 @@
             padding: 2rem;
             cursor: pointer;
             position: relative;
-            transition: border-color 0.2s ease, background-color 0.2s ease;
+            width: 100%;
+            transition: all 0.3s ease;
         }
         .clickable-box:hover {
             border-color: #4f46e5;
             background-color: #fbfbfe;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1);
+            transform: translateY(-2px);
         }
         .clickable-badge {
             position: absolute;
@@ -147,7 +173,13 @@
             color: #38bdf8;
         }
 
-        /* [구조 개혁] 카드 레이어가 직접 마우스 이벤트를 통제하여 여백까지 부드럽게 감싸도록 변경 */
+        /* 노란색 형광펜 하이라이트 효과 */
+        strong {
+            font-weight: 700;
+            background: linear-gradient(to top, rgba(254, 240, 138, 1) 45%, transparent 45%);
+            padding: 0 2px;
+        }
+
         .img-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -164,7 +196,6 @@
             cursor: crosshair;
         }
         
-        /* 원본 사진은 레이아웃 균형에 맞춰 contain 정렬 유지 */
         .img-card img {
             max-width: 90%;
             max-height: 90%;
@@ -175,7 +206,6 @@
             display: block;
         }
 
-        /* [수정] 돋보기 원형 크기 30% 추가 확대 (210px -> 275px) 및 사실적인 테두리 쉐도우 마감 */
         .magnifier-lens {
             position: absolute;
             width: 275px; 
@@ -188,14 +218,17 @@
             pointer-events: none;
             transition: opacity 0.2s ease;
             z-index: 10;
-            background-color: #f8fafc; /* 여백 영역 진입 시 배경 깔림 보장 */
+            background-color: #f8fafc;
         }
         
-        .img-card:hover .magnifier-lens {
+        .img-card:not(#deploy-card):hover .magnifier-lens {
             opacity: 1;
         }
 
-        /* 본문 리스트 */
+        #deploy-card {
+            cursor: default;
+        }
+
         ul {
             list-style: none;
         }
@@ -243,7 +276,7 @@
             gap: 1.5rem;
         }
 
-        /* 팝업 모달 시스템 스타일 기본 정의 */
+        /* 팝업 모달 시스템 */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -344,7 +377,7 @@
             background: #1e293b;
         }
 
-        /* 전환 효과 애니메이션 */
+        /* 애니메이션 효과 */
         .animate-element {
             opacity: 0 !important;
             transform: translateY(40px) !important;
@@ -359,7 +392,6 @@
         .section.fp-completely .delay-1 { transition-delay: 0.15s !important; }
         .section.fp-completely .delay-2 { transition-delay: 0.3s !important; }
 
-        /* [보존] 우측 네비게이션 도트 단일 세로 배열 스타일 완벽 고정 파트 */
         #fp-nav {
             display: block !important;
             position: fixed !important;
@@ -387,27 +419,12 @@
             position: relative !important;
         }
 
-        #fp-nav ul li::before,
-        #fp-nav ul li::after,
-        #fp-nav ul li a::before,
-        #fp-nav ul li a::after {
-            display: none !important;
-            content: none !important;
-        }
-
-        #fp-nav ul li a {
-            display: block !important;
-            width: 100% !important;
-            height: 100% !important;
-        }
-
         #fp-nav ul li a span {
             background: #0f172a !important;
             border-radius: 50% !important;
             width: 8px !important;
             height: 8px !important;
             border: none !important;
-            box-shadow: none !important;
             left: 50% !important;
             top: 50% !important;
             transform: translate(-50%, -50%) !important;
@@ -425,6 +442,64 @@
         }
         body.dark-nav-mode #fp-nav ul li a.active span {
             background: #38bdf8 !important;
+        }
+
+        /* -----------------------------------------
+           [모바일 전용 미디어 쿼리] 여기서만 유연하게 압축되도록 분리
+           ----------------------------------------- */
+        @media (max-width: 768px) {
+            .section {
+                padding: 40px 16px !important;
+            }
+            .container {
+                gap: 1rem !important;
+            }
+            h1 {
+                font-size: 2.2rem !important;
+            }
+            h2 {
+                font-size: 1.6rem !important;
+                margin-bottom: 0.2rem !important;
+            }
+            h3 {
+                font-size: 1.1rem !important;
+                margin-bottom: 0.4rem !important;
+            }
+            .chapter-title {
+                font-size: 2.8rem !important;
+            }
+            /* 모바일에서만 폭을 줄이고 내부 패딩 압축 */
+            .plain-box, .gray-box, .clickable-box {
+                padding: 1rem 1.2rem !important;
+                width: fit-content !important;
+                max-width: 100% !important;
+            }
+            li {
+                font-size: 0.85rem !important;
+                margin-bottom: 0.3rem !important;
+            }
+            .img-card {
+                height: 180px !important;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr !important;
+                gap: 0.8rem !important;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr !important;
+                gap: 0.8rem !important;
+            }
+            .example-text {
+                margin-top: 0.5rem !important;
+                padding: 0.6rem !important;
+                font-size: 0.8rem !important;
+            }
+            .container style*="grid-template-columns" {
+                grid-template-columns: 1fr !important;
+            }
+            #fp-nav {
+                right: 10px !important;
+            }
         }
     </style>
 </head>
@@ -590,7 +665,7 @@
                             <li>웹 접속 필요 시 별도 채널을 통해 프로젝트를 배포하여 인터넷으로 접속 가능하게 구현합니다.</li>
                         </ul>
                     </div>
-                    <div class="img-card animate-element delay-2">
+                    <div class="img-card animate-element delay-2" id="deploy-card">
                         <div class="magnifier-lens"></div>
                         <img src="pics/05.png" alt="Vercel/GitHub 레포지토리 배포 완료 대시보드">
                     </div>
@@ -699,7 +774,7 @@
         <div class="section chapter-divider">
             <div class="container" style="max-width: 850px; text-align: center;">
                 <span class="badge animate-element">Chapter 04</span>
-                <h1 class="chapter-title animate-element delay-1" style="margin-top: 1rem;">정리</h1>
+                <h1 class="chapter-title animate-element delay-1; margin-top: 1rem;">정리</h1>
                 <p class="animate-element delay-2" style="color: #94a3b8; font-size: 1.2rem; margin-top: 1rem;">장단점 정리</p>
             </div>
         </div>
@@ -736,7 +811,8 @@
                     <div class="plain-box animate-element delay-2">
                         <h3>인프라 범용성</h3>
                         <ul>
-                            <li>PC-모바일 간 높은 호환성 및 확장성</li>
+                            <li>파워포인트 필요 없이 웹 브라우저만으로도 액세스 가능</li>
+                            <li>PC, 모바일 등 어디서나 자유로운 접속 가능</li>
                         </ul>
                     </div>
                     <div class="plain-box animate-element delay-1">
@@ -826,6 +902,7 @@
             fitToSection: true,
             scrollBar: false, 
             css3: true,
+            scrollOverflow: false, 
             normalScrollElements: '.plain-box, .gray-box, .modal-content, .embed-iframe, .img-card',
             loopBottom: false,
             loopTop: false,
@@ -838,8 +915,9 @@
             }
         });
 
-        /* [혁신] 여백 오류 완벽 제어 및 통짜 카드 가상 레이어 확대 추적 렌더러 */
         document.querySelectorAll('.img-card').forEach(function(card) {
+            if (card.id === 'deploy-card') return;
+
             var img = card.querySelector('img');
             var lens = card.querySelector('.magnifier-lens');
             
@@ -852,19 +930,14 @@
             card.addEventListener('mousemove', function(e) {
                 var rect = card.getBoundingClientRect();
                 
-                // 카드 전체 박스 내부에서의 마우스 상대적 좌표
                 var mouseX = e.clientX - rect.left;
                 var mouseY = e.clientY - rect.top;
 
-                // 돋보기 렌즈 물리 위치 계산 및 배정 (마우스 중앙 정렬)
                 var lensX = mouseX - (lens.offsetWidth / 2);
                 var lensY = mouseY - (lens.offsetHeight / 2);
                 lens.style.left = lensX + 'px';
                 lens.style.top = lensY + 'px';
 
-                /* ------------------------------------------------------------
-                   이미지가 contain 배치되면서 생기는 내부의 실제 렌더링 영역 크기 역산
-                   ------------------------------------------------------------ */
                 var imgRatio = img.naturalWidth / img.naturalHeight;
                 var cardRatio = card.offsetWidth / card.offsetHeight;
                 
@@ -881,17 +954,13 @@
                     offsetX = (card.offsetWidth - realImgWidth) / 2;
                 }
 
-                // 2.2배 확대 배율 매칭 
                 var zoomFactor = 2.2;
                 
-                // 돋보기 내부 가상 이미지 크기 셋팅
                 lens.style.backgroundSize = (realImgWidth * zoomFactor) + "px " + (realImgHeight * zoomFactor) + "px";
 
-                // 여백을 포함하여 마우스 위치를 실제 이미지 영역에 맞춘 비율로 역산해 backgroundPosition으로 변환
                 var bgX = ((mouseX - offsetX) / realImgWidth) * 100;
                 var bgY = ((mouseY - offsetY) / realImgHeight) * 100;
 
-                // 여백 밖으로 나가더라도 부드럽게 배경이 이어지도록 스무스 포지셔닝 처리
                 lens.style.backgroundPosition = bgX + "% " + bgY + "%";
             });
         });
