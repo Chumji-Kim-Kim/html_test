@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주니어보드 7기 중부건설-대세충본부 6월 정기회의록</title>
+    
+    <!-- fullPage.css v4 및 폰트어썸/Pretendard 글꼴 로드 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f0fdfa;
+            color: #1e293b;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Fullpage 구조 스타일 */
+        .section {
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 장표 하단 공통 파스텔 민트색 물결 데코레이션 */
+        .section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(135deg, #a7f3d0 0%, #2dd4bf 100%);
+            clip-path: polygon(0 60%, 20% 40%, 40% 55%, 60% 35%, 80% 50%, 100% 30%, 100% 100%, 0% 100%);
+            z-index: 1;
+        }
+
+        /* 장표 상단 회의 소속 표기 스타일 */
+        .top-meeting-tag {
+            position: absolute;
+            top: 40px;
+            left: 60px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #475569;
+            z-index: 2;
+        }
+
+        .slide-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .center-box {
+            text-align: center;
+            width: 100%;
+        }
+
+        /* 블루 리본 스타일 타이틀 서브 바 */
+        .ribbon-tag {
+            display: inline-block;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 10px 45px;
+            position: relative;
+            margin-bottom: 35px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+        .ribbon-tag::before, .ribbon-tag::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        .ribbon-tag::before {
+            left: -15px;
+            border-width: 24px 15px 24px 0;
+            border-color: #2563eb #2563eb #2563eb transparent;
+        }
+        .ribbon-tag::after {
+            right: -15px;
+            border-width: 24px 0 24px 15px;
+            border-color: #2563eb transparent #2563eb #2563eb;
+        }
+
+        /* 메인 콘텐츠 헤더 */
+        .content-header {
+            font-size: 36px;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 35px;
+            letter-spacing: -1px;
+        }
+
+        /* 1페이지: 인트로 스타일 */
+        .intro-container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .intro-title-blue {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1d4ed8;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        .intro-title-black {
+            font-size: 60px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 60px;
+            letter-spacing: -2px;
+            line-height: 1.3;
+        }
+        .intro-date {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+        .intro-footer {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .ci-logo {
+            width: 28px; height: 28px;
+            background: #ea580c;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* 2페이지: 프로세스 노드 격자 구조 */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        .process-node {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 22px 15px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.01);
+        }
+        .node-tag {
+            display: inline-block;
+            background: #e63946;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .node-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+        .node-text {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        /* 좌우 분할 그리드 */
+        .sub-split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+            text-align: left;
+        }
+        .rounded-bar-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .rounded-bar {
+            background: #f1f5f9;
+            border-radius: 50px;
+            padding: 16px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+        }
+        .rounded-bar span {
+            color: #2563eb;
+            font-weight: 800;
+        }
+        
+        .nested-paper-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px 25px;
+            border-left: 5px solid #a8dadc;
+        }
+        .nested-card-item {
+            font-size: 16px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        /* 3페이지: 테이블 디자인 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        th, td {
+            padding: 16px 24px;
+        }
+        th {
+            background-color: #f1faee;
+            color: #1d3557;
+            font-weight: 700;
+            border-bottom: 2px solid #a8dadc;
+            font-size: 18px;
+        }
+        td {
+            border-bottom: 1px solid #edf2f7;
+            font-size: 16px;
+            font-weight: 600;
+            color: #334155;
+        }
+        tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+
+        /* 4페이지: 향후 계획 3분할 캘린더 구조 */
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            text-align: left;
+        }
+        .plan-column {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 30px 24px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+        }
+        .plan-column .icon-circle {
+            width: 54px; height: 54px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .plan-column .icon-circle i {
+            font-size: 22px;
+        }
+        .bullet-desc-item {
+            font-size: 16px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 10px;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .bullet-desc-item::before {
+            content: "•";
+            color: #2563eb;
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+            top: -3px;
+        }
+        .sub-bullet-text {
+            padding-left: 18px;
+            font-weight: 600;
+            color: #64748b;
+            font-size: 14px;
+            margin-top: -6px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        /* 5페이지: 아웃트로 대화면 스타일 */
+        .outro-container {
+            background: linear-gradient(135deg, #1d3557 0%, #457b9d 100%);
+            color: white;
+            text-align: center;
+        }
+        .outro-container h2 {
+            border-left: none;
+            padding-left: 0;
+            color: white;
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+        .outro-container p {
+            color: #f1faee;
+            font-size: 26px;
+            font-weight: 600;
+        }
+        .outro-icon-box {
+            width: 90px; height: 90px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px auto;
+        }
+        .outro-icon-box i {
+            font-size: 40px;
+            color: #ffffff;
+        }
+
+        /* ===================================================
+           시간차 애니메이션 정의 (CSS)
+        =================================================== */
+        .animate-up { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        .active-animation .animate-up { opacity: 1; transform: translateY(0); }
+        
+        .delay-1 { transition-delay: 0.15s; }
+        .delay-2 { transition-delay: 0.3s; }
+        .delay-3 { transition-delay: 0.45s; }
+        .delay-4 { transition-delay: 0.6s; }
+
+        /* 반응형 미디어 쿼리 */
+        @media (max-width: 992px) {
+            .plan-grid { grid-template-columns: 1fr; }
+            .slide-inner { height: auto; padding: 100px 20px 80px 20px; }
+            .section { height: auto !important; }
+            .process-grid { grid-template-columns: 1fr; gap: 12px; }
+            .sub-split-layout { grid-template-columns: 1fr; gap: 15px; }
+        }
+        @media (max-width: 768px) {
+            .top-meeting-tag { top: 20px; left: 20px; font-size: 14px; }
+            .intro-title-blue { font-size: 28px; }
+            .intro-title-black { font-size: 34px; margin-bottom: 30px; }
+            .content-header { font-size: 22px; margin-bottom: 20px; }
+            .ribbon-tag { font-size: 18px; padding: 6px 25px; margin-bottom: 20px; }
+            .rounded-bar { padding: 12px 20px; font-size: 15px; }
+            table th, table td { padding: 10px; font-size: 14px; }
+            .plan-column { padding: 20px; }
+            .bullet-desc-item { font-size: 15px; }
+            .outro-container h2 { font-size: 40px; }
+            .outro-container p { font-size: 18px; }
+            .section::after { height: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fullpage">
+        
+        <!-- 1장: INTRO -->
+        <div class="section">
+            <div class="slide-inner intro-container">
+                <h2 class="intro-title-blue animate-up">주니어보드 7기</h2>
+                <h1 class="intro-title-black animate-up delay-1">중부건설-대세충본부<br>6월 정기회의록</h1>
+                <div class="intro-date animate-up delay-2">'26. 6. 23.(화) 14:00~</div>
+                <div class="intro-footer animate-up delay-3">
+                    <span class="ci-logo"></span> 화상회의 (Web-Ex 활용)
+                </div>
+            </div>
+        </div>
+
+        <!-- 2장: 6월 활동내역 - 건설사업소 실태조사 -->
+        <div class="section">
+            <span class="top-meeting-tag">주니어보드 7기 정기회의</span>
+            <div class="slide-inner">
+                <div class="center-box">
+                    <div class="ribbon-tag animate-up">6월 활동내역 (1)</div>
+                    <h2 class="content-header animate-up delay-1">건설사업소 실태조사 활동계획 구체화</h2>
+                    
+                    <div class="process-grid animate-up delay-2">
+                        <div class="process-node">
+                            <span class="node-tag">인식 조사(6~7월)</span>
+                            <div class="node-title">데이터화</div>
+                            <div class="node-text">- 설문 및 심층 인터뷰<br>- 연차별, 직군별 인식 데이터화</div>
+                        </div>
+                        <div class="process-node">
+                            <span class="node-tag">결과 정리(7~8월)</span>
+                            <div class="node-title">괴리 분석</div>
+                            <div class="node-text">- 막연한 오해와 실제 사업소간 괴리 분석<br>- 핵심 고충사항 도출</div>
+                        </div>
+                        <div class="process-node">
+                            <span class="node-tag">가치 재발견(8~9월)</span>
+                            <div class="node-title">메리트 발굴</div>
+                            <div class="node-text">- 건설사업소만의 메리트(유연근무, 분위기 등) 발굴</div>
+                        </div>
+                        <div class="process-node">
+                            <span class="node-tag">결과 보고(10월)</span>
+                            <div class="node-title">전사 공유</div>
+                            <div class="node-text">- 실태조사 결과 보고<br>- 제도적 개선방안 및 긍정 이미지 전사 공유</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-split-layout animate-up delay-3">
+                        <div class="rounded-bar-list">
+                            <div class="rounded-bar"><span>1.</span> 조사대상: 연차별, 직군별 설문조사</div>
+                            <div class="rounded-bar"><span>2.</span> 조사방식: 구글폼 설문조사(안)</div>
+                            <div class="rounded-bar"><span>4.</span> 취합 및 분류</div>
+                        </div>
+                        <div class="nested-paper-card">
+                            <h3 style="text-align: left; color:#1e3a8a;"><i class="fa-solid fa-gears"></i> 3. 설문항목 설계</h3>
+                            <div class="nested-card-item">— 3.1 분류(연차, 직군 등 피설문자 구분용)</div>
+                            <div class="nested-card-item">— 3.2 인식-건설외 직군</div>
+                            <div class="nested-card-item">— 3.3 인식-건설</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3장: 청렴의식 제고 홍보물 제작 -->
+        <div class="section">
+            <span class="top-meeting-tag">주니어보드 7기 정기회의</span>
+            <div class="slide-inner">
+                <div class="center-box">
+                    <div class="ribbon-tag animate-up">6월 활동내역 (2)</div>
+                    <h2 class="content-header animate-up delay-1">청렴의식 제고를 위한 홍보물 제작 활동 정리</h2>
+                    
+                    <div class="bullet-desc-item animate-up delay-2" style="text-align: left; margin-bottom: 15px; font-size:18px;">
+                        <strong>활동방향 :</strong> AI를 활용하여 매월 사례 위주의 홍보물(카드뉴스 등) 발행
+                    </div>
+
+                    <table class="animate-up delay-3">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">월별 시행 주제</th>
+                                <th style="width: 70%;">청렴 테마</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>6월</td>
+                                <td>청렴의 중요성과 반부패 3법이란?</td>
+                            </tr>
+                            <tr>
+                                <td>7~8월</td>
+                                <td>반부패 3법 중 '청탁금지법'</td>
+                            </tr>
+                            <tr>
+                                <td>9~10월</td>
+                                <td>반부패 3법 중 '이해충돌방지법'</td>
+                            </tr>
+                            <tr>
+                                <td>11~12월</td>
+                                <td>반부패 3법 중 '공공재정환수법'</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4장: 7월 활동계획 및 향후 일정 (토론회 독립 분리 구성) -->
+        <div class="section">
+            <span class="top-meeting-tag">주니어보드 7기 정기회의</span>
+            <div class="slide-inner">
+                <div class="center-box">
+                    <div class="ribbon-tag animate-up">향후 계획</div>
+                    <h2 class="content-header animate-up delay-1">7월 활동계획 · 릴레이 토론회 및 협업 일정</h2>
+                    
+                    <div class="plan-grid">
+                        <!-- 1개별 열: 7월 활동계획 -->
+                        <div class="plan-column animate-up delay-2">
+                            <div class="icon-circle" style="background:#fef2f2;"><i class="fa-solid fa-calendar-check" style="color:#ef4444;"></i></div>
+                            <h3 style="color:#ef4444; margin-bottom: 15px;">3. 7월 활동계획</h3>
+                            <div class="bullet-desc-item">건설사업소 실태조사 활동 구체화</div>
+                            <div class="bullet-desc-item">청렴 카드뉴스 제작 활동 진행</div>
+                        </div>
+                        
+                        <!-- 2개별 열: 요구사항 반영한 토론회 별도 카드 구성 -->
+                        <div class="plan-column animate-up delay-3">
+                            <div class="icon-circle" style="background:#f0fdf4;"><i class="fa-solid fa-comments" style="color:#16a34a;"></i></div>
+                            <h3 style="color:#16a34a; margin-bottom: 15px;">청렴 릴레이 토론회</h3>
+                            <div class="bullet-desc-item">시행 일정</div>
+                            <div class="sub-bullet-text">6.29 ~ 7.3 기간 내 시행</div>
+                            <div class="bullet-desc-item">주요 준비 내역</div>
+                            <div class="sub-bullet-text">청렴 질문 도출 및 이전 시행 내역 정리</div>
+                        </div>
+
+                        <!-- 3개별 열: 향후 일정 및 협업 조사 -->
+                        <div class="plan-column animate-up delay-4">
+                            <div class="icon-circle" style="background:#f0f9ff;"><i class="fa-solid fa-network-wired" style="color:#0284c7;"></i></div>
+                            <h3 style="color:#0284c7; margin-bottom: 15px;">4. 일정 및 협업 조사</h3>
+                            <div class="bullet-desc-item">비전업 세미나 일정</div>
+                            <div class="sub-bullet-text">6.29 ~ 6.30 시행</div>
+                            <div class="bullet-desc-item">정보보안처 협업</div>
+                            <div class="sub-bullet-text">~6.19 개별 협업 완료</div>
+                            <div class="bullet-desc-item">홍보처-영상기획 협업</div>
+                            <div class="sub-bullet-text">~6.19 본부 협업 완료</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: right; margin-top:25px; font-size:14px; color:#94a3b8; font-weight:600;" class="animate-up delay-4">
+                        중부건설본부 서남해변환부 장예일 (☎0451-627)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5장: OUTRO -->
+        <div class="section outro-container">
+            <div class="slide-inner">
+                <div class="outro-icon-box animate-up">
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+                <h2 class="animate-up delay-1">감사합니다</h2>
+                <p class="animate-up delay-2">주니어보드 7기 중부건설-대세충본부</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- fullPage.js v4 스크립트 라이브러리 연동 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+    <script>
+        new fullpage('#fullpage', {
+            autoScrolling: true,
+            navigation: true,
+            navigationPosition: 'right',
+            keyboardScrolling: true,
+            
+            // 고급 프레젠테이션 최적화 스크롤 속도 제어
+            scrollingSpeed: 1000, 
+            
+            normalScrollElements: '.process-grid, table',
+            afterLoad: function(origin, destination, direction, trigger){
+                document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-animation'));
+                destination.item.classList.add('active-animation');
+            }
+        });
+    </script>
+</body>
+</html>
