@@ -578,119 +578,73 @@
            7. [완전 보정] 모바일 화면 전체 통합 스케일 다운 압축 반응형 CSS (0.82배 뷰포트 배정)
            ========================================================================== */
         @media (max-width: 768px) {
-            .section {
-                padding: 12px 10px !important; /* 내부 여백 극소화 */
-                height: 100vh !important; 
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-            }
-            
-            /* [핵심] 콘텐츠 분량이 많아 생기는 모바일 겹침 현상을 스케일 압축 공식으로 원천 봉쇄 */
-            .container {
-                gap: 0.3rem !important;
-                max-width: 100% !important;
-                width: 100% !important;
-                transform: scale(0.82) !important; /* 전체 요소를 강제로 컴팩트 모드로 압축 출력 */
-            }
-            
-            h1 {
-                font-size: 1.5rem !important; 
-            }
-            h2 {
-                font-size: 1.25rem !important;
-                margin-bottom: 0.1rem !important;
-            }
-            h3 {
-                font-size: 0.85rem !important;
-                margin-bottom: 0.1rem !important;
-            }
-            .chapter-title {
-                font-size: 1.9rem !important;
-            }
-            
-            /* 그리드 다단 레이아웃을 모바일 전용 1열 종대 스택으로 원천 고정 */
-            .plain-box, .gray-box, .clickable-box, .gemini-container-shell {
-                padding: 0.6rem 0.8rem !important;
-                border-radius: 12px !important;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-            
-            /* Gemini 인터페이스 모바일 최적화 밀착 코딩 */
-            .gemini-container-shell {
-                padding: 0.8rem !important;
-                min-height: auto !important;
-                gap: 0.5rem !important;
-            }
-            .gemini-chat-bubble-user {
-                padding: 0.6rem 0.8rem !important;
-                max-width: 100% !important;
-                font-size: 0.75rem !important;
-                border-radius: 14px !important;
-                line-height: 1.3 !important;
-            }
-            .gemini-chat-bubble-user p {
-                margin-bottom: 0.4rem !important;
-            }
-            .gemini-chat-bubble-user div {
-                font-size: 0.7rem !important;
-                margin-bottom: 0.05rem !important;
-            }
-            .gemini-input-capsule-bar {
-                width: 100% !important;
-                padding: 0.4rem 1rem !important;
-                margin-top: 0.4rem !important;
-            }
-            .gemini-input-left { font-size: 0.8rem !important; }
-            .gemini-input-capsule-bar-right { display: none !important; }
-            .gemini-disclaimer-text { font-size: 0.65rem !important; }
 
-            /* 텍스트 요소 글자 간격 세부 다이어트 */
-            li {
-                font-size: 0.75rem !important; 
-                margin-bottom: 0.15rem !important;
-                line-height: 1.3 !important;
-                padding-left: 0.8rem !important;
-            }
-            li::before {
-                top: 0.45rem !important;
-                width: 3px !important;
-                height: 3px !important;
-            }
-            
-            .img-card {
-                height: 140px !important; /* 이미지 카드를 컴팩트하게 맞춰 텍스트 공간 완전 사수 */
-                border-radius: 12px !important;
-            }
-            
-            .grid-2, .grid-3 {
-                grid-template-columns: 1fr !important;
-                gap: 0.3rem !important;
-                width: 100% !important;
-            }
-            
-            .example-text {
-                margin-top: 0.2rem !important;
-                padding: 0.3rem 0.5rem !important;
-                font-size: 0.7rem !important;
-            }
-            
-            #deploy-modal .grid-2 {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 0.5rem !important;
-            }
-            .modal-qr-frame-box {
-                width: 120px !important;
-                height: 120px !important;
-                padding: 0.4rem !important;
-            }
+    html, body {
+        overflow: auto !important;
+        height: auto !important;
+    }
 
-            #fp-nav {
-                right: 5px !important;
-            }
-        }
+    .section {
+        min-height: 100vh !important;
+        height: auto !important;
+        padding: 24px 16px 48px !important;
+        align-items: flex-start !important;
+    }
+
+    .container {
+        transform: none !important;   /* ← 핵심 */
+        max-width: 100% !important;
+        width: 100% !important;
+        gap: 1rem !important;
+    }
+
+    h1 { font-size: 2rem !important; }
+    h2 { font-size: 1.6rem !important; }
+
+    h3 {
+        font-size: 1.05rem !important;
+        white-space: normal !important; /* ← 핵심 */
+    }
+
+    .chapter-title {
+        font-size: 2.5rem !important;
+    }
+
+    .plain-box,
+    .gray-box,
+    .clickable-box,
+    .gemini-container-shell {
+        padding: 1rem !important;
+    }
+
+    .grid-2,
+    .grid-3,
+    .modal-img-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    li,
+    p {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+    }
+
+    .img-card {
+        height: auto !important;
+        min-height: 220px !important;
+    }
+
+    .img-card img {
+        max-width: 100% !important;
+        max-height: none !important;
+    }
+
+    .magnifier-lens,
+    #fp-nav {
+        display: none !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -1155,11 +1109,11 @@
             navigation: true,
             navigationPosition: 'right',
             scrollingSpeed: 650, 
-            autoScrolling: true,
-            fitToSection: true,
+            autoScrolling: window.innerWidth > 768,
+fitToSection: window.innerWidth > 768,
             scrollBar: false, 
             css3: true,
-            scrollOverflow: false, 
+            scrollOverflow: window.innerWidth <= 768, 
             normalScrollElements: '.plain-box, .gray-box, .modal-content, .embed-iframe, .img-card, .gemini-container-shell',
             loopBottom: false,
             loopTop: false,
