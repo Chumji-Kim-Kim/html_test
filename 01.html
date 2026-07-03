@@ -3,293 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>청렴 릴레이 토론회 결과</title>
+    <title>청렴 릴레이 토론회 결과 보고</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&family=Cabinet+Grotesk:wght@800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0f172a;
-            --accent-blue: #1d4ed8;
-            --accent-amber: #b45309;
-            --bg-color: #ffffff;
-            --text-color: #334155;
-            --muted-text: #64748b;
-            --border-color: #e2e8f0;
-            --slide-width: 297mm;
-            --slide-height: 210mm;
+            --bg-main: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --brand-blue: #2563eb;
+            --brand-blue-light: #eff6ff;
+            --brand-indigo: #4f46e5;
+            --brand-amber: #d97706;
+            --brand-amber-light: #fef3c7;
+            --border-subtle: #f1f5f9;
+            --slide-w: 297mm;
+            --slide-h: 210mm;
         }
 
-        * { box-sizing: border-box; }
-        body { 
-            margin: 0; 
-            padding: 40px 0; 
-            background-color: #f8fafc; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            font-family: 'Noto Sans KR', sans-serif; 
-            color: var(--text-color);
-        }
-
-        /* Print Button */
-        .print-btn-container { 
-            width: var(--slide-width); 
-            display: flex; 
-            justify-content: flex-end; 
-            margin-bottom: 20px; 
-        }
-        .print-btn { 
-            background-color: var(--accent-blue); 
-            color: white; 
-            border: none; 
-            padding: 12px 24px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-family: inherit; 
-            font-size: 15px; 
-            font-weight: 500; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        }
-        .print-btn:hover { background-color: #1e40af; }
-
-        /* Slide Style */
-        .slide {
-            width: var(--slide-width);
-            height: var(--slide-height);
-            background-color: var(--bg-color);
-            margin-bottom: 50px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.04);
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #f8fafc;
+            font-family: 'Pretendard', sans-serif;
+            color: var(--text-primary);
             display: flex;
             flex-direction: column;
-            padding: 30mm 25mm 25mm 25mm;
+            align-items: center;
+            padding: 40px 0;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* SVG Decorative Background */
-        .bg-pattern {
+        /* 컨트롤 프레임 */
+        .toolbar {
+            width: var(--slide-w);
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .btn-pdf {
+            background-color: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+        .btn-pdf:hover {
+            background-color: var(--brand-blue);
+            transform: translateY(-1px);
+        }
+
+        /* 슬라이드 베이스 */
+        .slide-container {
+            width: var(--slide-w);
+            height: var(--slide-h);
+            background-color: var(--bg-main);
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            padding: 32mm 24mm 24mm 24mm;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 고해상도 인라인 SVG 배경 그래픽 */
+        .decor-bg {
             position: absolute;
             top: 0;
             right: 0;
-            width: 45%;
+            width: 100%;
             height: 100%;
             z-index: 1;
             pointer-events: none;
         }
 
-        .slide-content {
+        .slide-inner {
             position: relative;
             z-index: 2;
-            height: 100%;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
-        /* Title Slide */
-        .slide.title-slide {
+        /* 타이틀 슬라이드 커스텀 */
+        .slide-container.cover-slide {
             padding: 0;
-            background: #ffffff;
             justify-content: center;
         }
-        .title-container {
-            padding-left: 25mm;
-            width: 60%;
+        .cover-content {
+            padding-left: 24mm;
+            width: 70%;
         }
-        .title-slide h1 { 
-            font-size: 54pt; 
-            color: var(--primary-color); 
-            margin: 0 0 20px 0; 
+        .cover-tag {
+            display: inline-block;
+            background-color: var(--brand-blue-light);
+            color: var(--brand-blue);
+            padding: 6px 14px;
             font-weight: 700;
-            line-height: 1.25;
-            letter-spacing: -2px;
+            font-size: 13px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
         }
-        .title-slide .subtitle { 
-            font-size: 20pt; 
-            color: var(--accent-blue); 
-            margin: 0 0 60px 0; 
+        .cover-slide h1 {
+            font-size: 48pt;
+            font-weight: 800;
+            line-height: 1.25;
+            letter-spacing: -2.5px;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        .cover-slide h1 span {
+            color: var(--brand-blue);
+        }
+        .cover-desc {
+            font-size: 18pt;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
             font-weight: 400;
         }
-        .title-slide .meta-info {
+        .cover-meta {
+            display: flex;
+            gap: 40px;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 24px;
+        }
+        .meta-item {
+            font-size: 12pt;
+            color: var(--text-secondary);
+        }
+        .meta-item strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 4px;
             font-size: 13pt;
-            color: var(--muted-text);
-            line-height: 2;
-        }
-        .title-slide .meta-info strong {
-            color: var(--primary-color);
         }
 
-        /* Header */
-        .slide-header {
-            margin-bottom: 15mm;
+        /* 일반 헤더 규칙 */
+        .header-block {
+            margin-bottom: 40px;
         }
-        .slide-header h2 {
-            font-size: 32pt;
-            color: var(--primary-color);
-            margin: 0;
+        .header-block h2 {
+            font-size: 30pt;
             font-weight: 700;
-            letter-spacing: -1px;
-            display: inline-block;
-            position: relative;
+            letter-spacing: -1.5px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        .slide-header h2::after {
+        .header-block h2::before {
             content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background-color: var(--accent-blue);
+            display: inline-block;
+            width: 8px;
+            height: 32px;
+            background: linear-gradient(to bottom, var(--brand-blue), var(--brand-indigo));
+            border-radius: 4px;
         }
 
-        /* Content Elements */
-        .grid-2 {
-            display: table;
-            width: 100%;
-            table-layout: fixed;
+        /* 테이블 고도화 */
+        .table-wrapper {
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
-        .col {
-            display: table-cell;
-            vertical-align: top;
-            width: 50%;
-        }
-        .col:first-child {
-            padding-right: 20px;
-        }
-        .col:last-child {
-            padding-left: 20px;
-        }
-
-        /* Table Style */
-        table {
+        .modern-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
         }
-        th {
+        .modern-table th {
             background-color: #f8fafc;
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 14pt;
-            padding: 18px 12px;
-            border-top: 2px solid var(--primary-color);
-            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 13pt;
+            padding: 22px 16px;
             text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
         }
-        td {
-            padding: 18px 12px;
-            border-bottom: 1px solid var(--border-color);
+        .modern-table td {
+            padding: 22px 16px;
             font-size: 14pt;
-            color: var(--text-color);
+            color: var(--text-primary);
             text-align: center;
-        }
-
-        /* Lists */
-        ul.bullet-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        ul.bullet-list > li {
-            position: relative;
-            padding-left: 30px;
-            margin-bottom: 35px;
-            font-size: 18pt;
-            line-height: 1.6;
-            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-subtle);
             font-weight: 500;
         }
-        ul.bullet-list > li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--accent-blue);
-            font-size: 24pt;
-            top: -4px;
+        .modern-table tr:last-child td {
+            border-bottom: none;
         }
-        ul.bullet-list .desc {
-            display: block;
-            font-size: 14pt;
-            color: var(--muted-text);
-            margin-top: 8px;
-            font-weight: 400;
+
+        /* 질의응답 유닛 (Q-Box 개조형) */
+        .question-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 28px 36px;
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+        }
+        .question-card .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            font-size: 11pt;
+            font-weight: 700;
+            color: #93c5fd;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .question-card.variant-amber .badge {
+            color: #fcd34d;
+        }
+        .question-card h3 {
+            font-size: 17pt;
+            font-weight: 600;
+            line-height: 1.4;
+            letter-spacing: -0.5px;
+        }
+
+        /* 정돈된 인포 리스트 */
+        .info-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px 24px;
+            border-radius: 12px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-subtle);
+        }
+        .info-row .num-indicator {
+            background-color: var(--brand-blue-light);
+            color: var(--brand-blue);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13pt;
+            flex-shrink: 0;
+        }
+        .info-row.variant-amber .num-indicator {
+            background-color: var(--brand-amber-light);
+            color: var(--brand-amber);
+        }
+        .info-body {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .info-title {
+            font-size: 16pt;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+        .info-desc {
+            font-size: 13pt;
+            color: var(--text-secondary);
             line-height: 1.5;
         }
 
-        /* Boxes */
-        .q-box {
-            background-color: #f8fafc;
-            border-left: 5px solid var(--accent-blue);
-            padding: 22px 30px;
-            font-size: 17pt;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 40px;
-            border-radius: 0 8px 8px 0;
-            line-height: 1.4;
+        /* 2열 스플릿 레이아웃 */
+        .flex-grid-2 {
+            display: flex;
+            gap: 24px;
+            height: 100%;
         }
-        .q-box.amber {
-            border-left-color: var(--accent-amber);
+        .flex-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .card-grid {
-            display: table;
-            width: 100%;
-            table-layout: fixed;
-            border-collapse: separate;
-            border-spacing: 20px 0;
-            margin-left: -20px;
-            width: calc(100% + 40px);
-        }
-        .card {
-            display: table-cell;
+        /* 현대적인 카드 그리드 컴포넌트 */
+        .dashboard-card {
             background-color: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 30px;
-            vertical-align: top;
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 0.2s;
         }
-        .card h3 {
-            margin: 0 0 15px 0;
+        .dashboard-card h4 {
             font-size: 16pt;
-            color: var(--accent-blue);
+            color: var(--brand-indigo);
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .card h3.amber {
-            color: var(--accent-amber);
-        }
-        .card p {
-            margin: 0;
-            font-size: 13pt;
+        .dashboard-card h4.amber { color: var(--brand-amber); }
+        .dashboard-card p {
+            font-size: 13.5pt;
             line-height: 1.6;
-            color: var(--text-color);
+            color: var(--text-secondary);
         }
 
-        /* Footer / Page Number */
-        .slide-footer {
+        /* 하단 정보창 규칙 */
+        .slide-footer-bar {
             position: absolute;
-            bottom: 15mm;
-            left: 25mm;
-            right: 25mm;
+            bottom: 12mm;
+            left: 24mm;
+            right: 24mm;
             display: flex;
             justify-content: space-between;
-            font-size: 11pt;
-            color: var(--muted-text);
-            border-top: 1px solid #f1f5f9;
-            padding-top: 15px;
-            z-index: 10;
+            align-items: center;
+            font-size: 10.5pt;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 16px;
+            font-weight: 500;
         }
 
-        /* Print Optimization */
+        /* 프린트 세팅 */
         @media print {
-            body { padding: 0; background-color: #ffffff; }
-            .print-btn-container { display: none; }
-            .slide { 
-                margin: 0; 
-                box-shadow: none; 
-                page-break-after: always; 
-                width: var(--slide-width);
-                height: var(--slide-height);
+            body { padding: 0; background-color: white; }
+            .toolbar { display: none; }
+            .slide-container {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                width: var(--slide-w);
+                height: var(--slide-h);
             }
             @page {
                 size: A4 landscape;
@@ -300,42 +355,47 @@
 </head>
 <body>
 
-    <div class="print-btn-container">
-        <button class="print-btn" onclick="window.print()">A4 가로 PDF 출력 / 인쇄</button>
+    <div class="toolbar">
+        <button class="btn-pdf" onclick="window.print()">A4 가로형 PDF 인쇄 / 저장</button>
     </div>
 
-    <div class="slide title-slide">
-        <div class="bg-pattern">
-            <svg width="100%" height="100%" viewBox="0 0 500 700" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M150 0H500V700H350C250 500 300 300 150 0Z" fill="#f8fafc"/>
-                <path d="M250 0H500V700H420C350 500 380 250 250 0Z" fill="#eff6ff"/>
-                <path d="M400 0H500V700H480C450 550 460 200 400 0Z" fill="#dbeafe"/>
+    <!-- Slide 1: 표지 -->
+    <div class="slide-container cover-slide">
+        <div class="decor-bg">
+            <svg width="100%" height="100%" viewBox="0 0 1122 794" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="950" cy="150" r="350" fill="#f1f5f9" opacity="0.6"/>
+                <circle cx="1000" cy="100" r="200" fill="#eff6ff" opacity="0.8"/>
+                <path d="M600 -100 C750 200, 650 500, 1200 600 L1200 -100 Z" fill="#f8fafc"/>
+                <path d="M750 -100 C850 150, 800 400, 1200 450 L1200 -100 Z" fill="#eff6ff" opacity="0.5"/>
             </svg>
         </div>
-        <div class="title-container slide-content">
-            <h1>청렴 릴레이 토론회<br>결과 보고</h1>
-            <div class="subtitle">디지털 업무 전환과 조직 문화 혁신을 위한 제언</div>
-            <div class="meta-info">
-                <strong>일시 :</strong> 2026. 7. 3(금) 10:00 ~ 11:00<br>
-                <strong>장소 :</strong> 중부건설본부<br>
-                <strong>참석 :</strong> 중부건설본부, 대전세종충남본부 (총 4명)
+        <div class="cover-content slide-inner">
+            <div><span class="cover-tag">청렴구축 프로젝트</span></div>
+            <h1>청렴 릴레이 토론회<br><span>결과 양식 보고</span></h1>
+            <p class="cover-desc">디지털 업무 혁신과 조직 전반의 청렴 문화 내재화 방안</p>
+            
+            <div class="cover-meta">
+                <div class="meta-item"><strong>일시</strong>2026. 7. 3(금) 10:00 ~ 11:00</div>
+                <div class="meta-item"><strong>장소</strong>중부건설본부</div>
+                <div class="meta-item"><strong>참석 대상</strong>중부건설본부, 대전세종충남본부 (4명)</div>
             </div>
         </div>
     </div>
 
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>참석자 현황</h2>
+    <!-- Slide 2: 참석자 명단 -->
+    <div class="slide-container">
+        <div class="slide-inner">
+            <div class="header-block">
+                <h2>참석자 명단</h2>
             </div>
-            <div style="margin-top: 20px;">
-                <table>
+            <div class="table-wrapper">
+                <table class="modern-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">소 속</th>
-                            <th style="width: 25%;">직 군</th>
-                            <th style="width: 25%;">성 명</th>
-                            <th style="width: 20%;">비 고</th>
+                            <th>소 속</th>
+                            <th>직 군</th>
+                            <th>성 명</th>
+                            <th>서 명</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -343,216 +403,229 @@
                             <td>중부건설본부</td>
                             <td>송변전</td>
                             <td>장예일</td>
-                            <td>-</td>
+                            <td>(서명생략)</td>
                         </tr>
                         <tr>
                             <td>중부건설본부</td>
                             <td>송변전</td>
                             <td>윤해빈</td>
-                            <td>-</td>
+                            <td>(서명생략)</td>
                         </tr>
                         <tr>
                             <td>대전세종충남본부</td>
                             <td>사무</td>
                             <td>정우석</td>
-                            <td>-</td>
+                            <td>(서명생략)</td>
                         </tr>
                         <tr>
                             <td>대전세종충남본부</td>
                             <td>사무</td>
                             <td>송상언</td>
-                            <td>-</td>
+                            <td>(서명생략)</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="slide-footer">
-            <span>청렴 릴레이 토론회</span>
-            <span>2</span>
-        </div>
+        <div class="slide-footer-bar"><span>청렴 릴레이 토론회 결과</span><span>02</span></div>
     </div>
 
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>이전 본부 주요 논의 사항 (1)</h2>
+    <!-- Slide 3: 이전본부 내용 요약 (1) -->
+    <div class="slide-container">
+        <div class="slide-inner">
+            <div class="header-block">
+                <h2>이전본부 내용 요약 (1)</h2>
             </div>
-            <div style="margin-top: 10px;">
-                <ul class="bullet-list">
-                    <li>
-                        생성형 AI 등 디지털 툴 활용 시 책임감 강화 방안
-                        <span class="desc">비공개 데이터 유출 방지를 위한 개인 보안 수칙 실천 및 조직 차원의 보안 체계 마련</span>
-                    </li>
-                    <li>
-                        상급자의 관행적 지시 대처 및 완곡한 소통법
-                        <span class="desc">우회적 소통 방식 정립 및 조직 내 청렴 소통 문화 내재화</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="slide-footer">
-            <span>청렴 릴레이 토론회</span>
-            <span>3</span>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>이전 본부 주요 논의 사항 (2)</h2>
-            </div>
-            <div class="card-grid" style="margin-top: 20px;">
-                <div class="card">
-                    <h3>3. 실효성 있는 청렴 방식</h3>
-                    <p>형식적인 자가 진단을 넘어, 투명성 확보를 위해 <strong>분기별 무기명 상호평가</strong> 실시 및 외부 기관 청렴 모니터링 평가를 업체 선정·계약에 반영하는 제도 마련</p>
+            <div class="info-stack">
+                <div class="info-row">
+                    <div class="num-indicator">1</div>
+                    <div class="info-body">
+                        <div class="info-title">생성형AI 등 디지털 툴 활용시 가이드라인 필요성</div>
+                        <div class="info-desc">비공개 데이터 유출을 방지하고 시스템 결과에 대한 담당자의 책임감을 강화할 실질적인 가이드라인은 무엇인가?<br><strong>→ 유출 방지를 위한 개인의 보안 수칙 실천 및 조직 차원의 보안 체계 마련</strong></div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>4. 포용적 청렴 인프라</h3>
-                    <p>급변하는 디지털 업무 전환 과정에서의 격차 해소를 위해 <strong>데이터 공유 플랫폼</strong> 기반 투명성 제고 및 소외계층을 고려한 교육 인프라 구축</p>
+                <div class="info-row">
+                    <div class="num-indicator">2</div>
+                    <div class="info-body">
+                        <div class="info-title">상급자의 관행적인 지시나 부당함 직면 시 대응</div>
+                        <div class="info-desc">세대 간 갈등을 최소화하고 서로 납득할 수 있는 정중한 '완곡한 소통법(Yes대화법)'의 현장 적용 방안은?<br><strong>→ 우회적 소통 방식 정립 및 조직 내 청렴소통 문화 내재화</strong></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="slide-footer">
-            <span>청렴 릴레이 토론회</span>
-            <span>4</span>
-        </div>
+        <div class="slide-footer-bar"><span>청렴 릴레이 토론회 결과</span><span>03</span></div>
     </div>
 
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>토론 내용 : 디지털 청렴 & 보안</h2>
-            </div>
-            <div class="q-box">
-                Q. 생성형 AI 활용 시 구성원 스스로 윤리적 판단으로 내재화하도록 만드는 가장 효과적인 방법은?
-            </div>
-            <div>
-                <ul class="bullet-list">
-                    <li>사례 중심 훈련 시행 및 담당자 윤리적 책임성 강화</li>
-                    <li>실제 업무 중 발생 가능한 보안 위반 시나리오 기반 워크숍 시행</li>
-                    <li>생성형 AI의 올바른 활용법과 디지털 윤리 교육 결합으로 자연스러운 스며듦 유도</li>
-                </ul>
-            </div>
-        </div>
-        <div class="slide-footer">
-            <span>청렴 릴레이 토론회</span>
-            <span>5</span>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>토론 내용 : 소통 & 조직문화</h2>
-            </div>
-            <div class="q-box amber">
-                Q. 관행과 원칙 충돌 시 청렴한 원칙을 관철하기 위해 필요한 제도적 조건은?
-            </div>
-            <div>
-                <ul class="bullet-list">
-                    <li>
-                        익명 공론화 채널 개설
-                        <span class="desc">개인의 거부 화법에만 의존하지 않고 관행적 오류를 심리적 부담 없이 제보 가능</span>
-                    </li>
-                    <li>
-                        철저한 실무자 보호 프로세스
-                        <span class="desc">원칙 처리를 요구한 직원이 부당한 인사 조치나 불이익을 받지 않도록 장치 마련</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="slide-footer">
-            <span>청렴 릴레이 토론회</span>
-            <span>6</span>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>토론 내용 : 청렴평가체계</h2>
-            </div>
-            <div class="q-box">
-                Q. 청렴 평가가 실질적인 조직 문화 변화로 이어지게 하려면?
-            </div>
-            <div class="grid-2" style="margin-top: 10px;">
-                <div class="col">
-                    <ul class="bullet-list">
-                        <li>상호 청렴 평가 시행 및 결과를 업무 기준과 연계</li>
-                        <li>'무기명 상호평가' 및 '청렴 셀프 체크리스트' 도입</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="bullet-list">
-                        <li>계약, 입찰 등 업무처리 기준에 결과를 반영하여 제도적 변화 유도</li>
-                        <li>사후 처벌보다 시스템 개선으로 연계</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="slide-footer">
-            <span>청렴 릴레이 토론회</span>
-            <span>7</span>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>토론 내용 : 디지털 포용성</h2>
-            </div>
-            <div class="q-box">
-                Q. 디지털 정보 독점이 불공정으로 이어지지 않기 위한 구조적 장치는?
-            </div>
-            <div class="card-grid">
-                <div class="card">
-                    <h3 class="amber">공적 자산 인식</h3>
-                    <p>데이터가 특정 개인/부서 소유가 아닌 조직의 '공적 자산'임을 규정하고 수평적 접근 권한 보장</p>
-                </div>
-                <div class="card">
-                    <h3 class="amber">맞춤형 지원</h3>
-                    <p>정보 취약계층 대상 맞춤형 지원 프로세스 제도화로 디지털 격차 해소</p>
-                </div>
-            </div>
-        </div>
-        <div class="slide-footer">
-            <span>청렴 릴레이 토론회</span>
-            <span>8</span>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>다음 본부로의 질문</h2>
-            </div>
-            <div style="margin-top: 10px;">
-                <ul class="bullet-list">
-                    <li><strong>정보보안 :</strong> 보안 강화로 인한 업무 불편을 최소화하며 정보 유출 리스크를 줄일 절충안은?</li>
-                    <li><strong>청렴교육 :</strong> 형식적 서약에서 벗어나 실질적인 행동 변화를 유도할 수 있는 방안은?</li>
-                    <li><strong>조직문화 :</strong> MZ세대와 기성세대의 청렴 기준 차이를 극복하고 공동의 문화를 만드는 방법은?</li>
-                    <li><strong>청렴이슈 :</strong> 앞으로 5년 안에 대두될 주요 청렴 이슈와 그 해결 방법은?</li>
-                </ul>
-            </div>
-        </div>
-        <div class="slide-footer">
-            <span>청렴 릴레이 토론회</span>
-            <span>9</span>
-        </div>
-    </div>
-
-    <div class="slide title-slide">
-        <div class="bg-pattern" style="left:0; right:auto; width:100%;">
-            <svg width="100%" height="100%" viewBox="0 0 1000 700" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 0H1000V700H0V0Z" fill="#ffffff"/>
-                <path d="M600 0H1000V700H800C700 500 750 250 600 0Z" fill="#eff6ff"/>
-                <path d="M850 0H1000V700H950C920 550 930 200 850 0Z" fill="#dbeafe"/>
+    <!-- Slide 4: 이전본부 내용 요약 (2) -->
+    <div class="slide-container">
+        <div class="decor-bg">
+            <svg width="100%" height="100%" viewBox="0 0 1122 794" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 794 L200 650 L400 794 Z" fill="#f8fafc" opacity="0.5"/>
             </svg>
         </div>
-        <div class="slide-content" style="align-items: center; justify-content: center; text-align: center;">
-            <h1 style="font-size: 60pt; margin-bottom: 20px; color: var(--primary-color);">감사합니다</h1>
-            <p style="font-size: 18pt; color: var(--muted-text); margin: 0;">청렴 릴레이 토론회 결과 보고</p>
+        <div class="slide-inner">
+            <div class="header-block">
+                <h2>이전본부 내용 요약 (2)</h2>
+            </div>
+            <div class="flex-grid-2">
+                <div class="dashboard-card" style="flex: 1;">
+                    <h4><span style="color:var(--brand-blue)">3</span> 적극적 청렴 방식 마련</h4>
+                    <p>형식적인 자가 진단을 넘어, 외부 협력업체나 접점 부서의 투명성을 객과적으로 검증할 수 있는 가장 실효성 있는 방식은 무엇인가?</p>
+                    <p style="color: var(--text-primary); font-weight: 600; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+                        [대안] 투명성 확보를 위해 분기별 무기명 상호평가 실시 및 외부 기관 청렴 모니터링 평가를 업체 선정·계약에 반영하는 제도 마련
+                    </p>
+                </div>
+                <div class="dashboard-card" style="flex: 1;">
+                    <h4><span style="color:var(--brand-blue)">4</span> 청렴 인프라 구축</h4>
+                    <p>급변하는 디지털 업무 전환 과정에서 발생하는 정보 독점이나 디지털 소외계층의 격차를 해소하고, 모두를 포용할 수 있는 방안은?</p>
+                    <p style="color: var(--text-primary); font-weight: 600; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+                        [대안] 데이터 공유 플랫폼 기반 투명성 제고, 소외계층 고려한 교육 및 개방형 인프라 구축
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer-bar"><span>청렴 릴레이 토론회 결과</span><span>04</span></div>
+    </div>
+
+    <!-- Slide 5: 토론내용 - 디지털 청렴&보안 -->
+    <div class="slide-container">
+        <div class="slide-inner">
+            <div class="header-block">
+                <h2>토론 내용 (디지털 청렴&보안)</h2>
+            </div>
+            <div class="question-card">
+                <span class="badge">Question 1</span>
+                <h3>생성형 AI 활용이 늘어나는 상황에서, 보안 수칙을 단순한 규정 준수가 아닌 구성원 스스로의 윤리적 판단으로 내재화하도록 만들기 위한 가장 효과적인 방법은 무엇인가?</h3>
+            </div>
+            <div class="info-stack">
+                <div class="info-row">
+                    <div class="num-indicator">●</div>
+                    <div class="info-body">
+                        <div class="info-title">사례 중심 훈련 시행 및 담당자 윤리적 책임성 강화</div>
+                        <div class="info-desc">실제 업무 중 발생 가능한 보안 위반 시나리오를 기반으로 워크숍을 시행하여 기술 활용의 최종 책임이 사용자에게 있음을 상시 각인합니다.</div>
+                        <div class="info-desc" style="margin-top: 4px; color: var(--brand-blue);">생성형 AI의 올바른 활용법과 디지털 윤리 교육을 결합, 규정이 제재가 아닌 일상적 업무 절차로 자연스럽게 스며들도록 유도합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer-bar"><span>청렴 릴레이 토론회 결과</span><span>05</span></div>
+    </div>
+
+    <!-- Slide 6: 토론내용 - 소통&조직문화 -->
+    <div class="slide-container">
+        <div class="slide-inner">
+            <div class="header-block">
+                <h2>토론 내용 (소통&조직문화)</h2>
+            </div>
+            <div class="question-card variant-amber">
+                <span class="badge" style="color: #fcd34d;">Question 2</span>
+                <h3>관행과 원칙이 충돌하는 상황에서 직접적인 거부 없이도 청렴한 원칙을 관철할 수 있으려면, 'Yes대화법' 외에 조직 내에서 추가적으로 갖춰져야 할 제도적 조건은 무엇인가?</h3>
+            </div>
+            <div class="info-stack">
+                <div class="info-row variant-amber">
+                    <div class="num-indicator">●</div>
+                    <div class="info-body">
+                        <div class="info-title">익명 공론화 채널 개설·모니터링 시행 및 청렴 실무자 보호 제도 마련</div>
+                        <div class="info-desc">개인의 거부 화법에만 의존하지 않고, 관행적 오류나 부당 지시를 심리적 부담 없이 제보할 수 있는 '익명 소통 채널'을 활성화합니다.</div>
+                        <div class="info-desc" style="margin-top: 4px; color: var(--brand-amber);">원칙 처리를 요구한 직원이 부당한 인사 조치나 근무 환경상의 불이익을 받지 않도록 철저한 '실무자 보호 프로세스'를 마련합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer-bar"><span>청렴 릴레이 토론회 결과</span><span>06</span></div>
+    </div>
+
+    <!-- Slide 7: 토론내용 - 청렴평가체계 -->
+    <div class="slide-container">
+        <div class="slide-inner">
+            <div class="header-block">
+                <h2>토론 내용 (청렴평가체계)</h2>
+            </div>
+            <div class="question-card">
+                <span class="badge">Question 3</span>
+                <h3>청렴 평가가 일회성 점검에 그치지 않고, 조직 문화 전반의 실질적인 변화로 이어지게 하려면 어떤 방식이 효과적인가?</h3>
+            </div>
+            <div class="flex-grid-2">
+                <div class="dashboard-card" style="flex:1; padding: 24px;">
+                    <h4 class="amber">상호 청렴 평가 및 가이드라인 연계</h4>
+                    <p>형식적인 자가 진단을 넘어, 접점 부서와 외부 협력업체 간 '무기명 상호평가' 및 '청렴 셀프 체크리스트'를 도입합니다.</p>
+                </div>
+                <div class="dashboard-card" style="flex:1; padding: 24px;">
+                    <h4 class="amber">제도적 변화 유도 및 시스템 개선</h4>
+                    <p>도출된 청렴도 평가 결과를 계약, 입찰 등 업무처리 기준에 연계하여 실질적인 제도적 변화를 유도합니다. 반복 취약 분야 발견 시 담당자 문책 등 사후 처벌을 지양하고 정보 공개 확대 등 시스템 개선으로 연계합니다.</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer-bar"><span>청렴 릴레이 토론회 결과</span><span>07</span></div>
+    </div>
+
+    <!-- Slide 8: 토론내용 - 디지털 포용성 -->
+    <div class="slide-container">
+        <div class="slide-inner">
+            <div class="header-block">
+                <h2>토론 내용 (디지털 포용성)</h2>
+            </div>
+            <div class="question-card">
+                <span class="badge">Question 4</span>
+                <h3>디지털 기술 도입으로 업무 효율은 높아지는 반면, 특정 구성원에게 정보와 권한이 집중되는 현상이 심화될 수 있는데, 이러한 디지털 정보 독점이 조직 내 불공정과 청렴훼손으로 이어지지 않으려면 어떤 구조적 장치가 필요한가?</h3>
+            </div>
+            <div class="info-stack">
+                <div class="info-row">
+                    <div class="num-indicator">●</div>
+                    <div class="info-body">
+                        <div class="info-title">개방형 정보 플랫폼 구축 및 데이터 인식 전환, 디지털 격차 해소</div>
+                        <div class="info-desc">특정 인원의 정보 편중을 막기 위해 주요 업무 데이터와 처리지침을 전사 공유 플랫폼 기반으로 투명하게 통합 관리합니다.</div>
+                        <div class="info-desc" style="color: var(--brand-indigo);">디지털 데이터가 개인이나 특정 부서의 소유가 아닌 조직의 '공적 자산'임을 명확히 규정하고, 이에 대한 수평적인 접근 권한을 보장합니다. 디지털 기술 격차가 업무 분장이나 평가의 불공정으로 이어지지 않도록 정보 취약계층 대상 맞춤형 지원 프로세스를 제도화합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer-bar"><span>청렴 릴레이 토론회 결과</span><span>08</span></div>
+    </div>
+
+    <!-- Slide 9: 다음본부로의 질문 -->
+    <div class="slide-container">
+        <div class="slide-inner">
+            <div class="header-block">
+                <h2>다음본부로의 질문</h2>
+            </div>
+            <div class="flex-grid-2">
+                <div class="flex-col">
+                    <div class="dashboard-card" style="padding: 20px; gap: 8px;">
+                        <h4 style="color: var(--brand-blue)">1. 정보보안</h4>
+                        <p>정보 유출을 차단하기 위해 외부 생성형 AI 접속을 전면 차단하거나 강화된 보안 필터를 도입할 경우 AI 활용 효율이 떨어질 수 있다. 보안 강화로 인한 현장의 업무 불편을 최소화하면서도 정보 유출 리스크를 줄일 수 있는 기술적·제도적 절충안은 무엇인가?</p>
+                    </div>
+                    <div class="dashboard-card" style="padding: 20px; gap: 8px;">
+                        <h4 style="color: var(--brand-blue)">2. 청렴교육</h4>
+                        <p>매년 의무적으로 이수해야 하는 청렴 서약이나 온라인 법령 교육을 형식적인 절차에서 벗어나 실질적인 행동 변화를 유도할 수 있는 방안은 무엇인가?</p>
+                    </div>
+                </div>
+                <div class="flex-col">
+                    <div class="dashboard-card" style="padding: 20px; gap: 8px;">
+                        <h4 style="color: var(--brand-amber)">3. 조직문화</h4>
+                        <p>MZ세대와 기성세대가 생각하는 청렴의 기준이 다를 수 있는데, 서로의 관점을 이해하고 조직의 공통된 청렴 문화를 만들기 위한 효과적인 방법은 무엇인가?</p>
+                    </div>
+                    <div class="dashboard-card" style="padding: 20px; gap: 8px;">
+                        <h4 style="color: var(--brand-amber)">4. 청렴이슈</h4>
+                        <p>우리 조직에서 앞으로 5년 안에 대두될 주요 청렴 이슈는 무엇이며, 이에 대한 해결방법은 무엇인가?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer-bar"><span>청렴 릴레이 토론회 결과</span><span>09</span></div>
+    </div>
+
+    <!-- Slide 10: 종결 보고 -->
+    <div class="slide-container cover-slide" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+        <div class="decor-bg">
+            <svg width="100%" height="100%" viewBox="0 0 1122 794" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="200" cy="600" r="300" fill="#cbd5e1" opacity="0.3"/>
+                <line x1="100" y1="100" x2="1000" y2="700" stroke="#cbd5e1" stroke-width="2" opacity="0.2"/>
+            </svg>
+        </div>
+        <div class="slide-inner" style="align-items: center; justify-content: center; text-align: center;">
+            <h1 style="font-size: 56pt; font-weight: 800; letter-spacing: -2px; color: var(--text-primary); margin-bottom: 16px;">경청해 주셔서 감사합니다</h1>
+            <p style="font-size: 16pt; color: var(--text-secondary); font-weight: 500;">청렴 릴레이 토론회 결과 공유 보고 마침</p>
         </div>
     </div>
 
