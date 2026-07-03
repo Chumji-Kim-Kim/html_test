@@ -6,55 +6,76 @@
     <title>154kV 황간(가칭) 변전소 건설사업 - 사업설명회 자료 (보상)</title>
     <style>
         :root {
-            --primary-color: #0054a6; /* 한전 메인 블루 */
-            --secondary-color: #f37021; /* 포인트 오렌지 */
-            --accent-green: #5cb85c; /* 친환경 그린 */
-            --dark-bg: #1e293b;
-            --light-bg: #f8fafc;
-            --border-color: #cbd5e1;
-            --text-color: #334155;
+            --kepco-blue: #0054a6;
+            --kepco-orange: #f37021;
+            --sky-blue: #e0f2fe;
+            --hill-green: #22c55e;
+            --hill-dark-green: #15803d;
+            --building-gray: #cbd5e1;
+            --text-dark: #1e293b;
         }
 
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-color);
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
-            padding: 40px 20px;
-            line-height: 1.6;
+            padding: 0;
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* 슬라이드 스타일 스타일링 */
+        /* 메인 PDF의 일러스트 배경을 CSS로 재현 */
         .slide {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            padding: 40px;
-            margin-bottom: 40px;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 700px;
+            background: 
+                /* 전신주 및 구조물 라인 레이어 */
+                linear-gradient(90deg, transparent 50%, rgba(148, 163, 184, 0.1) 50%, rgba(148, 163, 184, 0.1) 52%, transparent 52%),
+                /* 우측 한전 옥내 변전소 건물 실루엣 표현 */
+                linear-gradient(to top, #334155 0%, #334155 30%, transparent 30%),
+                /* 원경 빌딩 숲 실루엣 */
+                linear-gradient(30deg, var(--building-gray) 0%, var(--building-gray) 40%, transparent 40%),
+                /* 친환경 그린 산/언덕 레이어 */
+                radial-gradient(circle at 80% 20%, var(--hill-green) 0%, var(--hill-dark-green) 50%, transparent 50%),
+                radial-gradient(circle at 30% 40%, #86efac 0%, var(--hill-green) 60%, transparent 60%),
+                /* 푸른 하늘 그래디언트 베이스 */
+                linear-gradient(to bottom, #bae6fd 0%, #f0f9ff 60%, #ffffff 100%);
+            background-size: cover;
+            background-position: center;
+            margin: 30px 0;
+            padding: 50px;
+            box-sizing: border-box;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             position: relative;
-            border-top: 6px solid var(--primary-color);
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-bottom: 10px solid var(--kepco-blue);
         }
 
+        /* 슬라이드 헤더 */
         .slide-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 3px solid var(--kepco-blue);
             padding-bottom: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 15px 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
         }
 
         .slide-title {
-            font-size: 24px;
-            color: var(--primary-color);
+            font-size: 26px;
+            color: var(--kepco-blue);
+            font-weight: bold;
             margin: 0;
-            font-weight: 700;
             display: flex;
             align-items: center;
         }
@@ -62,111 +83,128 @@
         .slide-title::before {
             content: '';
             display: inline-block;
-            width: 4px;
-            height: 24px;
-            background-color: var(--secondary-color);
-            margin-right: 10px;
-            border-radius: 2px;
+            width: 6px;
+            height: 26px;
+            background-color: var(--kepco-orange);
+            margin-right: 12px;
+            border-radius: 3px;
         }
 
-        .kepco-logo {
-            font-weight: 800;
-            color: var(--primary-color);
-            font-size: 18px;
+        .logo-area {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--kepco-blue);
             letter-spacing: 1px;
         }
 
-        /* 텍스트 요소 */
+        /* 콘텐츠 영역 컨테이너 (배경과 분리하여 가독성 확보) */
+        .content-body {
+            background: rgba(255, 255, 255, 0.93);
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            flex-grow: 1;
+            backdrop-filter: blur(5px);
+            border-left: 5px solid var(--hill-green);
+        }
+
         h3 {
-            font-size: 18px;
+            font-size: 19px;
             color: #0f172a;
-            margin-top: 25px;
-            margin-bottom: 12px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
         }
 
         ul {
-            margin: 0 0 20px 0;
+            margin: 0 0 25px 0;
             padding-left: 20px;
         }
 
         li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 15px;
+            line-height: 1.7;
         }
 
-        .highlight-box {
-            background-color: #f1f5f9;
-            border-left: 4px solid var(--primary-color);
-            padding: 15px 20px;
-            margin: 15px 0;
+        .highlight-law {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--kepco-orange);
+            padding: 18px;
+            margin: 20px 0;
             font-size: 14px;
-            white-space: pre-wrap;
-            border-radius: 0 8px 8px 0;
+            border-radius: 4px;
+            color: #334155;
+            text-align: justify;
         }
 
-        /* 테이블 스타일링 */
+        /* 테이블 디자인 */
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
             font-size: 14px;
-            text-align: left;
         }
 
         th {
-            background-color: #e2e8f0;
-            color: var(--dark-bg);
+            background-color: var(--kepco-blue);
+            color: #ffffff;
             font-weight: 600;
             padding: 12px;
-            border: 1px solid var(--border-color);
+            border: 1px solid #cbd5e1;
+            text-align: center;
         }
 
         td {
             padding: 12px;
-            border: 1px solid var(--border-color);
-            background-color: #fff;
+            border: 1px solid #cbd5e1;
+            background-color: #ffffff;
         }
 
         tr:nth-child(even) td {
             background-color: #f8fafc;
         }
 
-        /* 다이어그램 스타일 (절차도) */
-        .process-flow {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        /* 프로세스 흐름 레이아웃 */
+        .flow-container {
+            display: flex;
+            flex-wrap: wrap;
             gap: 10px;
-            margin: 30px 0;
+            margin: 25px 0;
         }
 
-        .process-step {
-            background: #f1f5f9;
-            border: 1px solid var(--border-color);
+        .flow-box {
+            flex: 1;
+            min-width: 120px;
+            background: #ffffff;
+            border: 2px solid var(--building-gray);
             padding: 12px 8px;
             text-align: center;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 6px;
-            position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
-        .process-step.highlight {
-            background: #e0f2fe;
-            border-color: #7dd3fc;
-            color: #0369a1;
+        .flow-box.active {
+            border-color: var(--kepco-blue);
+            background-color: #eff6ff;
+            color: var(--kepco-blue);
         }
 
-        .process-step.success {
-            background: #dcfce7;
-            border-color: #86efac;
-            color: #15803d;
+        .flow-box.success {
+            border-color: var(--hill-green);
+            background-color: #f0fdf4;
+            color: var(--hill-dark-green);
         }
 
-        /* 참고사항 노트 */
-        .note {
+        .note-text {
             font-size: 13px;
             color: #64748b;
-            margin-top: 5px;
+            margin-top: 4px;
+            display: block;
         }
     </style>
 </head>
@@ -177,151 +215,181 @@
     <div class="slide">
         <div class="slide-header">
             <div class="slide-title">1. 토지보상</div>
-            <div class="kepco-logo">KEPCO</div>
+            <div class="logo-area">KEPCO</div>
         </div>
         
-        <h3>시행근거</h3>
-        <ul>
-            <li>가. 전원개발촉진법, 시행령, 시행규칙</li>
-            <li>나. 공익사업을 위한 토지 등의 취득 및 보상에 관한 법률, 시행령, 시행규칙</li>
-        </ul>
+        <div class="content-body">
+            <h3>시행근거</h3>
+            <ul>
+                <li>가. [span_0](start_span)전원개발촉진법, 시행령, 시행규칙[span_0](end_span)</li>
+                <li>나. [span_1](start_span)공익사업을 위한 토지 등의 취득 및 보상에 관한 법률, 시행령, 시행규칙[span_1](end_span)</li>
+            </ul>
 
-        <h3>변전소 부지 보상</h3>
-        <div class="highlight-box"><strong>[제68조(보상액의산정)]</strong> 사업시행자는 토지등에 대한 보상액을 산정하려는 경우에는 감정평가 법인등 3인(제2항에 따라 시·도지사와 토지소유자가 모두 감정평가법인등을 추천하지 아니하거나 시·도지사 또는 토지소유자 어느 한쪽이 감정평가법인등을 추천하지 아니하는 경우에는 2인)을 선정하여 토지등의 평가를 의뢰하여야 한다. 다만, 사업시행자가 국토교통부령으로 정하는 기준에 따라 직접 보상액을 산정할 수 있을 때에는 그러하지 아니한다. &lt;개정 2012. 6. 1, 2013. 3. 23, 2020. 4. 7&gt;</div>
+            <h3>변전소 부지 보상</h3>
+            <div class="highlight-law">
+                <strong>[제68조(보상액의산정)]</strong> 사업시행자는 토지등에 대한 보상액을 산정하려는 경우에는 감정평가 법인등 3인(제2항에 따라 시·도지사와 토지소유자가 모두 감정평가법인등을 추천하지 아니하거나 시·도지사 또는 토지소유자 어느 한쪽이 감정평가법인등을 추천하지 아니하는 경우에는 2인)을 선정하여 토지등의 평가를 의뢰하여야 한다. 다만, 사업시행자가 국토교통부령으로 정하는 기준에 따라 직접 보상액을 산정할 수 있을 때에는 그러하지 아니한다. [span_2](start_span)&lt;개정 2012. 6. 1, 2013. 3. 23, 2020. 4. 7&gt;[span_2](end_span)
+            </div>
 
-        <h3>2. 보상액의 산정</h3>
-        <ul>
-            <li><strong>1) 보상액 산정(감정평가)</strong><br>: 보상액을 산정하기 위해 감정평가업자 3인을 선정하여 토지 등을 평가<br><span class="note">(시·도지사와 토지소유자가 모두 감정평가법인등을 추천하지 아니하거나 시·도지사 또는 토지소유자 어느 한쪽이 감정평가법인등을 추천하지 아니하는 경우에는 2인)</span></li>
-            <li><strong>2) 보상방법</strong><br>: 협의 성립 시, 토지보상금은 계약체결 및 소유권이전등기 완료 후 개인은행 계좌로 지급</li>
-            <li><strong>3) 보상시기</strong><br>: 약 2주일 소요</li>
-        </ul>
+            <h3>2. 보상액의 산정</h3>
+            <ul>
+                <li><strong>1) 보상액 산정(감정평가) :</strong> 보상액을 산정하기 위해 감정평가업자 3인을 선정하여 토지 등을 평가<br>
+                [span_3](start_span)<span class="note-text">(시·도지사와 토지소유자가 모두 감정평가법인등을 추천하지 아니하거나 시·도지사 또는 토지소유자 어느 한쪽이 감정평가법인등을 추천하지 아니하는 경우에는 2인)[span_3](end_span)</span></li>
+                [span_4](start_span)<li><strong>2) 보상방법 :</strong> 협의 성립 시, 토지보상금은 계약체결 및 소유권이전등기 완료 후 개인은행 계좌로 지급[span_4](end_span)</li>
+                [span_5](start_span)<li><strong>3) 보상시기 :</strong> 약 2주일 소요[span_5](end_span)</li>
+            </ul>
+        </div>
     </div>
 
     <div class="slide">
         <div class="slide-header">
             <div class="slide-title">토지보상절차</div>
-            <div class="kepco-logo">KEPCO</div>
+            <div class="logo-area">KEPCO</div>
         </div>
-        <p style="font-size: 14px; font-weight: bold; color: var(--primary-color);">변전소 부지 보상 흐름도</p>
         
-        <div class="process-flow">
-            <div class="process-step">입지선정위,<br>최종입지확인</div>
-            <div class="process-step">실시계획 신청,<br>고시 승인</div>
-            <div class="process-step">보상계획 공고<br>및 열람</div>
-            <div class="process-step">감정평가법인등<br>선정 및 감정평가</div>
-            <div class="process-step">보상액 산정</div>
-        </div>
+        <div class="content-body">
+            <h3>변전소 부지 보상 절차 흐름</h3>
+            <div class="flow-container">
+                [span_6](start_span)<div class="flow-box">입지선정위,<br>최종입지확인[span_6](end_span)</div>
+                [span_7](start_span)<div class="flow-box">실시계획 신청,<br>고시 승인[span_7](end_span)</div>
+                [span_8](start_span)<div class="flow-box">보상계획 공고<br>및 열람[span_8](end_span)</div>
+                [span_9](start_span)<div class="flow-box">열람 및<br>이의신청[span_9](end_span)</div>
+                [span_10](start_span)<div class="flow-box">감정평가법인등 선정<br>및 감정평가[span_10](end_span)</div>
+                [span_11](start_span)<div class="flow-box">보상액 산정[span_11](end_span)</div>
+            </div>
+            
+            [span_12](start_span)<div style="text-align: center; margin: 15px 0; font-weight: bold; color: var(--kepco-orange);">▼ 손실보상협의 및 계약체결[span_12](end_span)</div>
 
-        <div style="text-align: center; margin: -10px 0 10px 0; font-weight: bold; color: #64748b;">▼ 손실보상협의 및 계약체결</div>
-
-        <div class="process-flow">
-            <div class="process-step success"><strong>[협의 성립 시]</strong><br>소유권 이전 및<br>보상금 지급</div>
-            <div class="process-step success">협의보상자 종결</div>
-            <div class="process-step highlight"><strong>[협의 불성립 시]</strong><br>수용재결신청</div>
-            <div class="process-step highlight">수용재결</div>
-            <div class="process-step highlight">보상금 지급<br>또는 공탁</div>
+            <div class="flow-container">
+                [span_13](start_span)<div class="flow-box success"><strong>[협의 성립시]</strong><br>소유권 이전 및<br>보상금 지급[span_13](end_span)</div>
+                [span_14](start_span)<div class="flow-box success">협의보상자 종결[span_14](end_span)</div>
+                [span_15](start_span)<div class="flow-box active"><strong>[협의 불성립시]</strong><br>수용재결신청[span_15](end_span)</div>
+                [span_16](start_span)<div class="flow-box active">수용재결[span_16](end_span)</div>
+                [span_17](start_span)<div class="flow-box active">보상금 지급<br>또는 공탁[span_17](end_span)</div>
+                [span_18](start_span)<div class="flow-box active">수용절차 종결[span_18](end_span)</div>
+            </div>
         </div>
     </div>
 
     <div class="slide">
         <div class="slide-header">
             <div class="slide-title">기타보상절차 - 조기협의장려금</div>
-            <div class="kepco-logo">KEPCO</div>
+            <div class="logo-area">KEPCO</div>
         </div>
         
-        <p><strong>【내용】</strong> 3개월 이내에 토지소유자와 협의가 성립하여 토지등을 취득 또는 사용하는 경우, 조기협의장려금을 가산하여 지급</p>
-        <p><strong>【대상】</strong> 송·변전 건설사업에 편입으로 구분(지상권) 설정하는 토지상<br><span class="note">※ 단, 협의 거부 등으로 소송 또는 토지수용위원회 재결신청 토지는 제외</span></p>
-        <p><strong>【협의기한】</strong> 감정평가 완료 후, 1차 협의보상 안내문 발송일에서 7일을 가산한 날로부터 6개월 이내</p>
-        <p><strong>【지급금액】</strong> 조기협의장려금 = 보상금 x 계약 체결기간에 따른 지급률</p>
+        <div class="content-body">
+            <h3>조기협의장려금 제도 안내</h3>
+            <ul>
+                [span_19](start_span)<li><strong>【내용】</strong> 3개월 이내에 토지소유자와 협의가 성립하여 토지등을 취득 또는 사용하는 경우, 조기협의장려금을 가산하여 지급[span_19](end_span)</li>
+                <li><strong>【대상】</strong> 송·변전 건설사업에 편입으로 구분(지상권) 설정하는 토지상<br>
+                [span_20](start_span)<span class="note-text">※ 단, 협의 거부 등으로 소송 또는 토지수용위원회 재결신청 토지는 제외[span_20](end_span)</span></li>
+                [span_21](start_span)<li><strong>【협의기한】</strong> 감정평가 완료 후, 1차 협의보상 안내문 발송일에서 7일을 가산한 날로부터 6개월 이내[span_21](end_span)</li>
+                [span_22](start_span)<li><strong>【지급금액】</strong> 조기협의장려금 = 보상금 x 계약 체결기간에 따른 지급률[span_22](end_span)</li>
+            </ul>
 
-        <h3 style="font-size: 15px;">&lt;계약 체결기간에 따른 지급률&gt;</h3>
-        <p style="font-size: 14px; margin-bottom: 5px;">토지소유자가 보상계획 1차 안내 후,</p>
-        <ul>
-            <li>1) 3개월 이내, 계약이 완료된 경우 : <strong>50%</strong></li>
-            <li>2) 3개월 초과 ~ 6개월 이내, 계약이 완료된 경우 : <strong>20%</strong></li>
-        </ul>
-        <p class="note">※ 보상액이 1억원을 초과한 경우, 그 초과금액에 대해서는 60% 까지 인정</p>
-        <p class="note">※ 동일한 필지에 대하여 최저보상금과 장려금은 중복 적용 불가</p>
+            [span_23](start_span)<h3 style="font-size: 16px; border: none; margin-bottom: 5px;">&lt;계약 체결기간에 따른 지급률&gt;[span_23](end_span)</h3>
+            <p style="font-size: 14px; margin-left: 5px; margin-bottom: 10px;">토지소유자가 보상계획 1차 안내 후,</p>
+            <ul>
+                [span_24](start_span)<li>1) 3개월 이내, 계약이 완료된 경우 : <strong>50%</strong>[span_24](end_span)</li>
+                [span_25](start_span)<li>2) 3개월 초과 ~ 6개월 이내, 계약이 완료된 경우 : <strong>20%</strong>[span_25](end_span)</li>
+            </ul>
+            [span_26](start_span)<span class="note-text" style="margin-left: 5px;">※ 보상액이 1억원을 초과한 경우, 그 초과금액에 대해서는 60% 까지 인정[span_26](end_span)</span>
+            [span_27](start_span)<span class="note-text" style="margin-left: 5px;">※ 동일한 필지에 대하여 최저보상금과 장려금은 중복 적용 불가[span_27](end_span)</span>
+        </div>
     </div>
 
     <div class="slide">
         <div class="slide-header">
-            <div class="slide-title">기타보상절차 - 최저보상금 산정</div>
-            <div class="kepco-logo">KEPCO</div>
+            <div class="slide-title">기타보상절차 - 최저보상금</div>
+            <div class="logo-area">KEPCO</div>
         </div>
         
-        <p><strong>【내용】</strong> 감정평가금액이 70만원 이하인 토지에 한하여 필지당 100만원으로 산정</p>
-        <p><strong>【대상】</strong> 감정평가금액이 70만원 이하인 토지로서 협의 기간 내 소유권 또는 (구분)지상권 등을 설정할 수 있는 토지<br><span class="note">※ 단, 협의 거부 등으로 소송 또는 토지수용위원회 재결신청 토지는 제외</span></p>
-        <p><strong>【협의기한】</strong> 감정평가 완료 후, 1차 협의보상 안내문 발송일에서 7일을 가산한 날로부터 6개월 이내</p>
-        <p><strong>【지급금액】</strong> 100만원/필지</p>
-        <p class="note">※ 동일한 필지에 대하여 최저보상금과 장려금은 중복 적용 불가</p>
+        <div class="content-body">
+            <h3>최저보상금 산정 기준</h3>
+            <ul>
+                [span_28](start_span)<li><strong>【내용】</strong> 감정평가금액이 70만원 이하인 토지에 한하여 필지당 100만원으로 산정[span_28](end_span)</li>
+                <li><strong>【대상】</strong> 감정평가금액이 70만원 이하인 토지로서 협의 기간 내 소유권 또는 (구분)지상권 등을 설정할 수 있는 토지<br>
+                [span_29](start_span)<span class="note-text">※ 단, 협의 거부 등으로 소송 또는 토지수용위원회 재결신청 토지는 제외[span_29](end_span)</span></li>
+                [span_30](start_span)<li><strong>【협의기한】</strong> 감정평가 완료 후, 1차 협의보상 안내문 발송일에서 7일을 가산한 날로부터 6개월 이내[span_30](end_span)</li>
+                [span_31](start_span)<li><strong>【지급금액】</strong> 100만원/필지[span_31](end_span)</li>
+            </ul>
+            [span_32](start_span)<span class="note-text" style="margin-left: 5px;">※ 동일한 필지에 대하여 최저보상금과 장려금은 중복 적용 불가[span_32](end_span)</span>
+        </div>
     </div>
 
     <div class="slide">
         <div class="slide-header">
-            <div class="slide-title">특별지원 사업 종류 및 보상절차</div>
-            <div class="kepco-logo">KEPCO</div>
+            <div class="slide-title">특별지원 사업 및 절차</div>
+            <div class="logo-area">KEPCO</div>
         </div>
         
-        <p><strong>【내용】</strong> 송변전설비 건설 주변지역에 거주하는 주민ㆍ주민공동체 (행정리 단위)</p>
-        <p><strong>【지급금액】</strong> 변전소 부지 확정 후, 한전 내부 규정에 의거한 별도 산출식에 따라서 지원금 지급</p>
+        <div class="content-body">
+            <h3>특별지원 사업 개요</h3>
+            <ul>
+                [span_33](start_span)<li><strong>【내용】</strong> 송변전설비 건설 주변지역에 거주하는 주민ㆍ주민공동체 (행정리 단위)[span_33](end_span)</li>
+                [span_34](start_span)<li><strong>【지급금액】</strong> 변전소 부지 확정 후, 한전 내부 규정에 의거한 별도 산출식에 따라서 지원금 지급[span_34](end_span)</li>
+            </ul>
 
-        <h3>【보상절차】</h3>
-        <div class="process-flow">
-            <div class="process-step">사업계획 협의</div>
-            <div class="process-step">협의서 작성</div>
-            <div class="process-step">특별지원 내부심의</div>
-            <div class="process-step">합의서 작성/공증</div>
-            <div class="process-step">사업비 요청/입금</div>
-            <div class="process-step">사업완료 증빙제출</div>
+            [span_35](start_span)<h3>【보상절차】[span_35](end_span)</h3>
+            <div class="flow-container">
+                [span_36](start_span)<div class="flow-box">사업계획 협의[span_36](end_span)</div>
+                [span_37](start_span)<div class="flow-box">협의서 작성[span_37](end_span)</div>
+                [span_38](start_span)<div class="flow-box">특별지원 내부심의[span_38](end_span)</div>
+                [span_39](start_span)<div class="flow-box">합의서 작성/공증[span_39](end_span)</div>
+                [span_40](start_span)<div class="flow-box">사업비 요청/입금[span_40](end_span)</div>
+                [span_41](start_span)<div class="flow-box">사업완료 증빙제출[span_41](end_span)</div>
+            </div>
+
+            <ul>
+                [span_42](start_span)<li><strong>◇ 주민의견 수렴 :</strong> 합의서 작성 전 의견 수렴[span_42](end_span)</li>
+                [span_43](start_span)<li><strong>◇ 주민대표 선임 :</strong> 5인 이상 선임 <span class="note-text">* 세대주 과반수 이상 찬성/동의[span_43](end_span)</span></li>
+                [span_44](start_span)<li>- 특별지원사업의 세부 내용 및 해당 송·변전설비의 건설 및 향후 동일 변전소에 건설당시 고려된 최종규모 범위 내에서 설비를 추가하는 경우, 이와 관련된 이의를 제기하지 않는다는 내용을 합의서에 명시.[span_44](end_span)</li>
+                [span_45](start_span)<li>- 주민대표 및 주민대표기구의 대표자는 지역 실정과 여건을 고려하여 주민의견을 수렴한 뒤, 특별지원사업계획을 한전에 제출[span_45](end_span)</li>
+            </ul>
         </div>
-
-        <ul>
-            <li><strong>◇ 주민의견 수렴 :</strong> 합의서 작성 전 의견 수렴</li>
-            <li><strong>◇ 주민대표 선임 :</strong> 5인 이상 선임 <span class="note">(* 세대주 과반수 이상 찬성/동의)</span></li>
-            <li>- 특별지원사업의 세부 내용 및 해당 송·변전설비의 건설 및 향후 동일 변전소에 건설당시 고려된 최종규모 범위 내에서 설비를 추가하는 경우, 이와 관련된 이의를 제기하지 않는다는 내용을 합의서에 명시.</li>
-            <li>- 주민대표 및 주민대표기구의 대표자는 지역 실정과 여건을 고려하여 주민의견을 수렴한 뒤, 특별지원사업계획을 한전에 제출</li>
-        </ul>
     </div>
 
     <div class="slide">
         <div class="slide-header">
-            <div class="slide-title">특별지원 사업 종류 세부내용</div>
-            <div class="kepco-logo">KEPCO</div>
+            <div class="slide-title">특별지원 사업 종류</div>
+            <div class="logo-area">KEPCO</div>
         </div>
         
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 25%;">특별지원사업 종류</th>
-                    <th style="width: 75%;">세부내용</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>주민생활안정 지원사업</strong></td>
-                    <td>주택용 전기요금, 의료보험료, 냉·난방비, 교통·통신비, 경로지원비, 교육비, 문화활동비, 생필품비 등 지원, 그 밖에 송·변전설비 주변지역 주민의 생활안정 지원을 위하여 주민생활 안정지원협의체가 필요하다고 인정되는 사업</td>
-                </tr>
-                <tr>
-                    <td><strong>주민복지사업</strong></td>
-                    <td>주택개량사업, 목욕/건강/운동/미용/오락시설, 문화 및 행사 체험/관광, 교통수단제공사업, 지역도서관, 놀이방/공부방 등의 건립 및 운영 등</td>
-                </tr>
-                <tr>
-                    <td><strong>소득증대사업</strong></td>
-                    <td>농작물·임산물 재배/가공/저장 및 판매(시설), 가축 사육 및 판매(시설), 수산물 양식 및 판매(시설) 사업, 영농규모화 사업(농지매매, 임대차 자금, 영동기계 구입자금 등) 등</td>
-                </tr>
-                <tr>
-                    <td><strong>육영사업</strong></td>
-                    <td>평생교육지원, 농·어촌학교 운영, 장학기금 적립, 기숙사 제공, 교육기자재, 학교 급식 지원사업 등</td>
-                </tr>
-                <tr>
-                    <td><strong>송·변전 설비 건설 주변지역의 발전·환경개선·안전관리 주민건강 및 송·변전 설비 건설의 촉진을 위한 필요사업</strong></td>
-                    <td>마을회관·도로·상하수도·전기통신시설 등 공동시설사업, 주민건강검진 및 외지 가족 통보 서비스, 공공기관·군부대 등 시설개선, 학교법인·종교단체·비영리법인 등의 시설개선 또는 공익성 사업, 1인 가구 안부 살핌 서비스, 그 밖에 송·변전 설비 건설의 촉진을 위한 특별지원의 목적에 맞는 사업</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="content-body">
+            <h3>지원 사업별 세부 내용</h3>
+            <table>
+                <thead>
+                    <tr>
+                        [span_46](start_span)<th style="width: 30%;">특별지원사업 종류[span_46](end_span)</th>
+                        [span_47](start_span)<th style="width: 70%;">세부내용[span_47](end_span)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        [span_48](start_span)<td><strong>주민생활안정 지원사업</strong>[span_48](end_span)</td>
+                        [span_49](start_span)<td>주택용 전기요금, 의료보험료, 냉·난방비, 교통·통신비, 경로지원비, 교육비, 문화활동비, 생필품비 등 지원, 그 밖에 송·변전설비 주변지역 주민의 생활안정 지원을 위하여 주민생활 안정지원협의체가 필요하다고 인정되는 사업[span_49](end_span)</td>
+                    </tr>
+                    <tr>
+                        [span_50](start_span)<td><strong>주민복지사업</strong>[span_50](end_span)</td>
+                        [span_51](start_span)<td>주택개량사업, 목욕/건강/운동/미용/오락시설, 문화 및 행사 체험/관광, 교통수단제공사업, 지역도서관, 놀이방/공부방 등의 건립 및 운영 등[span_51](end_span)</td>
+                    </tr>
+                    <tr>
+                        [span_52](start_span)<td><strong>소득증대사업</strong>[span_52](end_span)</td>
+                        [span_53](start_span)<td>농작물·임산물 재배/가공/저장 및 판매(시설), 가축 사육 및 판매(시설), 수산물 양식 및 판매(시설) 사업, 영농규모화 사업(농지매매, 임대차 자금, 영동기계 구입자금 등) 등[span_53](end_span)</td>
+                    </tr>
+                    <tr>
+                        [span_54](start_span)<td><strong>육영사업</strong>[span_54](end_span)</td>
+                        [span_55](start_span)<td>평생교육지원, 농·어촌학교 운영, 장학기금 적립, 기숙사 제공, 교육기자재, 학교 급식 지원사업 등[span_55](end_span)</td>
+                    </tr>
+                    <tr>
+                        [span_56](start_span)<td><strong>송·변전 설비 건설 주변지역의 발전·환경개선·안전관리 주민건강 및 송·변전 설비 건설의 촉진을 위한 필요사업</strong>[span_56](end_span)</td>
+                        [span_57](start_span)<td>마을회관·도로·상하수도·전기통신시설 등 공동시설사업, 주민건강검진 및 외지 가족 통보 서비스, 공공기관·군부대 등 시설개선, 학교법인·종교단체·비영리법인 등의 시설개선 또는 공익성 사업, 1인 가구 안부 살핌 서비스, 그 밖에 송·변전 설비 건설의 촉진을 위한 특별지원의 목적에 맞는 사업[span_57](end_span)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
+
 </body>
 </html>
