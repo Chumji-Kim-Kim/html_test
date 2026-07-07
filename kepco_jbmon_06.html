@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비금전적 총보상 전략 벤치마킹 보고서 - 주니어보드 7기</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css">
+    
+    <style>
+        :root {
+            --main-color: #005596;       /* 딥 블루 */
+            --accent-color: #00A5B5;     /* 틸/아쿠아 */
+            --bg-light: #F8FAFC;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard Variable", Pretendard, sans-serif;
+            color: var(--text-dark);
+            background-color: #ffffff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* fullpage.js 세션 레이아웃 설정 */
+        .section {
+            padding: 60px 80px;
+            display: block !important;
+            position: relative;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            display: table;
+            width: 100%;
+        }
+
+        .cell {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /* 경력 디자이너 타이포그래피 규칙 적용 (Bold, Medium, Light 위계 정립) */
+        h1 {
+            font-size: 42px;
+            font-weight: 800; /* Extra Bold */
+            color: var(--main-color);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700; /* Bold */
+            color: var(--main-color);
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 15px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600; /* Semi Bold */
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 400; /* Regular / Light */
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .light-text {
+            font-weight: 300; /* Light */
+            color: var(--text-muted);
+        }
+
+        .medium-text {
+            font-weight: 500; /* Medium */
+        }
+
+        /* 테이블 및 그리드 컴포넌트 */
+        .grid-2 {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            margin-top: 20px;
+        }
+
+        .col {
+            display: table-cell;
+            vertical-align: top;
+            padding: 15px;
+        }
+
+        .card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: var(--main-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .badge-accent {
+            background-color: var(--accent-color);
+        }
+
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 30px; }
+
+        /* 구석에 위치시킨 PDF 인쇄 전용 유틸리티 버튼 */
+        #print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        #print-btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .slide-svg {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* A4 가로 출력을 위한 미디어 쿼리 프린트 최적화 */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            body, .section {
+                background: white !important;
+                color: black !important;
+                height: auto !important;
+            }
+            .section {
+                page-break-after: always !important;
+                height: 100vh !important;
+                display: block !important;
+                padding: 40px 60px !important;
+            }
+            #print-btn, .fp-watermark, #fp-nav {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button id="print-btn" onclick="window.print()">A4 가로 PDF 출력</button>
+
+    <div id="fullpage">
+        <div class="section">
+            <div class="container">
+                <div class="cell text-center">
+                    <span class="badge">주니어보드 7기 정기회의 발표</span>
+                    <h1>비금전적 총보상 전략<br><span class="light-text" style="color: var(--accent-color);">벤치마킹 및 도입 적용 방안</span></h1>
+                    <p class="medium-text mt-4" style="font-size: 18px; color: var(--text-dark);">최고 성과자 동기부여를 위한 핵심 보상 모델 재정립</p>
+                    <div style="margin-top: 50px;">
+                        <svg class="slide-svg" viewBox="0 0 200 100" style="max-width: 220px;">
+                            <path d="M20,80 L60,50 L100,60 L140,30 L180,10" fill="none" stroke="#005596" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="180" cy="10" r="6" fill="#00A5B5"/>
+                            <line x1="20" y1="80" x2="180" y2="80" stroke="#E2E8F0" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="cell">
+                    <h2>01. 배경 및 문제의식</h2>
+                    <div class="grid-2">
+                        <div class="col" style="width: 60%;">
+                            <div class="card">
+                                <h3>공공부문 규제 환경의 한계</h3>
+                                <p>블라인드 채용과 공공성Mandate 조건 하에서 연공서열 중심 혹은 부서 단위 균등 보상 압박이 강해집니다. 이 구조는 뛰어난 업무적 노력을 다하는 <strong>'슈퍼 퍼포머(Super-performers)'</strong>들의 이탈 및 동기부여 공백을 발생시킵니다.</p>
+                            </div>
+                            <div class="card">
+                                <h3>비금전적 총보상의 전략적 가치</h3>
+                                <p>예산 제한과 엄격한 급여 상한선을 우회하여 핵심 임직원들을 잡아둘 수 있도록, 역량 강화 및 조직 내 명예를 활용한 다차원적 보상 설계가 시급합니다.</p>
+                            </div>
+                        </div>
+                        <div class="col" style="width: 40%;">
+                            <svg class="slide-svg" viewBox="0 0 120 120" style="margin-top: 20px;">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="#E2E8F0" stroke-width="8"/>
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="#005596" stroke-width="8" stroke-dasharray="240 314"/>
+                                <text x="60" y="65" text-anchor="middle" font-weight="700" font-size="13" fill="#005596">비금전 전략</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="cell">
+                    <h2>02. 글로벌 외교관 & 가속 코호트 모델</h2>
+                    <div class="grid-2">
+                        <div class="col">
+                            <div class="card">
+                                <span class="badge badge-accent">글로벌 외교관 모델</span>
+                                <h3>한수원(KHNP) & K-Water 사례</h3>
+                                <p>체코 원전 파견 등 대형 프로젝트를 연계하여 우수 직원을 기술 대표단으로 선발합니다. 단순 출장이 아니라 '국가 대표' 자격을 부여함으로써 지위를 격상시킵니다. K-Water 또한 124개국 대상 국제 교육 강사로 선발하여 글로벌 네트워크 위상을 명예적 보상으로 제공합니다.</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <span class="badge badge-accent">가속 코호트 모델</span>
+                                <h3>영국 공무원 FLS & LG전자 LeAP</h3>
+                                <p>영국 정부는 급여 동결 환경 속에서도 고잠재력 주니어를 차관급 고위 리더와 매칭하는 'FLS' 프로그램을 운영하여 고성과자에게 '사내 가시성'을 선제 제공합니다. LG전자는 주니어 HiPo 그룹을 발굴하여 팀 리더 직행 인증 코스를 거치게 하는 가속 패스를 줍니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="cell">
+                    <h2>03. 명예, 지위 및 직함 (유산 트랙)</h2>
+                    <div class="grid-2">
+                        <div class="col" style="width: 55%;">
+                            <div class="card">
+                                <h3>전문 직함 부여의 희소성</h3>
+                                <p>범용적인 '매니저' 직함은 보상으로서 기능하지 못합니다. 관리직 승진 제한을 맞이한 최고의 현업 핵심 전문가들을 위해 '펠로우(Fellow)' 혹은 '마스터(Master)'와 같은 특별 자격 제도가 유효합니다.</p>
+                            </div>
+                            <div class="card">
+                                <h3>포스코(POSCO) 명예의 전당 벤치마킹</h3>
+                                <p>수익 기여와 인성을 동시 평가하여 선발된 현장 최고의 장인을 본사 명예의 전당에 영구 헌액합니다. 이는 비용을 들이지 않고도 직원의 평생 커리어 유산을 공인하는 최고의 지위 보상 수단입니다.</p>
+                            </div>
+                        </div>
+                        <div class="col" style="width: 45%; text-align: center;">
+                            <svg class="slide-svg" viewBox="0 0 100 100" style="max-width: 160px; margin-top: 30px;">
+                                <polygon points="50,15 63,43 93,43 69,61 78,89 50,72 22,89 31,61 7,43 37,43" fill="#00A5B5" />
+                                <circle cx="50" cy="53" r="12" fill="none" stroke="#ffffff" stroke-width="3"/>
+                            </svg>
+                            <p class="medium-text mt-4" style="color: var(--main-color); font-size: 18px;">"노력으로 획득하는 독점적 명예"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="cell">
+                    <h2>04. 재충전의 시간 및 KEPCO형 적용안</h2>
+                    <div class="grid-2">
+                        <div class="col">
+                            <div class="card">
+                                <h3>전략적 안식년 (Sabbatical)</h3>
+                                <p class="medium-text" style="color: var(--main-color);">Adobe / SAP 모델</p>
+                                <p style="font-size: 14px; margin-top: 10px;">어도비는 5년 단위 리프레시를 제공해 완벽한 차단을 보장합니다. 이를 응용하여 <strong>KEPCO형 '리프레시 월(Month)'</strong> 제도를 설계, 기본급 기반의 장기 휴가 권리를 성과 유인책으로 제공하는 가이드라인이 가능합니다.</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <h3>유연성과 시간 주권 보장</h3>
+                                <p class="medium-text" style="color: var(--main-color);">Spotify / Orsted 모델</p>
+                                <p style="font-size: 14px; margin-top: 10px;">스포티파이는 지정 공휴일 대신 원하는 날 쉬는 구조를 씁니다. 당사 대체휴무 적립 시스템을 결합해 본인이 원하는 기념일에 완전히 몰아 쓸 수 있는 <strong>'마이 데이(My Day)'</strong> 캠페인을 확장 활성화합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="cell">
+                    <h2>05. 핵심 벤치마킹 데이터베이스 요약</h2>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 14px;">
+                        <thead>
+                            <tr style="background-color: var(--main-color); color: white; text-align: left;">
+                                <th style="padding: 14px; border-radius: 6px 0 0 0;">기업/기관명</th>
+                                <th style="padding: 14px;">프로그램명</th>
+                                <th style="padding: 14px;">핵심 카테고리</th>
+                                <th style="padding: 14px; border-radius: 0 6px 0 0;">주요 핵심 내용</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 14px; font-weight: 600;">삼성전자</td>
+                                <td style="padding: 14px;">C-Lab (사내벤처)</td>
+                                <td style="padding: 14px; color: var(--accent-color); font-weight: 600;">자율성</td>
+                                <td style="padding: 14px;">1년 현업 배제 및 보장, 창업 실패 리스크 해소(5년 내 재입사)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color); background-color: var(--bg-light);">
+                                <td style="padding: 14px; font-weight: 600;">Google</td>
+                                <td style="padding: 14px;">g2g (Googler-to-Googler)</td>
+                                <td style="padding: 14px; color: var(--accent-color); font-weight: 600;">성장 인프라</td>
+                                <td style="padding: 14px;">직원 상호간 교육 네트워크 기반 사내 강사 인증 체계</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 14px; font-weight: 600;">3M</td>
+                                <td style="padding: 14px;">15% Culture</td>
+                                <td style="padding: 14px; color: var(--accent-color); font-weight: 600;">자율성</td>
+                                <td style="padding: 14px;">근무 시간의 15%를 본인 선택 혁신 타겟 프로젝트에 투자</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color); background-color: var(--bg-light);">
+                                <td style="padding: 14px; font-weight: 600;">SK하이닉스</td>
+                                <td style="padding: 14px;">Master / Technical Leader</td>
+                                <td style="padding: 14px; color: var(--accent-color); font-weight: 600;">성장 커리어</td>
+                                <td style="padding: 14px;">정년 제약 없는 현업 최고 기술 전문가 지정 전용 롱런 트랙</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="cell text-center">
+                    <h1>경청해 주셔서 감사합니다.</h1>
+                    <p class="medium-text mt-4" style="font-size: 18px; color: var(--text-muted);">주니어보드 7기 정기회의 프레젠테이션</p>
+                    <p style="margin-top: 15px; font-size: 14px; color: var(--accent-color);">오른쪽 네비게이션 도트와 하단 버튼을 활용하여 화면을 컨트롤할 수 있습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+    <script>
+        new fullpage('#fullpage', {
+            autoScrolling: true,
+            navigation: true,
+            navigationPosition: 'right',
+            scrollingSpeed: 700,
+            licenceKey: 'OPEN-SOURCE-GPLV3-LICENSE' // 오픈소스 기본 키 명시
+        });
+    </script>
+</body>
+</html>
