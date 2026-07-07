@@ -3,373 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>주니어보드 7기 6월 정기회의</title>
+    <title>주니어보드 7기 중부건설-대세충본부 6월 정기회의록</title>
+    <!-- FullPage.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css">
+    <!-- Pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --main-color: #0b3c5d;
-            --accent-color: #328cc1;
-            --soft-blue: #d9b310;
-            --bg-white: #ffffff;
-            --text-dark: #1d2731;
-            --text-gray: #5c6f84;
-            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --dark-bg: #0f172a;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --text-gray: #64748b;
+            --main-blue: #60a5fa; /* 파스텔톤 블루 */
+            --sub-blue: #bfdbfe;
+            --glow-shadow: rgba(96, 165, 250, 0.15);
+            --highlight: linear-gradient(180deg, rgba(255,255,255,0) 60%, rgba(254, 240, 138, 0.8) 40%); /* 형광펜 효과 */
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             -webkit-print-color-adjust: exact;
         }
 
         body {
             font-family: 'Pretendard', sans-serif;
-            margin: 0;
-            padding: 0;
             color: var(--text-dark);
-            background-color: var(--bg-white);
-        }
-
-        /* 상/하단 은은한 파도 배경 그래픽 */
-        .wave-bg {
-            position: absolute;
-            width: 100%;
-            left: 0;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .wave-top { top: 0; height: 160px; }
-        .wave-bottom { bottom: 0; height: 160px; }
-
-        .section {
-            position: relative;
+            background-color: var(--white);
             overflow: hidden;
-            display: table;
-            width: 100%;
-            height: 100vh;
-            table-layout: fixed;
+        }
+
+        /* 공통 섹션 레이아웃 */
+        .section {
+            background-color: var(--white);
+            position: relative;
+            transition: background-color 0.5s ease;
         }
 
         .fp-tableCell {
-            display: table-cell;
-            vertical-align: middle;
-            padding: 60px 10%;
+            padding: 40px 6% !important;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
         }
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            position: relative;
-            z-index: 10;
         }
 
-        /* 타이포그래피 */
-        h1 { font-weight: 800; font-size: 54pt; line-height: 1.2; margin: 0 0 20px 0; color: var(--main-color); letter-spacing: -1px; }
-        h2 { font-weight: 700; font-size: 32pt; margin-bottom: 40px; color: var(--main-color); border-left: 8px solid var(--accent-color); padding-left: 20px; letter-spacing: -0.5px; }
-        h3 { font-weight: 600; font-size: 20pt; margin-bottom: 15px; color: var(--text-dark); }
-        p { font-weight: 300; font-size: 14pt; color: var(--text-gray); line-height: 1.7; margin: 0; }
-        strong { font-weight: 600; }
+        /* 반전 다크테마 (인트로, 아웃트로, 간지용) */
+        .section.dark-theme {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+        .section.dark-theme var(--text-dark) { color: var(--text-light); }
 
-        /* 1페이지: 타이틀 */
-        .title-slide { text-align: left; position: relative; }
-        .title-slide .date { font-size: 18pt; font-weight: 500; margin-bottom: 15px; color: var(--accent-color); display: inline-block; background: rgba(50, 140, 193, 0.1); padding: 5px 15px; border-radius: 6px; }
-        .title-slide .presenter { font-size: 14pt; margin-top: 60px; color: var(--text-gray); line-height: 1.6; border-left: 3px solid #ccc; padding-left: 15px; }
-
-        /* 2페이지: 그리드 레이아웃 */
-        .grid-3 { display: table; width: 100%; table-layout: fixed; border-spacing: 25px 0; margin-left: -25px; margin-right: -25px; }
-        .grid-item { display: table-cell; background: var(--light-bg); border-radius: 16px; padding: 40px 30px; vertical-align: top; border-top: 6px solid var(--main-color); box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-        .grid-item i { font-size: 32pt; color: var(--accent-color); margin-bottom: 25px; display: block; }
-        .grid-item h4 { font-size: 18pt; font-weight: 600; margin: 0 0 15px 0; color: var(--main-color); }
-        .grid-item p { font-size: 12pt; line-height: 1.6; }
-
-        /* 3페이지: 프로세스 단계 흐름 */
-        .flow-container { display: table; width: 100%; table-layout: fixed; border-spacing: 15px 0; }
-        .flow-step { display: table-cell; background: white; border: 1px solid #e1e8ed; border-radius: 12px; padding: 30px 20px; text-align: center; vertical-align: top; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-        .flow-step .step-num { background: var(--main-color); color: white; width: 40px; height: 40px; line-height: 40px; border-radius: 50%; display: inline-block; font-weight: 700; font-size: 12pt; margin-bottom: 15px; }
-        .flow-step h5 { font-size: 15pt; font-weight: 600; margin: 0 0 10px 0; color: var(--main-color); }
-        .flow-step p { font-size: 11pt; color: var(--text-gray); }
-
-        /* 4페이지: 카드뉴스 표 구조 */
-        .table-container { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #eee; }
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { background: var(--main-color); color: white; padding: 22px 25px; font-weight: 600; font-size: 14pt; }
-        td { padding: 20px 25px; border-bottom: 1px solid #edf2f7; font-size: 13pt; color: var(--text-dark); }
-        tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) { background-color: #f8fafc; }
-        .badge { background: #e2f7f3; color: #0d9488; padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 11pt; }
-
-        /* 5페이지: 좌우 레이아웃 분할 */
-        .split-layout { display: table; width: 100%; table-layout: fixed; }
-        .split-col { display: table-cell; width: 50%; vertical-align: top; padding-right: 40px; }
-        .split-col:last-child { padding-right: 0; padding-left: 40px; border-left: 1px solid #e2e8f0; }
+        /* 타이포그래피 벌크업 스케일 */
+        h1 { font-weight: 800; font-size: 4.5rem; line-height: 1.2; color: var(--text-light); letter-spacing: -0.03em; }
+        h2 { font-weight: 700; font-size: 2.8rem; margin-bottom: 2.5rem; color: var(--text-dark); letter-spacing: -0.02em; position: relative; }
+        .dark-theme h2 { color: var(--text-light); }
+        h3 { font-weight: 600; font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-dark); }
+        .dark-theme h3 { color: var(--text-light); }
+        p, li { font-weight: 400; font-size: 1.25rem; line-height: 1.8; color: var(--text-gray); }
+        .dark-theme p { color: #94a3b8; }
         
-        .list-item { display: table; width: 100%; margin-bottom: 25px; }
-        .list-icon { display: table-cell; width: 40px; vertical-align: top; color: var(--accent-color); font-size: 16pt; }
-        .list-content { display: table-cell; vertical-align: top; }
-        .list-content h5 { font-size: 14pt; font-weight: 600; margin: 0 0 5px 0; color: var(--main-color); }
-        .list-content p { font-size: 11pt; }
+        /* 형광펜 그라데이션 강조 효과 */
+        strong {
+            font-weight: 700;
+            background: var(--highlight);
+            color: inherit;
+            padding: 0 4px;
+        }
 
-        /* PDF 출력 플로팅 버튼 */
-        .pdf-print-btn {
+        /* 컨텐츠 구조화 디자인 및 호버 인터랙션 */
+        .plain-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .plain-box:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px -4px var(--glow-shadow), 0 4px 12px -2px var(--glow-shadow);
+        }
+
+        /* 테이블 스크롤 및 레이아웃 컨테이너 */
+        .scrollable-content {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 600px;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.15rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 1.1rem;
+            color: #334155;
+            background-color: var(--white);
+        }
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        /* 그리드 및 분할 레이아웃 */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            width: 100%;
+        }
+
+        /* 메타 정보 뱃지 */
+        .meta-text {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* PDF 출력 버튼 (A4 가로 표준) */
+        .pdf-btn {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 20px;
+            left: 20px;
             z-index: 9999;
-            background: #1e293b;
-            color: #ffffff;
-            border: none;
-            padding: 12px 22px;
-            border-radius: 30px;
-            font-family: 'Pretendard', sans-serif;
-            font-size: 11pt;
-            font-weight: 500;
+            background-color: rgba(15, 23, 42, 0.8);
+            color: var(--text-light);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 18px;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
-        .pdf-print-btn:hover {
-            background: #0f172a;
-            transform: translateY(-2px);
+        .pdf-btn:hover {
+            background-color: var(--dark-bg);
+            border-color: var(--main-blue);
+            box-shadow: 0 0 12px var(--glow-shadow);
         }
 
-        /* A4 Landscape 인쇄 스타일 지정 */
+        /* 네비게이션 도트 커스텀 (불순 가상요소 제거 및 절대 2줄 방지) */
+        #fp-nav ul li {
+            width: 12px !important;
+            height: 12px !important;
+            margin: 12px 0 !important;
+        }
+        #fp-nav ul li a span {
+            background: #cbd5e1 !important;
+            width: 8px !important;
+            height: 8px !important;
+            margin: 2px 0 0 2px !important;
+            transition: all 0.3s ease !important;
+        }
+        #fp-nav ul li a.active span {
+            background: var(--main-blue) !important;
+            width: 12px !important;
+            height: 12px !important;
+            margin: 0 !important;
+            box-shadow: 0 0 8px var(--main-blue);
+        }
+
+        /* 데스크탑 및 고해상도 최적화 미디어쿼리 */
+        @media (min-width: 1024px) {
+            .fp-tableCell { padding: 40px 10% !important; }
+            h1 { font-size: 5.5rem; }
+            h2 { font-size: 3.5rem; }
+        }
+
+        /* 모바일 및 저해상도 미디어쿼리 (유연한 가독성 보장) */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+            h3 { font-size: 1.4rem; }
+            p, li, td, th { font-size: 1rem; }
+            .plain-box { padding: 1.5rem; }
+            .grid-layout { grid-template-columns: 1fr; gap: 1rem; }
+            #fp-nav { display: none !important; } /* 모바일에서는 인디케이터 숨김 처리 */
+        }
+
+        /* 인쇄 가단 (A4 가로 강제 세팅) */
         @media print {
-            @page {
-                size: A4 landscape;
-                margin: 0;
-            }
-            body {
-                background: #ffffff;
-            }
-            .pdf-print-btn, #fp-nav {
-                display: none !important;
-            }
-            .section {
-                height: 100vh !important;
-                page-break-after: always !important;
-                page-break-inside: avoid !important;
-                display: block !important;
-                position: relative !important;
-            }
-            .fp-tableCell {
-                display: block !important;
-                height: 100% !important;
-                padding: 50px 8% !important;
-            }
-            .wave-bg {
-                opacity: 0.4;
-            }
+            @page { size: A4 landscape; margin: 0; }
+            body { overflow: visible !important; background-color: var(--white); color: var(--text-dark); }
+            .pdf-btn, #fp-nav { display: none !important; }
+            .section { height: 100vh !important; page-break-after: always !important; display: block !important; position: relative !important; background: var(--white) !important; color: var(--text-dark) !important; }
+            .section.dark-theme { background: var(--white) !important; color: var(--text-dark) !important; }
+            .section.dark-theme h1, .section.dark-theme h2, .section.dark-theme h3 { color: var(--text-dark) !important; }
+            .fp-tableCell { display: block !important; padding: 40px !important; }
         }
     </style>
 </head>
 <body>
 
-    <button class="pdf-print-btn" onclick="window.print()">
-        <i class="fa-solid fa-print"></i> PDF 출력 (A4 가로)
+    <!-- 가로출력용 작게 배치된 프린트 버튼 -->
+    <button class="pdf-btn" onclick="window.print()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        PDF 인쇄
     </button>
 
     <div id="fullpage">
-        
-        <div class="section">
-            <svg class="wave-bg wave-top" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                <path fill="#0b3c5d" fill-opacity="0.06" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,218.7C672,203,768,149,864,128C960,107,1056,117,1152,138.7C1248,160,1344,192,1392,208L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-            </svg>
-            <div class="fp-tableCell">
-                <div class="container title-slide">
-                    <div class="date"><i class="fa-regular fa-clock"></i> 2026. 06. 23 (화) 14:00</div>
-                    <h1>주니어보드 7기<br>6월 정기회의 선언</h1>
-                    <p style="font-size: 18pt; color: var(--main-color); font-weight: 400; margin-bottom: 40px;">중부건설본부 - 대전세종충남본부 연합 소통 및 정기 협의체 회의</p>
-                    
-                    <div class="presenter">
-                        <strong>발표부서:</strong> 중부건설본부 서남해변환부<br>
-                        <strong>작성자:</strong> 장예일 주임 (내선 ☎0451-627)
-                    </div>
-                </div>
-            </div>
-            <svg class="wave-bg wave-bottom" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                <path fill="#328cc1" fill-opacity="0.08" d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,218.7C840,213,960,171,1080,165.3C1200,160,1320,192,1380,208L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-            </svg>
-        </div>
 
-        <div class="section">
+        <!-- 슬라이드 1: 인트로 (다크 테마 반전 효과) -->
+        <div class="section dark-theme" data-anchor="intro">
             <div class="fp-tableCell">
                 <div class="container">
-                    <h2>회의 개요 및 주요 의제</h2>
-                    <div class="grid-3">
-                        <div class="grid-item">
-                            <i class="fa-solid fa-network-wired"></i>
-                            <h4>회의 환경</h4>
-                            <p><strong>일시:</strong> 6월 23일 14시<br><strong>장소:</strong> 비대면 화상회의 시스템 (Web-Ex)<br>양 본부 간 유기적 결합 유도</p>
-                        </div>
-                        <div class="grid-item">
-                            <i class="fa-solid fa-users-gear"></i>
-                            <h4>참석 대상자 (7명)</h4>
-                            <p><strong>중부건설본부:</strong> 4명 참석<br><strong>대전세종충남본부:</strong> 3명 참석<br>실무급 주니어보드 위원 전원 참석 완료</p>
-                        </div>
-                        <div class="grid-item">
-                            <i class="fa-solid fa-lightbulb"></i>
-                            <h4>주요 추진 핵심안건</h4>
-                            <p>1. 건설사업소 정주 여건 실태조사<br>2. 생성형 AI 활용 청렴 카드뉴스 제작 및 배포 체계 마련</p>
-                        </div>
-                    </div>
+                    <div class="meta-text">'26. 6. 23.(화) 중부건설본부 서남해변환부 장예일(☎0451-627)</div>
+                    <h1>주니어보드 7기<br><span style="color: var(--main-blue);">중부건설-대세충본부</span><br>6월 정기회의록</h1>
                 </div>
             </div>
         </div>
 
-        <div class="section">
+        <!-- 슬라이드 2: 1. 6월 정기회의의 개요 (화이트 테마) -->
+        <div class="section" data-anchor="overview">
             <div class="fp-tableCell">
                 <div class="container">
-                    <h2>건설사업소 실태조사 단계별 추진 전략</h2>
-                    <p style="margin-bottom: 40px; font-size: 15pt;">사업소 근무 환경의 막연한 오해를 해소하고 실질적 메리트를 발굴하기 위한 로드맵입니다.</p>
-                    
-                    <div class="flow-container">
-                        <div class="flow-step">
-                            <div class="step-num">01</div>
-                            <h5>인식 조사 시행</h5>
-                            <p><strong>6월 ~ 7월 중</strong><br>연차별/직군별 설문지 배포 및 1:1 심층 매칭 인터뷰 진행</p>
-                        </div>
-                        <div class="flow-step">
-                            <div class="step-num">02</div>
-                            <h5>데이터 분석 및 정리</h5>
-                            <p><strong>7월 ~ 8월 중</strong><br>비건설 직군 인식 조사 결과를 바탕으로 오해와 실태 간의 격차 도출</p>
-                        </div>
-                        <div class="flow-step">
-                            <div class="step-num">03</div>
-                            <h5>핵심 가치 재발견</h5>
-                            <p><strong>8월 ~ 9월 중</strong><br>건설소만의 유연근무, 조직문화 장점 등 긍정적 요소 발굴 및 정립</p>
-                        </div>
-                        <div class="flow-step">
-                            <div class="step-num">04</div>
-                            <h5>최종 결과 보고</h5>
-                            <p><strong>10월 예정</strong><br>실태조사 결과 보고서 및 실무 개선 건의 과제 최종 확정</p>
-                        </div>
+                    <h2>1. 6월 정기회의의 개요</h2>
+                    <div class="plain-box" style="width: 100%;">
+                        <p style="margin-bottom: 1rem;"><strong>일 시</strong> : '26. 6. 23.(화) 14:00~</p>
+                        <p style="margin-bottom: 1rem;"><strong>장 소</strong> : 화상회의(Web-Ex 활용)</p>
+                        <p><strong>인 원</strong> : 중부건설본부(4인) + 대전세종충남본부(3인)</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="section">
+        <!-- 슬라이드 3: 2. 6월 활동내역 - 실태조사 계획 (화이트 테마) -->
+        <div class="section" data-anchor="activity-survey">
             <div class="fp-tableCell">
                 <div class="container">
-                    <h2>AI 기반 청렴 카드뉴스 제작 계획</h2>
-                    <p style="margin-bottom: 30px; font-size: 15pt;">매월 반부패 3법과 관련된 실제 사례 위주의 고품질 홍보 콘텐츠를 주기적으로 기획 및 발행합니다.</p>
+                    <h2>2. 6월 활동내역 <span style="font-size: 1.5rem; color: var(--text-gray); font-weight:400; vertical-align: middle; margin-left:10px;">붙임 1</span></h2>
+                    <h3 style="margin-bottom: 1.5rem; color: var(--main-blue);">■ 건설사업소 실태조사 활동계획 구체화</h3>
                     
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="width: 20%;">발행 시기</th>
-                                    <th style="width: 55%;">주요 청렴 테마 및 핵심 내용</th>
-                                    <th style="width: 25%;">추진 상태</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>6월 중</strong></td>
-                                    <td>청렴의 최우선 가치 정립 및 반부패 3법의 기본 개념 소개</td>
-                                    <td><span class="badge" style="background:#e0f2fe; color:#0369a1;">제작 및 시행 완료</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>7월 ~ 8월</strong></td>
-                                    <td>반부패 3법 집중 분석 1탄: <strong>'청탁금지법'</strong> 핵심 위반 및 준수 사례</td>
-                                    <td><span class="badge">기획 단계</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>9월 ~ 10월</strong></td>
-                                    <td>반부패 3법 집중 분석 2탄: <strong>'이해충돌방지법'</strong> 공직자 행동 강령 안내</td>
-                                    <td><span class="badge">기획 단계</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>11월 ~ 12월</strong></td>
-                                    <td>반부패 3법 집중 분석 3탄: <strong>'공공재정환수법'</strong> 및 연간 청렴활동 결산</td>
-                                    <td><span class="badge">기획 단계</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="grid-layout">
+                        <div class="plain-box">
+                            <h3>○ 프로젝트 진행 단계 정리</h3>
+                            <p style="font-size: 1.15rem; margin-top: 0.5rem;">설문 및 심층 인터뷰 &rarr; 연차별, 직군별 인식 데이터화 &rarr; 막연한 오해와 실제 사업소간 괴리 분석 &rarr; 핵심 고충사항 도출 &rarr; 건설사업소만의 메리트(유연근무, 분위기 등) 발굴 &rarr; 실태조사 결과 보고 및 제도적 개선방안 및 긍정 이미지 전사 공유(10월)</p>
+                        </div>
+                        <div class="plain-box">
+                            <h3>○ 인식조사 방안 정리 및 설문항목 도출</h3>
+                            <ul style="list-style-type: decimal; margin-left: 20px; font-size: 1.1rem;">
+                                <li><strong>조사대상</strong>: 연차별, 직군별 설문조사</li>
+                                <li><strong>조사방식</strong>: 구글폼 설문조사(안)</li>
+                                <li><strong>설문항목 설계</strong><br>
+                                    - 분류(연차, 직군 등 피설문자 구분용)<br>
+                                    - 인식-건설외 직군<br>
+                                    - 인식-건설<br>
+                                    - 취합 및 분류
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="section">
+        <!-- 슬라이드 4: 2. 6월 활동내역 - 카드뉴스 및 토론회 (화이트 테마) -->
+        <div class="section" data-anchor="activity-etc">
             <div class="fp-tableCell">
                 <div class="container">
-                    <h2>향후 업무 일정 및 전사 협업 현황</h2>
+                    <h2>2. 6월 활동내역 (계속)</h2>
                     
-                    <div class="split-layout">
-                        <div class="split-col">
-                            <h3>6-7월 주요 마일스톤</h3>
-                            
-                            <div class="list-item">
-                                <div class="list-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                                <div class="list-content">
-                                    <h5>비전업 세미나 참여</h5>
-                                    <p><strong>06.29 ~ 06.30:</strong> 주니어보드 역량 강화를 위한 전사 직무 비전 세미나 참석</p>
-                                </div>
-                            </div>
-
-                            <div class="list-item">
-                                <div class="list-icon"><i class="fa-solid fa-comments"></i></div>
-                                <div class="list-content">
-                                    <h5>청렴 한전 릴레이 토론회</h5>
-                                    <p><strong>06.29 ~ 07.03:</strong> 조직문화 개선을 위한 청렴 질문지 도출 및 의견 수렴 실행</p>
-                                </div>
-                            </div>
+                    <div class="plain-box">
+                        <h3>■ 청렴 카드뉴스 제작 방안 정리</h3>
+                        <p style="margin-bottom: 1rem;"><strong>(활동방향)</strong> AI를 활용하여 매월 사례 위주의 홍보물(카드뉴스 등) 발행</p>
+                        
+                        <div class="scrollable-content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>월</th>
+                                        <th>청렴 테마</th>
+                                        <th>비고</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>6월</strong></td>
+                                        <td>청렴의 중요성과 반부패 3법이란?</td>
+                                        <td>시행 예정 내역 협의</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>7~8월</strong></td>
+                                        <td>반부패 3법 중 <strong>'청탁금지법'</strong></td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>9~10월</strong></td>
+                                        <td>반부패 3법 중 <strong>'이해충돌방지법'</strong></td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>11~12월</strong></td>
+                                        <td>반부패 3법 중 <strong>'공공재정환수법'</strong></td>
+                                        <td>-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
 
-                        <div class="split-col">
-                            <h3>타 부서 긴밀 협업 과제</h3>
-                            
-                            <div class="list-item">
-                                <div class="list-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                                <div class="list-content">
-                                    <h5>정보보안처 사전 실무 협의</h5>
-                                    <p><strong>~ 06.19 완료:</strong> 주니어보드 대내외 활동 및 설문 데이터 보안성 검증을 위한 업무 조율 완료</p>
-                                </div>
-                            </div>
+                    <div class="plain-box" style="margin-bottom: 0;">
+                        <h3>■ 릴레이 토론회(6.29 ~ 7.3) 준비</h3>
+                        <p>○ 청렴 질문 도출 및 이전 시행 내역 정리</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                            <div class="list-item">
-                                <div class="list-icon"><i class="fa-solid fa-video"></i></div>
-                                <div class="list-content">
-                                    <h5>홍보처 영상 제작 기획 협의</h5>
-                                    <p><strong>~ 06.19 완료:</strong> 하반기 주니어보드 정기 활동 및 성과 전파용 홍보 영상 콘셉트 확정</p>
-                                </div>
-                            </div>
+        <!-- 슬라이드 5: 3. 7월 활동계획 & 4. 향후 일정 (화이트 테마) -->
+        <div class="section" data-anchor="future-plans">
+            <div class="fp-tableCell">
+                <div class="container">
+                    <h2>3. 7월 활동계획 및 4. 향후 일정</h2>
+                    
+                    <div class="grid-layout">
+                        <div class="plain-box">
+                            <h3 style="color: var(--main-blue);">[3. 7월 활동계획]</h3>
+                            <ul style="margin-top: 1rem; list-style-type: none;">
+                                <li style="margin-bottom: 1rem;">◽ 건설사업소 <strong>실태조사 활동 구체화</strong></li>
+                                <li>◽ 청렴 <strong>카드뉴스 제작 활동 진행</strong></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="plain-box">
+                            <h3 style="color: var(--main-blue);">[4. 향후 일정 및 협업 조사]</h3>
+                            <ul style="margin-top: 1rem; list-style-type: none;">
+                                <li style="margin-bottom: 0.8rem;">◽ 비전업 세미나(6.29 ~ 6.30)</li>
+                                <li style="margin-bottom: 0.8rem;">◽ 청렴 한전 릴레이토론회(6.29 ~ 7.3)</li>
+                                <li style="margin-bottom: 0.8rem;">◽ 정보보안처(~6.19, 개별 협업)</li>
+                                <li>◽ 홍보처-영상기획(~6.19, 본부 협업)</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="section" style="background: linear-gradient(135deg, #0b3c5d 0%, #1d2731 100%); color: white;">
+        <!-- 슬라이드 6: 아웃트로 (다크 테마 반전 효과) -->
+        <div class="section dark-theme" data-anchor="outro">
             <div class="fp-tableCell">
-                <div class="container" style="text-align: center;">
-                    <h1 style="color: white; font-size: 64pt; margin-bottom: 20px; font-weight: 800;">감사합니다</h1>
-                    <p style="color: #cbd5e1; font-size: 18pt; font-weight: 300; margin-bottom: 60px;">더 나은 조직문화를 위해 주니어보드가 앞장서겠습니다.</p>
-                    <div style="font-size: 13pt; color: var(--accent-color); letter-spacing: 3px; font-weight: 600;">
-                        중부건설본부 &bull; 대전세종충남본부 주니어보드 7기
-                    </div>
+                <div class="container" style="text-align: center; align-items: center; width: 100%;">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--main-blue)" stroke-width="1.5" style="margin-bottom: 2rem;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <h1 style="font-size: 4rem; margin-bottom: 1.5rem;">감사합니다</h1>
+                    <p style="color: var(--text-gray); font-size: 1.5rem;">주니어보드 7기 중부건설-대세충본부</p>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <!-- FullPage.js 및 종속 스크립트 연동 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
     <script>
-        // FullPage.js 설정 활성화
-        new fullpage('#fullpage', {
-            autoScrolling: true,
-            scrollHorizontally: true,
-            navigation: true,
-            navigationPosition: 'right',
-            scrollingSpeed: 700,
-            licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE'
+        document.addEventListener('DOMContentLoaded', function() {
+            new fullpage('#fullpage', {
+                // 내비게이션 옵션
+                navigation: true,
+                navigationPosition: 'right',
+                anchors: ['intro', 'overview', 'activity-survey', 'activity-etc', 'future-plans', 'outro'],
+                
+                // 스크롤 성능 및 모바일 충돌 방지 정교화 옵션
+                scrollingSpeed: 800,
+                autoScrolling: true,
+                fitToSection: true,
+                scrollBar: false,
+                
+                // 가로형 표 스크롤 컴포넌트나 입력 박스에서 fullpage 롤링 터치 충돌 방지 세팅
+                normalScrollElements: '.scrollable-content, table, button',
+                
+                // 오픈소스 가이드 준수 라이선스
+                licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE'
+            });
         });
     </script>
 </body>
