@@ -3,114 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자기소개 프레젠테이션 - 장예일</title>
+    <title>장예일 - 자기소개 프레젠테이션</title>
     <style>
-        /* Pretendard 폰트 불러오기 */
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+        :root {
+            --primary-blue: #1e3a8a;
+            --light-blue: #3b82f6;
+            --bg-blue: #f0f4ff;
+            --border-blue: #93c5fd;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+        }
 
         body {
             font-family: 'Pretendard', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #ffffff;
-            /* 옅은 체크무늬 배경 */
-            background-image: radial-gradient(#e0e7ff 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #334155;
+            background-color: #1e3a8a; /* 레퍼런스의 진한 블루 배경톤 */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        .container {
-            width: 900px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        /* 프레젠테이션 슬라이드 프레임 */
+        .slide-container {
+            width: 1200px;
+            height: 720px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            padding: 50px 60px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--border-blue);
+        }
+
+        /* 상단 네비게이션/타이틀 바 */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+            margin-bottom: 35px;
+        }
+
+        .header-title-group h2 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--light-blue);
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-title-group h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin: 0;
+        }
+
+        .header-badge {
+            background-color: var(--bg-blue);
+            color: var(--primary-blue);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid var(--border-blue);
+        }
+
+        /* 메인 컨텐츠 영역 (2분할) */
+        .slide-body {
             display: flex;
             gap: 40px;
-        }
-
-        .box {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.03);
-        }
-
-        /* Left Side */
-        .left-section {
             flex: 1;
         }
 
-        h1 { font-size: 24px; font-weight: 700; color: #1e40af; margin-bottom: 20px; }
-        .info-item { margin-bottom: 15px; }
-        .label { font-weight: 600; color: #64748b; font-size: 14px; }
-        .value { font-weight: 500; color: #1e293b; font-size: 16px; margin-top: 4px; }
-
-        /* Right Side */
-        .right-section {
-            flex: 0 0 300px;
-            text-align: center;
+        /* 좌측 정보 박스 */
+        .info-panel {
+            flex: 1.2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
-        h2 { font-size: 20px; color: #1e40af; margin-bottom: 5px; }
-        
-        .profile-img {
-            width: 250px;
-            height: 250px;
-            border-radius: 20px;
-            object-fit: cover;
-            margin: 20px 0;
-            border: 4px solid #dbeafe;
-        }
-
-        .hobby-imgs {
+        .info-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 20px;
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .info-card:hover {
+            border-color: var(--light-blue);
+            background-color: var(--bg-blue);
+        }
+
+        .info-card.full-width {
+            grid-column: span 2;
+        }
+
+        .info-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-gray);
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* 우측 프로필 및 이미지 박스 */
+        .profile-panel {
+            flex: 0.8;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: space-between;
+        }
+
+        .profile-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 0 0 4px 0;
+        }
+
+        .profile-header p {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        .profile-main-img {
+            width: 170px;
+            height: 170px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 3px solid var(--light-blue);
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+            margin: 10px 0;
+        }
+
+        .hobby-images-wrapper {
+            display: flex;
+            gap: 12px;
+            width: 100%;
             justify-content: center;
         }
 
-        .hobby-imgs img {
-            width: 120px;
-            height: 120px;
+        .hobby-img {
+            width: 48%;
+            height: 85px;
             border-radius: 10px;
             object-fit: cover;
-            border: 2px solid #e2e8f0;
+            border: 2px solid #cbd5e1;
         }
-
-        svg { width: 24px; height: 24px; vertical-align: middle; margin-right: 8px; fill: #1e40af; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- 좌측 설명란 -->
-    <div class="left-section box">
-        <h1>
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-            자기소개
-        </h1>
-        <div class="info-item"><div class="label">이름</div><div class="value">장예일</div></div>
-        <div class="info-item"><div class="label">생년월일</div><div class="value">98년 7월생</div></div>
-        <div class="info-item"><div class="label">소속</div><div class="value">중부건설본부</div></div>
-        <div class="info-item"><div class="label">담당 업무</div><div class="value">HVDC 500kV 서화성변환소 건설사업</div></div>
-        <div class="info-item"><div class="label">MBTI</div><div class="value">ISFJ</div></div>
-        <div class="info-item"><div class="label">남이 보는 나</div><div class="value">경상도 상테토남</div></div>
-        <div class="info-item"><div class="label">실제의 나</div><div class="value">캐치캐치 안무고민중</div></div>
+<div class="slide-container">
+    <!-- 상단 헤더 -->
+    <div class="slide-header">
+        <div class="header-title-group">
+            <h2>JEONGBU CONSTRUCTION CORP.</h2>
+            <h1>주니어보드 7기 자기소개</h1>
+        </div>
+        <div class="header-badge">중부건설본부 서남해변환부</div>
     </div>
 
-    <!-- 우측 프로필란 -->
-    <div class="right-section box">
-        <h2>장예일</h2>
-        <p style="color: #1e40af; font-weight: 500;">중부건설본부 서남해변환부</p>
-        <img src="pics/IMG_3293.jpeg" class="profile-img" alt="프로필 사진">
-        <div class="hobby-imgs">
-            <img src="pics/IMG_0239.jpeg" alt="취미1">
-            <img src="pics/IMG_4919.jpeg" alt="취미2">
+    <!-- 본문 내용 -->
+    <div class="slide-body">
+        <!-- 좌측 상세 정보 Grid -->
+        <div class="info-panel">
+            <div class="info-card">
+                <span class="info-label">이름</span>
+                <span class="info-value">장예일</span>
+            </div>
+            <div class="info-card">
+                <span class="info-label">생년월일</span>
+                <span class="info-value">98년 7월생</span>
+            </div>
+            <div class="info-card full-width">
+                <span class="info-label">소속</span>
+                <span class="info-value">중부건설본부</span>
+            </div>
+            <div class="info-card full-width">
+                <span class="info-label">담당 업무</span>
+                <span class="info-value">HVDC 500kV 서화성변환소 건설사업</span>
+            </div>
+            <div class="info-card">
+                <span class="info-label">MBTI</span>
+                <span class="info-value">ISFJ</span>
+            </div>
+            <div class="info-card">
+                <span class="info-label">남이 보는 나</span>
+                <span class="info-value">경상도 상테토남</span>
+            </div>
+            <div class="info-card full-width">
+                <span class="info-label">실제의 나</span>
+                <span class="info-value">캐치캐치 안무고민중</span>
+            </div>
+        </div>
+
+        <!-- 우측 프로필 및 사진 영역 -->
+        <div class="profile-panel">
+            <div class="profile-header">
+                <h3>장예일 사원</h3>
+                <p>Profile & Hobby</p>
+            </div>
+            
+            <!-- 프로필 사진 (크게 배치) -->
+            <img src="pics/IMG_3293.jpeg" class="profile-main-img" alt="프로필 사진">
+
+            <!-- 취미 사진 2개 -->
+            <div class="hobby-images-wrapper">
+                <img src="pics/IMG_0239.jpeg" class="hobby-img" alt="취미 사진 1">
+                <img src="pics/IMG_4919.jpeg" class="hobby-img" alt="취미 사진 2">
+            </div>
         </div>
     </div>
 </div>
