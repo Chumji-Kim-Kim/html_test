@@ -11,16 +11,15 @@
             --primary-blue: #1e3a8a;
             --light-blue: #3b82f6;
             --bg-blue: #f0f4ff;
-            --border-blue: #93c5fd;
             --text-dark: #1e293b;
-            --text-gray: #64748b;
+            --text-gray: #475569;
         }
 
         body {
             font-family: 'Pretendard', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1e3a8a; /* 레퍼런스의 진한 블루 배경톤 */
+            background-color: #1e3a8a;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,7 +39,6 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            border: 2px solid var(--border-blue);
         }
 
         /* 상단 네비게이션/타이틀 바 */
@@ -76,7 +74,6 @@
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
-            border: 1px solid var(--border-blue);
         }
 
         /* 메인 컨텐츠 영역 (2분할) */
@@ -86,52 +83,55 @@
             flex: 1;
         }
 
-        /* 좌측 정보 박스 */
+        /* 좌측 정보 박스 그리드 */
         .info-panel {
             flex: 1.2;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 16px;
         }
 
         .info-card {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 16px 20px;
+            background-color: #ffffff;
+            border: none; /* 테두리 제거 */
+            border-radius: 14px;
+            padding: 18px 22px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            transition: all 0.2s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* 떠있는 느낌의 그림자 */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .info-card:hover {
-            border-color: var(--light-blue);
-            background-color: var(--bg-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.1);
         }
 
         .info-card.full-width {
             grid-column: span 2;
         }
 
+        /* 라벨 크기와 굵기 키움 */
         .info-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-gray);
-            margin-bottom: 4px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--light-blue);
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
         }
 
         .info-value {
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 17px;
+            font-weight: 600;
             color: var(--text-dark);
         }
 
         /* 우측 프로필 및 이미지 박스 */
         .profile-panel {
             flex: 0.8;
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            border: none; /* 테두리 제거 */
             border-radius: 16px;
             padding: 25px;
             display: flex;
@@ -139,6 +139,7 @@
             align-items: center;
             text-align: center;
             justify-content: space-between;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* 떠있는 느낌의 그림자 */
         }
 
         .profile-header h3 {
@@ -156,13 +157,13 @@
         }
 
         .profile-main-img {
-            width: 170px;
-            height: 170px;
+            width: 165px;
+            height: 165px;
             border-radius: 14px;
             object-fit: cover;
             border: 3px solid var(--light-blue);
             box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
-            margin: 10px 0;
+            margin: 8px 0;
         }
 
         .hobby-images-wrapper {
@@ -177,7 +178,7 @@
             height: 85px;
             border-radius: 10px;
             object-fit: cover;
-            border: 2px solid #cbd5e1;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
